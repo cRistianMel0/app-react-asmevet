@@ -2,7 +2,6 @@ import '../../styled-components/styles.scss';
 import Navbar from "../../components/Navbar";
 import CardServicios from './components/CardServicios';
 import serviciosImg from '../../assets/img/pet.svg';
-import servicioImg from '../../assets/img/servicio.jpeg'
 import ServiciosCreate from './ServiciosCreate';
 import { useEffect, useState } from 'react';
 import axios from 'axios'
