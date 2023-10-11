@@ -1,0 +1,48 @@
+import express from "express"
+import mysql2 from "mysql2"
+
+
+const db = mysql2.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "test"
+})
+
+const app = express()
+
+app.use(express.json())
+app.use()
+
+const PORT = 8000;
+
+app.listen(PORT, ()=>{
+    console.log(`Funcionando en el puerto ${PORT}`);
+})
+
+
+
+/* Obtener los servicios */
+app.get("/servicios", (req,res)=>{
+    const q = "SELECT * FROM servicios"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+/*  Crear nuevos servicios*/
+app.post("/servicios", (req,res)=>{
+    const q = "INSERT INTO servicios (`nombre`, `descripcion`, `imagen`) VALUES (?)";
+    const values = [
+        req.body.nombre,
+        req.body.descripcion,
+        req.body.imagen,
+    ]
+    db.query(q,[values],(err,data)=>{
+        if(err) return res.json(err);
+        return res.json("Servicio Creado");
+    })
+})
+
+app.use(express.json())

@@ -1,0 +1,35 @@
+.card {
+    width: 270px;
+    background: white;
+    padding: .4em;
+    border-radius: 6px;
+    &:hover {
+        background-color: rgb(235, 235, 235);
+        zoom: 95%;
+        transition: background-color 0.8s ease;
+    }
+}
+
+.card-image {
+    background-color: rgb(236, 236, 236);
+    background-size: cover;
+    height: 130px;
+    border-radius: 6px 6px 0 0;
+    &:hover {
+        transform: scale(0.98);
+    }
+}
+
+.heading {
+    font-weight: 400;
+    font-size: 20px;
+    color: rgba(78, 170, 158, 0.74);
+    padding: 7px;
+}
+
+.description {
+    color: gray;
+    font-weight: 400;
+    font-size: 14px;
+    padding-top: 20px;
+}

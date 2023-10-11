@@ -1,0 +1,21 @@
+/* Estilo para que el Navbar sea fijo */
+.Navbar {
+    z-index: 10;
+    background-color: rgba(42, 165, 124, 0.575);
+    filter: drop-shadow(0px 4px 8px gray);
+    margin-left: 60px;
+    margin-right: 60px;
+    border-radius: 0px 0px 25px 25px;
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+    a:hover {
+        background-color: azure;
+        color: rgba(42, 165, 124, 0.925);
+        border-radius: 5px;
+        transition: background-color 0.8s ease;
+    }
+}
+
