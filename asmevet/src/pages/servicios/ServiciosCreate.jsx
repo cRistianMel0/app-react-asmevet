@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { Plus } from 'react-bootstrap-icons';
+import { PlusCircle  } from 'react-bootstrap-icons';
 import axios from 'axios';
 
 export default function ServiciosCreate() {
@@ -67,7 +67,7 @@ export default function ServiciosCreate() {
   return (
     <>
       <Button variant="outline-success" onClick={handleShow}>
-        <Plus /> Agrega un Nuevo Servicio
+        <PlusCircle /> Agrega un Nuevo Servicio
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -105,7 +105,7 @@ export default function ServiciosCreate() {
             <Form.Group className="mb-3">
               <Form.Label>Imagen</Form.Label>
               <Form.Control
-                type="file" // Cambiado a type "file" para cargar imágenes
+                type="file"
                 name="imagen"
                 value={formValues.imagen}
                 onChange={handleInputChange}
@@ -116,7 +116,7 @@ export default function ServiciosCreate() {
                 Cancelar
               </Button>
               <Button variant="primary" type="submit">
-                Guardar
+                Agregar
               </Button>
             </Modal.Footer>
           </Form>
