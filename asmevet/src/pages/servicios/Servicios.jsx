@@ -83,7 +83,7 @@ export default function Servicios() {
                 <div className="container">
                     <div className="row mb-3">
                         <div className="col-7">
-                        <h2 className='mb-4'>Servicios</h2>
+                        <h2 className='mb-4'>SERVICIOS</h2>
                             <p>
                                 En Asmevet, ofrecemos una amplia gama de servicios veterinarios de alta calidad para cuidar la salud y el bienestar de tus queridas mascotas. <br /> <br /> Nuestros servicios están diseñados para garantizar que tus mascotas reciban la atención que se merecen. <br /> <br /> Desde consultas generales hasta tratamientos especializados, estamos aquí para ayudarte a mantener a tus amigos peludos felices y saludables.
                             </p>
