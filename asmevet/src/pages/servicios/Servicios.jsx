@@ -5,9 +5,11 @@ import serviciosImg from '../../assets/img/pet.svg';
 import ServiciosCreate from './ServiciosCreate';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import SearchBar from '../../components/SearchBar';
 
 export default function Servicios() {
-  const [serviciosData, setServicios] = useState([])
+  const [serviciosData, setServicios] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
   // Llamado al API para traer los registros de servicios
   useEffect(() => {
@@ -23,13 +25,18 @@ export default function Servicios() {
     fetchAllServicios()
   }, [])
 
+  // Función para filtrar los servicios en función del texto de búsqueda
+  const filteredServicios = serviciosData.filter((servicio) =>
+    servicio.nombre.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <>
       <Navbar />
 
       <section className="page">
         <div className="container">
-          <div className="row mb-3">
+          <div className="row mb-4">
             <div className="col-7">
               <h2 className='mb-4'>SERVICIOS</h2>
               <p>
@@ -40,9 +47,16 @@ export default function Servicios() {
               <img className='img-fluid rounded-circle' src={serviciosImg} alt="Imagen de un gato" />
             </div>
           </div>
-          <ServiciosCreate />
+          <div className="row">
+            <div className="col-8">
+              <SearchBar searchText={searchText} setSearchText={setSearchText} />
+            </div>
+            <div className="col-4">
+              <ServiciosCreate />
+            </div>
+          </div>
           <div className="row d-flex gap-5 justify-content-center mt-5">
-            <CardServicios cards={serviciosData} />
+            <CardServicios cards={filteredServicios} />
           </div>
         </div>
       </section>

@@ -3,9 +3,10 @@
     background: white;
     padding: .4em;
     border-radius: 6px;
+
     &:hover {
         background-color: rgb(235, 235, 235);
-        zoom: 95%;
+        zoom: 98%;
         transition: background-color 0.8s ease;
     }
 }
@@ -15,6 +16,7 @@
     background-size: cover;
     height: 130px;
     border-radius: 6px 6px 0 0;
+
     &:hover {
         transform: scale(0.98);
     }
@@ -25,11 +27,41 @@
     font-size: 20px;
     color: rgba(78, 170, 158, 0.74);
     padding: 7px;
-}
 
-.description {
-    color: gray;
-    font-weight: 400;
-    font-size: 14px;
-    padding-top: 20px;
+    .description {
+        color: gray;
+        font-weight: 400;
+        font-size: 14px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: end;
+        gap: 10px;
+        text-align: end;
+        font-size: 20px;
+
+        .edit-button,
+        .delete-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+        }
+
+        .delete-button {
+            background-color: #ff0000;
+
+            &:hover {
+                background-color: #d60000;
+            }
+        }
+    }
 }
