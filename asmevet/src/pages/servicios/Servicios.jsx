@@ -4,16 +4,17 @@ import CardServicios from './components/CardServicios';
 import serviciosImg from '../../assets/img/pet.svg';
 import ServiciosCreate from './ServiciosCreate';
 import { useEffect, useState } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 
 export default function Servicios() {
   const [serviciosData, setServicios] = useState([])
 
+  // Llamado al API para traer los registros de servicios
   useEffect(() => {
     const fetchAllServicios = async () => {
       try {
         const res = await axios.get("http://localhost:8000/servicios")
-        setServicios(res.data); // Actualiza el estado con los datos obtenidos
+        setServicios(res.data);
       } catch (err) {
         console.log(err);
       }
