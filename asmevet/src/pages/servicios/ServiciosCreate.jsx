@@ -19,7 +19,7 @@ export default function ServiciosCreate() {
   // Estado para manejar la validación del formulario
   const [validated, setValidated] = useState(false);
 
-  // Función para cerrar el modal, limpiar el formulario y recargar la page
+  // Función para cerrar el modal y limpiar el formulario
   const handleClose = () => {
     setShow(false);
     setFormValues({
@@ -28,7 +28,6 @@ export default function ServiciosCreate() {
       imagen: '',
     });
     setValidated(false);
-    window.location.reload();
   };
 
   // Función para mostrar el modal
@@ -46,8 +45,9 @@ export default function ServiciosCreate() {
       try {
         // Realizar una solicitud POST a la API con los valores del formulario
         await axios.post("http://localhost:8000/servicios", formValues);
-        // Cerrar el modal después de enviar los datos
+        // Cerrar el modal y recargar la page después de enviar los datos
         handleClose();
+        window.location.reload();
       } catch (err) {
         console.log(err);
       }
