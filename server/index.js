@@ -46,4 +46,15 @@ app.post("/servicios", (req,res)=>{
     })
 })
 
+/* Modificar Disponibilidad de un servicio */
+app.patch('/servicios', (req,res)=>{
+    const id = req.body.idServicio
+    const q = "UPDATE servicios SET disponible = 0 WHERE idServicio = ?"
+
+    db.query(q,[id], (err,results)=>{
+        if(err) return res.json(err)
+        return res.json("Disponibilidad Actualizada Correctamente")
+    })
+})
+
 app.use(express.json())
