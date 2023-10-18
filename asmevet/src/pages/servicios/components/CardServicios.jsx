@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PencilSquare, Trash } from 'react-bootstrap-icons';
 import "../styled-components/cardServicios.scss";
 import servicioImg from '../../../assets/img/servicio.jpeg';
+import ServiciosEdit from '../ServiciosEdit';
 
 export default function CardServicios({ cards }) {
-  const handleEdit = (servicio) => {
+  const [editModalShow, setEditModalShow] = useState(false);
+  const [editedServicio, setEditedServicio] = useState(null);
 
+  const handleEdit = (servicio) => {
+    const servicioKey = servicio.id;
+
+    setEditedServicio({
+      ...editedServicio,
+      [servicioKey]: { 
+        nombre: servicio.nombre,
+        descripcion: servicio.descripcion,
+        imagen: servicio.imagen,
+      }
+    });
+    setEditModalShow(true);
+  }
+
+  const handleSaveEdit = (editedServicio) => {
+    setEditModalShow(false);
   }
 
   const handleDelete = (servicio) => {
@@ -33,6 +51,14 @@ export default function CardServicios({ cards }) {
           </div>
         </div>
       ))}
+      {editedServicio && (
+        <ServiciosEdit
+          show={editModalShow}
+          onClose={() => setEditModalShow(false)}
+          servicio={editedServicio}
+          onSave={handleSaveEdit}
+        />
+      )}
     </>
   );
 }
