@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react/prop-types */
-import { PencilSquare, Trash } from 'react-bootstrap-icons';
+import { PencilSquare, ExclamationTriangle } from 'react-bootstrap-icons';
 import "../styled-components/cardServicios.scss";
 import servicioImg from '../../../assets/img/servicio.jpeg';
 import axios from 'axios';
@@ -16,6 +15,7 @@ export default function CardServicios({ cards }) {
       axios.patch('http://localhost:8000/servicios', {idServicio})
         .then(response => {
           console.log(response.data);
+          window.location.reload();
         })
         .catch(error => {
           console.error(error);
@@ -41,7 +41,7 @@ export default function CardServicios({ cards }) {
                 <PencilSquare />
               </button>
               <button className="delete-button"  onClick={() => handleDelete(servicio.idServicio)}>
-                <Trash />
+                <ExclamationTriangle />
               </button>
             </div>
           </div>

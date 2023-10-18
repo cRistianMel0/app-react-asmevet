@@ -16,7 +16,9 @@ export default function Servicios() {
     const fetchAllServicios = async () => {
       try {
         const res = await axios.get("http://localhost:8000/servicios")
-        setServicios(res.data);
+        // Filtrar los servicios disponibles (donde el campo "disponible" es igual a 1)
+        const serviciosDisponibles = res.data.filter(servicio => servicio.disponible === 1);
+        setServicios(serviciosDisponibles);
       } catch (err) {
         console.log(err);
       }
