@@ -1,15 +1,18 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
 import { PencilSquare, Trash } from 'react-bootstrap-icons';
 import "../styled-components/cardServicios.scss";
 import servicioImg from '../../../assets/img/servicio.jpeg';
 
 export default function CardServicios({ cards }) {
   const handleEdit = (servicio) => {
-
+    console.log(servicio.nombre);
   }
 
   const handleDelete = (servicio) => {
-    let res = confirm("¿Está seguro de que desea ELIMINAR el servicio?");
+    let res = confirm("¿Está seguro de que desea DESHABIILITAR el servicio?");
+    if (res) {
+      console.log(servicio.nombre)
+    } 
   }
 
   return (
