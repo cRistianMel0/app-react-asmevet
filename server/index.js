@@ -57,4 +57,21 @@ app.patch('/servicios', (req,res)=>{
     })
 })
 
+/* Actualizar infromacion de los servicios */
+app.put('/servicios', (req,res)=>{
+    const id = req.body.idServicio
+    const q = "UPDATE servicios SET `nombre` = ?, `descripcion` = ?, `imagen` = ? WHERE idServicio = ?"
+
+    const values = [
+        req.body.nombre,
+        req.body.descripcion,
+        req.body.imagen,
+    ]
+
+    db.query(q,[...values, id], (err,results)=>{
+        if(err) return res.json(err)
+        return res.json("El servicio se ha actualizado correctamente")
+    })
+})
+
 app.use(express.json())
