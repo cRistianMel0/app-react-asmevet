@@ -1,13 +1,14 @@
 .card {
     width: 270px;
     background: white;
-    padding: .4em;
+    padding: 0.4em;
     border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.8s ease;
 
     &:hover {
         background-color: rgb(235, 235, 235);
-        zoom: 98%;
-        transition: background-color 0.8s ease;
+        transform: scale(1.02);
     }
 }
 
@@ -38,9 +39,9 @@
 
     .buttons {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         gap: 10px;
-        text-align: end;
+        text-align: right;
         font-size: 20px;
 
         .edit-button,
@@ -50,6 +51,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            padding: 5px;
 
             &:hover {
                 background-color: #0056b3;

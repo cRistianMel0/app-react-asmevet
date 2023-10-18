@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { PencilSquare, Trash } from 'react-bootstrap-icons';
+import { PencilSquare, ExclamationTriangle } from 'react-bootstrap-icons';
 import "../styled-components/cardServicios.scss";
 import servicioImg from '../../../assets/img/servicio.jpeg';
 
@@ -9,9 +9,9 @@ export default function CardServicios({ cards }) {
   }
 
   const handleDelete = (servicio) => {
-    let res = confirm("¿Está seguro de que desea DESHABIILITAR el servicio?");
+    let res = confirm("¿Está seguro de que desea DESHABILITAR el servicio?");
     if (res) {
-      console.log(servicio.nombre)
+      console.log(servicio.nombre);
     } 
   }
 
@@ -30,7 +30,7 @@ export default function CardServicios({ cards }) {
                 <PencilSquare />
               </button>
               <button className="delete-button" onClick={() => handleDelete(servicio)}>
-                <Trash />
+                <ExclamationTriangle />
               </button>
             </div>
           </div>
@@ -39,5 +39,3 @@ export default function CardServicios({ cards }) {
     </>
   );
 }
-
-// esto es de prueba
