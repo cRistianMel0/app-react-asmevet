@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -10,6 +10,17 @@ export default function ServiciosEdit({ show, onClose, servicio, onSave }) {
     descripcion: servicio.descripcion,
     imagen: servicio.imagen,
   });
+
+  useEffect(() => {
+    setEditedServicio({ 
+      nombre: servicio.nombre,
+      descripcion: servicio.descripcion,
+      imagen: servicio.imagen,
+    });
+  }, [servicio]);
+
+  console.log(editedServicio);
+  console.log(servicio);
 
   const handleSave = () => {
     onSave(editedServicio); 
