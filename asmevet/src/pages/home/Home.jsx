@@ -1,4 +1,4 @@
-import App from '../../app';
+// import App from '../../app';
 import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 
@@ -8,7 +8,7 @@ export default function Home() {
             <Navbar />
             <section>
                 <div style={{height:"800px"}}>
-                    <App />
+                    {/* <App /> */}
                 </div>
             </section>
             <Footer />
