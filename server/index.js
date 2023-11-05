@@ -34,26 +34,37 @@ app.get("/", (req, res) => {
 // routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
+require('./app/routes/servicios.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+db.sequelize.sync().then(() => {
+  initial(); // Llamada a la función initial() después de sincronizar la base de datos
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}.`);
+  });
 });
 
-function initial() {
-  Role.create({
-    id: 1,
-    name: "user"
-  });
- 
-  Role.create({
-    id: 2,
-    name: "moderator"
-  });
- 
-  Role.create({
-    id: 3,
-    name: "admin"
-  });
+async function initial() {
+  try {
+    let role = await Role.findOne({ where: { id: 1 } });
+    if (!role) {
+      await Role.create({ id: 1, name: "user" });
+    }
+
+    role = await Role.findOne({ where: { id: 2 } });
+    if (!role) {
+      await Role.create({ id: 2, name: "moderator" });
+    }
+
+    role = await Role.findOne({ where: { id: 3 } });
+    if (!role) {
+      await Role.create({ id: 3, name: "admin" });
+    }
+
+    console.log("Roles inicializados correctamente.");
+  } catch (error) {
+    console.error("Error al inicializar roles:", error);
+  }
 }
