@@ -1,7 +1,7 @@
 const db = require("../models");
 const config = require("../config/auth.config");
-const User = db.users; // Cambiado de `db.user` a `db.users`
-const Role = db.roles; // Agregado
+const User = db.user;
+const Role = db.role;
 
 const Op = db.Sequelize.Op;
 
@@ -11,17 +11,7 @@ var bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
   // Save User to Database
   User.create({
-    idUser: req.body.idUser, // Agregado si es necesario
-    idEspecialidad: req.body.idEspecialidad, // Agregado si es necesario
-    nombre: req.body.nombre,
-    apellido: req.body.apellido,
-    tipoDoc: req.body.tipoDoc,
-    documento: req.body.documento,
-    telefono: req.body.telefono,
-    direccion: req.body.direccion,
-    correo: req.body.correo,
-    genero: req.body.genero,
-    fechaNacimiento: req.body.fechaNacimiento,
+    username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)
   })
@@ -29,8 +19,8 @@ exports.signup = (req, res) => {
       if (req.body.roles) {
         Role.findAll({
           where: {
-            nombre: {
-              [Op.or]: req.body.roles // Cambiado de name a nombre
+            name: {
+              [Op.or]: req.body.roles
             }
           }
         }).then(roles => {
@@ -53,7 +43,7 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
   User.findOne({
     where: {
-      email: req.body.email // Cambiado de username a nombre
+      username: req.body.username
     }
   })
     .then(user => {
@@ -73,7 +63,7 @@ exports.signin = (req, res) => {
         });
       }
 
-      const token = jwt.sign({ id: user.idUser }, // Cambiado de id a idUser
+      const token = jwt.sign({ id: user.id },
                               config.secret,
                               {
                                 algorithm: 'HS256',
@@ -84,10 +74,11 @@ exports.signin = (req, res) => {
       var authorities = [];
       user.getRoles().then(roles => {
         for (let i = 0; i < roles.length; i++) {
-          authorities.push("ROLE_" + roles[i].nombre.toUpperCase()); // Cambiado de name a nombre
+          authorities.push("ROLE_" + roles[i].name.toUpperCase());
         }
         res.status(200).send({
-          id: user.idUser, // Cambiado de id a idUser
+          id: user.id,
+          username: user.username,
           email: user.email,
           roles: authorities,
           accessToken: token
