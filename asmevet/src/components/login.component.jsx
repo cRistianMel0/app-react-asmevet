@@ -1,158 +1,141 @@
-/* eslint-disable react/prop-types */
-import { Component } from "react";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-
+import { useState } from "react";
+import { useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import AuthService from "../services/auth.service";
+import '../styled-components/auth.scss';
 
-import { withRouter } from '../common/with-router';
-
-const required = value => {
-  if (!value) {
+const vusername = (value) => {
+  if (value.length < 3 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
-        This field is required!
+        El usuario debe tener entre 3 y 20 caracteres.
       </div>
     );
   }
 };
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-
-    this.state = {
-      username: "",
-      password: "",
-      loading: false,
-      message: ""
-    };
-  }
-
-  onChangeUsername(e) {
-    this.setState({
-      username: e.target.value
-    });
-  }
-
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value
-    });
-  }
-
-  handleLogin(e) {
-    e.preventDefault();
-
-    this.setState({
-      message: "",
-      loading: true
-    });
-
-    this.form.validateAll();
-
-    if (this.checkBtn.context._errors.length === 0) {
-      AuthService.login(this.state.username, this.state.password).then(
-        () => {
-          this.props.router.navigate("/profile");
-          window.location.reload();
-        },
-        error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          this.setState({
-            loading: false,
-            message: resMessage
-          });
-        }
-      );
-    } else {
-      this.setState({
-        loading: false
-      });
-    }
-  }
-
-  render() {
+const vpassword = (value) => {
+  if (value.length < 6 || value.length > 40) {
     return (
-      <div className="col-md-12">
-        <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
-
-          <Form
-            onSubmit={this.handleLogin}
-            ref={c => {
-              this.form = c;
-            }}
-          >
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <Input
-                type="text"
-                className="form-control"
-                name="username"
-                value={this.state.username}
-                onChange={this.onChangeUsername}
-                validations={[required]}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <Input
-                type="password"
-                className="form-control"
-                name="password"
-                value={this.state.password}
-                onChange={this.onChangePassword}
-                validations={[required]}
-              />
-            </div>
-
-            <div className="form-group">
-              <button
-                className="btn btn-primary btn-block"
-                disabled={this.state.loading}
-              >
-                {this.state.loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span>Login</span>
-              </button>
-            </div>
-
-            {this.state.message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {this.state.message}
-                </div>
-              </div>
-            )}
-            <CheckButton
-              style={{ display: "none" }}
-              ref={c => {
-                this.checkBtn = c;
-              }}
-            />
-          </Form>
-        </div>
+      <div className="alert alert-danger" role="alert">
+        La contraseña debe tener entre 6 y 40 caracteres.
       </div>
     );
   }
-}
+};
 
-// eslint-disable-next-line react-refresh/only-export-components
-export default withRouter(Login);
+const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [touchedFields, setTouchedFields] = useState({ username: false, password: false });
+  const navigate = useNavigate();
+  const checkBtn = useRef();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    setMessage("");
+
+    AuthService.login(username, password)
+      .then(() => {
+        navigate("/profile");
+        window.location.reload();
+      })
+      .catch((error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setLoading(false);
+        setMessage(resMessage);
+      });
+  };
+
+  const handleFieldBlur = (field) => {
+    setTouchedFields({ ...touchedFields, [field]: true });
+  };
+
+  return (
+    <div className="col-md-12 auth-card-container">
+      <div className="card auth-card">
+        <img
+          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          alt="profile-img"
+          className="profile-img-card"
+        />
+
+        <Form onSubmit={handleLogin} ref={checkBtn}>
+          <Form.Group controlId="username">
+            <Form.Label>Usuario</Form.Label>
+            <Form.Control
+              type="text"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              onBlur={() => handleFieldBlur("username")}
+              isInvalid={touchedFields.username && vusername(username) !== null}
+            />
+            <Form.Control.Feedback type="invalid">
+              {vusername(username)}
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group controlId="password">
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              onBlur={() => handleFieldBlur("password")}
+              isInvalid={touchedFields.password && vpassword(password) !== null}
+            />
+            <Form.Control.Feedback type="invalid">
+              {vpassword(password)}
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          <div className="form-group">
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={loading}
+            >
+              {loading && (
+                <span className="spinner-border spinner-border-sm"></span>
+              )}
+              <span>Iniciar sesión</span>
+            </Button>
+          </div>
+
+          {message && (
+            <div className="form-group">
+              <div className="alert alert-danger" role="alert">
+                {message}
+              </div>
+            </div>
+          )}
+          {/* <CheckButton
+            style={{ display: "none" }}
+            ref={checkBtn}
+          /> */}
+        </Form>
+        <div className="form-group">
+          <p>¿No tienes una cuenta? Regístrate <Link to="/register">aquí</Link></p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
