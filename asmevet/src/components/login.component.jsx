@@ -1,17 +1,26 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
+import { useState } from "react";
+import { useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import AuthService from "../services/auth.service";
 import '../styled-components/auth.scss';
 
-const required = (value) => {
-  if (!value) {
+const vusername = (value) => {
+  if (value.length < 3 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
-        This field is required!
+        El usuario debe tener entre 3 y 20 caracteres.
+      </div>
+    );
+  }
+};
+
+const vpassword = (value) => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        La contraseña debe tener entre 6 y 40 caracteres.
       </div>
     );
   }
@@ -22,6 +31,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [touchedFields, setTouchedFields] = useState({ username: false, password: false });
   const navigate = useNavigate();
   const checkBtn = useRef();
 
@@ -49,6 +59,10 @@ const Login = () => {
       });
   };
 
+  const handleFieldBlur = (field) => {
+    setTouchedFields({ ...touchedFields, [field]: true });
+  };
+
   return (
     <div className="col-md-12 auth-card-container">
       <div className="card auth-card">
@@ -58,44 +72,50 @@ const Login = () => {
           className="profile-img-card"
         />
 
-        <Form
-          onSubmit={handleLogin}
-          ref={checkBtn}
-        >
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <Input
+        <Form onSubmit={handleLogin} ref={checkBtn}>
+          <Form.Group controlId="username">
+            <Form.Label>Usuario</Form.Label>
+            <Form.Control
               type="text"
-              className="form-control"
               name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              validations={[required]}
+              required
+              onBlur={() => handleFieldBlur("username")}
+              isInvalid={touchedFields.username && vusername(username) !== null}
             />
-          </div>
+            <Form.Control.Feedback type="invalid">
+              {vusername(username)}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <Input
+          <Form.Group controlId="password">
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control
               type="password"
-              className="form-control"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              validations={[required]}
+              required
+              onBlur={() => handleFieldBlur("password")}
+              isInvalid={touchedFields.password && vpassword(password) !== null}
             />
-          </div>
+            <Form.Control.Feedback type="invalid">
+              {vpassword(password)}
+            </Form.Control.Feedback>
+          </Form.Group>
 
           <div className="form-group">
-            <button
-              className="btn btn-primary btn-block"
+            <Button
+              variant="primary"
+              type="submit"
               disabled={loading}
             >
               {loading && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
-              <span>Login</span>
-            </button>
+              <span>Iniciar sesión</span>
+            </Button>
           </div>
 
           {message && (
@@ -105,10 +125,10 @@ const Login = () => {
               </div>
             </div>
           )}
-          <CheckButton
+          {/* <CheckButton
             style={{ display: "none" }}
             ref={checkBtn}
-          />
+          /> */}
         </Form>
         <div className="form-group">
           <p>¿No tienes una cuenta? Regístrate <Link to="/register">aquí</Link></p>
