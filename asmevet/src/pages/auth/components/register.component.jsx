@@ -2,7 +2,8 @@ import { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import AuthService from "../services/auth.service";
+import AuthService from "../../../services/auth.service";
+import '../styled-components/auth.scss';
 
 const email = (value) => {
   if (!/^\S+@\S+\.\S+$/.test(value)) {
@@ -191,9 +192,6 @@ export default class Register extends Component {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                {/* Nuevos campos */}
-
-
                 <Form.Group controlId="tipoDoc">
                   <Form.Label>Tipo de Documento</Form.Label>
                   <Form.Control
@@ -204,7 +202,6 @@ export default class Register extends Component {
                   >
                     <option>Cédula</option>
                     <option>Pasaporte</option>
-                    {/* Agrega más opciones según necesites */}
                   </Form.Control>
                 </Form.Group>
 
@@ -238,7 +235,6 @@ export default class Register extends Component {
                   />
                 </Form.Group>
 
-                // ...
                 <Form.Group controlId="genero">
                   <Form.Label>Género</Form.Label>
                   <Form.Select
@@ -252,8 +248,6 @@ export default class Register extends Component {
                     <option value="Otro">Otro</option>
                   </Form.Select>
                 </Form.Group>
-// ...
-
 
                 <Form.Group controlId="fechaNacimiento">
                   <Form.Label>Fecha de Nacimiento</Form.Label>
@@ -264,8 +258,6 @@ export default class Register extends Component {
                     onChange={(e) => this.setState({ fechaNacimiento: e.target.value })}
                   />
                 </Form.Group>
-
-                {/* Repite el bloque de código anterior para los demás campos nuevos */}
 
                 <Button variant="primary" type="submit">
                   Sign Up

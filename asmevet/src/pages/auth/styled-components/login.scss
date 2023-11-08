@@ -1,0 +1,43 @@
+body {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+// Estilos para el contenedor de Login
+.loginContainer {
+    background-color: #EEEEEE;
+    border-radius: 20px;
+}
+
+// Estilos para la columna derecha
+.MDBCol2 {
+    background-color: #45b4b469;
+    background-image: url();
+    border-radius: 0px 20px 20px 0px;
+}
+
+// Estilos para el color del boton de iniciar sesión
+.gradient-custom-2 {
+    background: linear-gradient(to right, #24eeee, #36a5d8, #36b6dd, #45b4a5);
+    border: none;
+    &:hover{
+        border: 1px solid darkblue;
+    }
+}
+
+// Estilos para el boton o link de registrarse
+.register {
+    text-decoration: none;
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
+    border-radius: 5px;
+    padding: 8px;
+    margin: 0px 20px 0px 20px;
+    &:hover{
+        color: white;
+        background-color: #0d6efd;
+    }
+}
