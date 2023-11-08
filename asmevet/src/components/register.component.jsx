@@ -238,7 +238,6 @@ export default class Register extends Component {
                   />
                 </Form.Group>
 
-                // ...
                 <Form.Group controlId="genero">
                   <Form.Label>Género</Form.Label>
                   <Form.Select
@@ -252,7 +251,6 @@ export default class Register extends Component {
                     <option value="Otro">Otro</option>
                   </Form.Select>
                 </Form.Group>
-// ...
 
 
                 <Form.Group controlId="fechaNacimiento">
@@ -265,7 +263,7 @@ export default class Register extends Component {
                   />
                 </Form.Group>
 
-                {/* Repite el bloque de código anterior para los demás campos nuevos */}
+        
 
                 <Button variant="primary" type="submit">
                   Sign Up
