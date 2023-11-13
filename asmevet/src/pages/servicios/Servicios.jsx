@@ -4,8 +4,8 @@ import CardServicios from './components/CardServicios';
 import serviciosImg from '../../assets/img/pet.svg';
 import ServiciosCreate from './ServiciosCreate';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import SearchBar from '../../components/SearchBar';
+import serviciosService from '../../services/servicios.service';
 
 export default function Servicios() {
   const [serviciosData, setServicios] = useState([]);
@@ -15,17 +15,19 @@ export default function Servicios() {
   useEffect(() => {
     const fetchAllServicios = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/servicios")
+        const res = await serviciosService.findAll();
         // Filtrar los servicios disponibles (donde el campo "disponible" es igual a 1)
-        const serviciosDisponibles = res.data.filter(servicio => servicio.disponible === 1);
+        const serviciosDisponibles = res.data.filter(servicio => servicio.disponible === true);
+        console.log(serviciosData)
         setServicios(serviciosDisponibles);
       } catch (err) {
         console.log(err);
       }
     }
-
+  
     fetchAllServicios()
   }, [])
+  
 
   // Función para filtrar los servicios en función del texto de búsqueda
   const filteredServicios = serviciosData.filter((servicio) =>

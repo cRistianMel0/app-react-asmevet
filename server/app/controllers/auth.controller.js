@@ -1,5 +1,7 @@
 const db = require("../models");
+const config = require("../config/auth.config");
 const User = db.user;
+const Role = db.role;
 
 const Op = db.Sequelize.Op;
 
@@ -11,18 +13,34 @@ exports.signup = (req, res) => {
   User.create({
     username: req.body.username,
     apellido: req.body.apellido,
-    tipoDoc: req.body.tipoDoc || 'Cédula',
+    tipoDoc: req.body.tipoDoc,
     documento: req.body.documento,
     telefono: req.body.telefono,
     direccion: req.body.direccion,
-    correo: req.body.correo,
+    email: req.body.email,
     genero: req.body.genero,
     fechaNacimiento: req.body.fechaNacimiento,
-    email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)
   })
     .then(user => {
-      res.send({ message: "User registered successfully!" });
+      if (req.body.roles) {
+        Role.findAll({
+          where: {
+            name: {
+              [Op.or]: req.body.roles
+            }
+          }
+        }).then(roles => {
+          user.setRoles(roles).then(() => {
+            res.send({ message: "User registered successfully!" });
+          });
+        });
+      } else {
+        // user role = 1
+        user.setRoles([1]).then(() => {
+          res.send({ message: "User registered successfully!" });
+        });
+      }
     })
     .catch(err => {
       res.status(500).send({ message: err.message });
@@ -32,7 +50,7 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
   User.findOne({
     where: {
-      username: req.body.username
+      email: req.body.email
     }
   })
     .then(user => {
@@ -60,20 +78,17 @@ exports.signin = (req, res) => {
                                 expiresIn: 86400, // 24 hours
                               });
 
-      res.status(200).send({
-        id: user.id,
-        username: user.username,
-        apellido: user.apellido,
-        tipoDoc: user.tipoDoc,
-        documento: user.documento,
-        telefono: user.telefono,
-        direccion: user.direccion,
-        correo: user.correo,
-        genero: user.genero,
-        fechaNacimiento: user.fechaNacimiento,
-        email: user.email,
-        roles: [], // No estoy seguro de cómo manejar los roles en tu aplicación, aquí los dejé vacíos
-        accessToken: token
+      var authorities = [];
+      user.getRoles().then(roles => {
+        for (let i = 0; i < roles.length; i++) {
+          authorities.push("ROLE_" + roles[i].name.toUpperCase());
+        }
+        res.status(200).send({
+          id: user.id,
+          email: user.email,
+          roles: authorities,
+          accessToken: token
+        });
       });
     })
     .catch(err => {

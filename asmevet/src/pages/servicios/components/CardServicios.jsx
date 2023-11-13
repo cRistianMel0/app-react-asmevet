@@ -6,6 +6,7 @@ import "../styled-components/cardServicios.scss";
 import servicioImg from '../../../assets/img/servicio.jpeg';
 import axios from 'axios';
 import ServiciosEdit from '../ServiciosEdit';
+import serviciosService from '../../../services/servicios.service';
 
 export default function CardServicios({ cards }) {
   const [editModalShow, setEditModalShow] = useState(false);
@@ -33,7 +34,7 @@ export default function CardServicios({ cards }) {
   const handleDelete = (idServicio) => {
     let res = window.confirm("¿Está seguro de que desea DESHABILITAR el servicio?");
     if (res) {
-      axios.patch('http://localhost:8000/servicios', { idServicio })
+      serviciosService.updateDisponibilidad(idServicio, false) 
         .then(response => {
           console.log(response.data);
           window.location.reload();
@@ -44,6 +45,7 @@ export default function CardServicios({ cards }) {
         });
     }
   }
+  
 
   return (
     <>
@@ -56,7 +58,7 @@ export default function CardServicios({ cards }) {
               {servicio.descripcion}
             </div>
             <div className="buttons">
-              <button className="edit-button" onClick={() => handleEdit(servicio)}>
+              <button className="edit-button" onClick={() => handleEdit(servicio.idServicio)}>
                 <PencilSquare />
               </button>
               <button className="delete-button" onClick={() => handleDelete(servicio.idServicio)}>
