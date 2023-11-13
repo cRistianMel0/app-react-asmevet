@@ -1,5 +1,6 @@
-body {
-    background-color: white;
+// Estilos para el componente Login
+.loginBody {
+    background-color: rgb(135, 171, 204);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,9 +15,10 @@ body {
 
 // Estilos para la columna derecha
 .MDBCol2 {
-    background-color: #45b4b469;
-    background-image: url();
+    // background-color: #45b4b469;
     border-radius: 0px 20px 20px 0px;
+    background-image: url('../../../assets//img/veterinario-login.jpg');
+    background-size: cover;
 }
 
 // Estilos para el color del boton de iniciar sesión
@@ -28,8 +30,14 @@ body {
     }
 }
 
+.loginButton {
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+}
+
 // Estilos para el boton o link de registrarse
-.register {
+.registerButton {
     text-decoration: none;
     color: #0d6efd;
     border: 1px solid #0d6efd;
