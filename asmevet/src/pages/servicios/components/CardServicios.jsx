@@ -31,10 +31,11 @@ export default function CardServicios({ cards }) {
     setEditModalShow(false);
   }
 
-  const handleDelete = (idServicio) => {
+  const handleDelete = (servicio) => {
+    console.log("algo se esta enviando:", servicio);
     let res = window.confirm("¿Está seguro de que desea DESHABILITAR el servicio?");
     if (res) {
-      serviciosService.updateDisponibilidad(idServicio, false) 
+      serviciosService.updateDisponibilidad(servicio) 
         .then(response => {
           console.log(response.data);
           window.location.reload();
@@ -61,7 +62,7 @@ export default function CardServicios({ cards }) {
               <button className="edit-button" onClick={() => handleEdit(servicio.idServicio)}>
                 <PencilSquare />
               </button>
-              <button className="disable-button" onClick={() => handleDelete(servicio.idServicio)}>
+              <button className="disable-button" onClick={() => handleDelete(servicio)}>
                 <ExclamationTriangle />
               </button>
             </div>

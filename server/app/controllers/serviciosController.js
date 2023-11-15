@@ -78,7 +78,7 @@ exports.update = (req, res) => {
 
 // Eliminar un Servicio por su id
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  const id = req.params.idServicio;
 
   Servicio.destroy({
     where: { id: id }

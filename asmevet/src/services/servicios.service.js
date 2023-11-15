@@ -15,8 +15,8 @@ class ServiciosService {
     return axios.put(`${API_URL}/${id}`, servicio);
   }
 
-  updateDisponibilidad(idServicio, disponibilidad) {
-    return axios.patch(API_URL, idServicio, disponibilidad);
+  updateDisponibilidad(servicio) {
+    return axios.patch(API_URL, servicio);
   }
   
 
