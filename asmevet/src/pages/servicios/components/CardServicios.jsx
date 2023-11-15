@@ -61,7 +61,7 @@ export default function CardServicios({ cards }) {
               <button className="edit-button" onClick={() => handleEdit(servicio.idServicio)}>
                 <PencilSquare />
               </button>
-              <button className="delete-button" onClick={() => handleDelete(servicio.idServicio)}>
+              <button className="disable-button" onClick={() => handleDelete(servicio.idServicio)}>
                 <ExclamationTriangle />
               </button>
             </div>
