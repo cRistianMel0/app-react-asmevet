@@ -5,7 +5,8 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: true
     },
     username: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false,
     },
     apellido: {
       type: Sequelize.STRING,
@@ -29,7 +30,8 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     },
     email: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     genero: {
       type: Sequelize.STRING(20),
@@ -37,15 +39,11 @@ module.exports = (sequelize, Sequelize) => {
     },
     fechaNacimiento: {
       type: Sequelize.DATE,
-      allowNull: true
-    },
-    email: {
-      type: Sequelize.STRING(50),
       allowNull: false
     },
     password: {
       type: Sequelize.STRING(255),
-      allowNull: true
+      allowNull: false
     }
   });
 

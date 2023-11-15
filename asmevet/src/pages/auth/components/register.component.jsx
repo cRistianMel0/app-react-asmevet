@@ -1,101 +1,78 @@
-import { Component } from "react";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import AuthService from "../../../services/auth.service";
-import '../styled-components/auth.scss';
+import "../styled-components/register.scss";
+import { MDBContainer, MDBCardBody, MDBRow, MDBCol } from "mdb-react-ui-kit";
+import { Link } from "react-router-dom";
 
 const email = (value) => {
   if (!/^\S+@\S+\.\S+$/.test(value)) {
-    return "Invalid email address";
+    return "Dirección de correo electrónico no válida";
   }
 };
 
 const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
-    return "Username must be between 3 and 20 characters";
+    return "El nombre de usuario debe tener entre 3 y 20 caracteres";
   }
 };
 
 const vpassword = (value) => {
   if (value.length < 6 || value.length > 40) {
-    return "Password must be between 6 and 40 characters";
+    return "La contraseña debe tener entre 6 y 40 caracteres";
   }
 };
 
-export default class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.handleRegister = this.handleRegister.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
+const Register = () => {
+  const [state, setState] = useState({
+    username: "",
+    email: "",
+    password: "",
+    idEspecialidad: "",
+    apellido: "",
+    tipoDoc: "Cédula",
+    documento: "",
+    telefono: "",
+    direccion: "",
+    genero: "",
+    fechaNacimiento: "",
+    successful: false,
+    message: "",
+  });
 
-    this.state = {
-      username: "",
-      email: "",
-      password: "",
-      idEspecialidad: "",
-      apellido: "",
-      tipoDoc: "Cédula",
-      documento: "",
-      telefono: "",
-      direccion: "",
-      genero: "",
-      fechaNacimiento: "",
-      successful: false,
-      message: "",
-    };
-  }
-
-  onChangeUsername(e) {
-    this.setState({
-      username: e.target.value,
-    });
-  }
-
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value,
-    });
-  }
-
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value,
-    });
-  }
-
-  handleRegister(e) {
+  const handleRegister = (e) => {
     e.preventDefault();
 
-    this.setState({
+    setState((prevState) => ({
+      ...prevState,
       message: "",
       successful: false,
-    });
+    }));
 
     const form = e.target;
     const isValidForm = form.checkValidity();
 
     if (isValidForm) {
       AuthService.register({
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password,
-        idEspecialidad: this.state.idEspecialidad,
-        apellido: this.state.apellido,
-        tipoDoc: this.state.tipoDoc,
-        documento: this.state.documento,
-        telefono: this.state.telefono,
-        direccion: this.state.direccion,
-        genero: this.state.genero,
-        fechaNacimiento: this.state.fechaNacimiento,
+        username: state.username,
+        email: state.email,
+        password: state.password,
+        apellido: state.apellido,
+        tipoDoc: state.tipoDoc,
+        documento: state.documento,
+        telefono: state.telefono,
+        direccion: state.direccion,
+        genero: state.genero,
+        fechaNacimiento: state.fechaNacimiento,
       }).then(
         (response) => {
-          this.setState({
+          setState((prevState) => ({
+            ...prevState,
             message: response.data.message,
             successful: true,
-          });
+          }));
         },
         (error) => {
           const resMessage =
@@ -105,177 +82,274 @@ export default class Register extends Component {
             error.message ||
             error.toString();
 
-          this.setState({
+          setState((prevState) => ({
+            ...prevState,
             successful: false,
             message: resMessage,
-          });
+          }));
         }
       );
     } else {
       form.reportValidity();
     }
-  }
+  };
 
-  render() {
-    return (
-      <div className="col-md-12 auth-card-container">
-        <div className="card auth-card">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
+  return (
+    <div className="registerBody">
+      <MDBContainer
+        className={`registerContainer ${
+          state.successful ? "success-container" : ""
+        }`}
+      >
+        <MDBRow>
+          <MDBCol className="Col1"></MDBCol>
 
-          <Form noValidate onSubmit={this.handleRegister}>
-            {!this.state.successful && (
-              <div>
-                <Form.Group controlId="username">
-                  <Form.Label>Nombre</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}
-                    required
-                    isInvalid={
-                      this.state.username &&
-                      vusername(this.state.username) !== null
-                    }
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {vusername(this.state.username)}
-                  </Form.Control.Feedback>
-                </Form.Group>
+          <MDBCol>
+            <MDBCardBody
+              className={`text-black d-flex flex-column justify-content-center ${
+                state.successful ? "success-card-body" : ""
+              }`}
+            >
+              <h4 className="mt-2 mb-3 text-center fw-bold">
+                Registro de Usuarios
+              </h4>
+              <Form noValidate onSubmit={handleRegister}>
+                {!state.successful && (
+                  <div>
+                    <div className="row">
+                      <Form.Group controlId="username" className="col-6">
+                        <Form.Label>
+                          Nombre<span style={{ color: "red" }}> *</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="username"
+                          value={state.username}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              username: e.target.value,
+                            })
+                          }
+                          required
+                          isInvalid={
+                            state.username && vusername(state.username) !== null
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {vusername(state.username)}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <Form.Group controlId="apellido" className="col-6">
+                        <Form.Label>Apellido</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="apellido"
+                          value={state.apellido}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              apellido: e.target.value,
+                            })
+                          }
+                        />
+                      </Form.Group>
+                    </div>
 
-                <Form.Group controlId="apellido">
-                  <Form.Label>Apellido</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="apellido"
-                    value={this.state.apellido}
-                    onChange={(e) => this.setState({ apellido: e.target.value })}
-                  />
-                </Form.Group>
+                    <div className="row">
+                      <Form.Group controlId="email" className="col-6">
+                        <Form.Label>
+                          Correo Electrónico
+                          <span style={{ color: "red" }}> *</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="email"
+                          name="email"
+                          value={state.email}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              email: e.target.value,
+                            })
+                          }
+                          required
+                          isInvalid={state.email && email(state.email) !== null}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {email(state.email)}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <Form.Group controlId="password" className="col-6">
+                        <Form.Label>
+                          Contraseña<span style={{ color: "red" }}> *</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="password"
+                          name="password"
+                          value={state.password}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              password: e.target.value,
+                            })
+                          }
+                          required
+                          isInvalid={
+                            state.password && vpassword(state.password) !== null
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {vpassword(state.password)}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </div>
 
-                <Form.Group controlId="email">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChangeEmail}
-                    required
-                    isInvalid={
-                      this.state.email && email(this.state.email) !== null
-                    }
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {email(this.state.email)}
-                  </Form.Control.Feedback>
-                </Form.Group>
+                    <div className="row">
+                      <Form.Group controlId="telefono" className="col-6">
+                        <Form.Label>
+                          Teléfono<span style={{ color: "red" }}> *</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="telefono"
+                          value={state.telefono}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              telefono: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="direccion" className="col-6">
+                        <Form.Label>
+                          Dirección<span style={{ color: "red" }}> *</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="direccion"
+                          value={state.direccion}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              direccion: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </Form.Group>
+                    </div>
 
-                <Form.Group controlId="password">
-                  <Form.Label>Contraseña</Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
-                    required
-                    isInvalid={
-                      this.state.password &&
-                      vpassword(this.state.password) !== null
-                    }
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {vpassword(this.state.password)}
-                  </Form.Control.Feedback>
-                </Form.Group>
+                    <div className="row">
+                      <Form.Group controlId="tipoDoc" className="col-6">
+                        <Form.Label>
+                          Tipo de Documento
+                          <span style={{ color: "red" }}> *</span>
+                        </Form.Label>
+                        <Form.Control
+                          as="select"
+                          name="tipoDoc"
+                          value={state.tipoDoc}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              tipoDoc: e.target.value,
+                            })
+                          }
+                          required
+                        >
+                          <option>Cédula</option>
+                          <option>Pasaporte</option>
+                        </Form.Control>
+                      </Form.Group>
+                      <Form.Group controlId="documento" className="col-6">
+                        <Form.Label>
+                          Número de Documento
+                          <span style={{ color: "red" }}> *</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="documento"
+                          value={state.documento}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              documento: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </Form.Group>
+                    </div>
 
-                <Form.Group controlId="tipoDoc">
-                  <Form.Label>Tipo de Documento</Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="tipoDoc"
-                    value={this.state.tipoDoc}
-                    onChange={(e) => this.setState({ tipoDoc: e.target.value })}
-                  >
-                    <option>Cédula</option>
-                    <option>Pasaporte</option>
-                  </Form.Control>
-                </Form.Group>
+                    <div className="row">
+                      <Form.Group controlId="genero" className="col-6">
+                        <Form.Label>Género</Form.Label>
+                        <Form.Select
+                          name="genero"
+                          value={state.genero}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              genero: e.target.value,
+                            })
+                          }
+                        >
+                          <option value="">Selecciona una opción</option>
+                          <option value="Masculino">Masculino</option>
+                          <option value="Femenino">Femenino</option>
+                          <option value="Otro">Otro</option>
+                        </Form.Select>
+                      </Form.Group>
 
-                <Form.Group controlId="documento">
-                  <Form.Label>Número de Documento</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="documento"
-                    value={this.state.documento}
-                    onChange={(e) => this.setState({ documento: e.target.value })}
-                  />
-                </Form.Group>
+                      <Form.Group controlId="fechaNacimiento" className="col-6">
+                        <Form.Label>
+                          Fecha de Nacimiento
+                          <span style={{ color: "red" }}> *</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="date"
+                          name="fechaNacimiento"
+                          value={state.fechaNacimiento}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              fechaNacimiento: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </Form.Group>
+                    </div>
 
-                <Form.Group controlId="telefono">
-                  <Form.Label>Teléfono</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="telefono"
-                    value={this.state.telefono}
-                    onChange={(e) => this.setState({ telefono: e.target.value })}
-                  />
-                </Form.Group>
+                    <div className="d-flex justify-content-center my-3">
+                      <Button variant="primary" type="submit">
+                        Registrarse
+                      </Button>
+                    </div>
+                  </div>
+                )}
 
-                <Form.Group controlId="direccion">
-                  <Form.Label>Dirección</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="direccion"
-                    value={this.state.direccion}
-                    onChange={(e) => this.setState({ direccion: e.target.value })}
-                  />
-                </Form.Group>
+                {state.successful && (
+                  <Alert variant="success" role="alert" className="fade show">
+                    {state.message}
+                  </Alert>
+                )}
+              </Form>
+              {state.successful && (
+                <>
+                  <Link to="/login" className="loginButton">
+                    Iniciar Sesión
+                  </Link>
+                </>
+              )}
+            </MDBCardBody>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </div>
+  );  
+};
 
-                <Form.Group controlId="genero">
-                  <Form.Label>Género</Form.Label>
-                  <Form.Select
-                    name="genero"
-                    value={this.state.genero}
-                    onChange={(e) => this.setState({ genero: e.target.value })}
-                  >
-                    <option value="">Selecciona una opción</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                    <option value="Otro">Otro</option>
-                  </Form.Select>
-                </Form.Group>
-
-                <Form.Group controlId="fechaNacimiento">
-                  <Form.Label>Fecha de Nacimiento</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="fechaNacimiento"
-                    value={this.state.fechaNacimiento}
-                    onChange={(e) => this.setState({ fechaNacimiento: e.target.value })}
-                  />
-                </Form.Group>
-
-                <Button variant="primary" type="submit">
-                  Sign Up
-                </Button>
-              </div>
-            )}
-
-            {this.state.message && (
-              <Alert
-                variant={this.state.successful ? "success" : "danger"}
-                role="alert"
-              >
-                {this.state.message}
-              </Alert>
-            )}
-          </Form>
-        </div>
-      </div>
-    );
-  }
-}
+export default Register;

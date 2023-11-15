@@ -6,7 +6,7 @@ import Home from "./pages/home/Home";
 import Productos from './pages/productos/Productos';
 import Servicios from './pages/servicios/Servicios';
 import Login from './pages/auth/components/login.component';
-import Register from './pages/auth/components/register.component2';
+import Register from './pages/auth/components/register.component';
 
 const router = createBrowserRouter([
   {
