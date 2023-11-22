@@ -1,0 +1,70 @@
+// Estilos para SliderSection
+$darkGreen: rgba(30, 121, 90, 0.89);
+
+.slide-container {
+    background-color: rgba(181, 228, 193, 0.774);
+    text-align: start;
+    padding: 40px;
+    
+    // Columna para la info de cada slide
+    .slider_detail-box {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding-left: 120px;
+
+        // Estilos para botones en la info 
+        .btn-box {
+            display: flex;
+            gap: 10px;
+            
+            .btn-custom-1 {
+                background-color: $darkGreen;
+                color: white;
+                border: none;
+                &:hover {
+                    background-color: transparent;
+                    color: $darkGreen;
+                    border: 1px solid $darkGreen;
+                }
+            }
+            
+            .btn-custom-2 {
+                background-color: white;
+                color: $darkGreen;
+                border: none;
+                &:hover {
+                    background-color: transparent;
+                    color: white;
+                    border: 1px solid white;
+                }
+            }
+        }
+    } 
+
+    // Columna para la imagen de cada slide
+    .slider_img-box {
+        display: flex;
+        justify-content: center;
+
+        // Imagen de cada slide
+        img {
+            max-width: 500px;
+            height: 390px;
+            border-radius: 50px;
+        }
+    }
+}
+
+// Estilos para las cajas de navegación en el Carousel
+.carousel-control-prev,
+.carousel-control-next {
+    width: 120px;
+    
+    // Estilos para las flechas de navegación en el Carousel
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        filter: brightness(120%);
+    }
+}
+
