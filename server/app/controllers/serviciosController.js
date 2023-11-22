@@ -53,10 +53,10 @@ exports.findAll = (req, res) => {
 
 // Actualizar un Servicio por su id
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const id = req.body.idServicio;
 
   Servicio.update(req.body, {
-    where: { id: id }
+    where: { idServicio: id }
   })
     .then(num => {
       if (num == 1) {

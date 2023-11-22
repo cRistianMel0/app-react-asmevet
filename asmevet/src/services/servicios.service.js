@@ -11,8 +11,8 @@ class ServiciosService {
     return axios.get(API_URL);
   }
 
-  update(id, servicio) {
-    return axios.put(`${API_URL}/${id}`, servicio);
+  update(servicio) {
+    return axios.put(API_URL, servicio);
   }
 
   updateDisponibilidad(servicio) {
