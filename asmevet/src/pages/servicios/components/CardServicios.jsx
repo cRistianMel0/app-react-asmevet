@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { PencilSquare, ExclamationTriangle } from 'react-bootstrap-icons';
 import "../styled-components/cardServicios.scss";
 import servicioImg from '../../../assets/img/servicio.jpeg';
-import axios from 'axios';
 import ServiciosEdit from '../ServiciosEdit';
 import serviciosService from '../../../services/servicios.service';
 
@@ -13,23 +12,25 @@ export default function CardServicios({ cards }) {
   const [editedServicio, setEditedServicio] = useState(null);
 
   const handleEdit = (servicio) => {
-    setEditedServicio(servicio);
+    setEditedServicio(servicio); 
     setEditModalShow(true);
   }
-
+  
   const handleSaveEdit = (editedServicio) => {
-    axios.put('http://localhost:8000/servicios', editedServicio)
+    serviciosService.update(editedServicio)
       .then(response => {
         console.log(response.data);
-        // window.location.reload();
+        setEditModalShow(false);
+        alert('¡El servicio se actualizó correctamente!');
+        window.location.reload(); // Recargar la página
       })
       .catch(error => {
         console.error(error);
         window.alert(`Se ha generado un problema en el servidor ${error}`);
       });
+  };
   
-    setEditModalShow(false);
-  }
+  
 
   const handleDelete = (servicio) => {
     console.log("algo se esta enviando:", servicio);
@@ -59,7 +60,7 @@ export default function CardServicios({ cards }) {
               {servicio.descripcion}
             </div>
             <div className="buttons">
-              <button className="edit-button" onClick={() => handleEdit(servicio.idServicio)}>
+              <button className="edit-button" onClick={() => handleEdit(servicio)}>
                 <PencilSquare />
               </button>
               <button className="disable-button" onClick={() => handleDelete(servicio)}>
