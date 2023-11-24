@@ -17,7 +17,7 @@ const ServiceSection = () => {
             </h2>
             <Container className="layout_padding2">
               <Row>
-                <Col md={4}>
+                <Col md={4} className="col">
                   <div className="img_box">
                     <img src={servicioImg1} alt="Servicio de Cuidado para Mascotas" />
                   </div>
@@ -30,7 +30,7 @@ const ServiceSection = () => {
                     </p>
                   </div>
                 </Col>
-                <Col md={4}>
+                <Col md={4} className="col">
                   <div className="img_box">
                     <img src={servicioImg2} alt="Servicio de Hotel para Mascotas" />
                   </div>
@@ -43,7 +43,7 @@ const ServiceSection = () => {
                     </p>
                   </div>
                 </Col>
-                <Col md={4}>
+                <Col md={4} className="col">
                   <div className="img_box">
                     <img src={servicioImg3} alt="Servicio de Emergencia Veterinaria" />
                   </div>

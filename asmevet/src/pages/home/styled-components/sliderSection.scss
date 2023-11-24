@@ -2,7 +2,7 @@
 $darkGreen: rgba(30, 121, 90, 0.89);
 
 .slide-container {
-    background-color: rgba(181, 228, 193, 0.774);
+    background-color: rgba(181, 228, 216, 0.856);
     text-align: start;
     padding: 40px;
     
@@ -22,6 +22,7 @@ $darkGreen: rgba(30, 121, 90, 0.89);
                 background-color: $darkGreen;
                 color: white;
                 border: none;
+                border-radius: 0;
                 &:hover {
                     background-color: transparent;
                     color: $darkGreen;
@@ -33,7 +34,9 @@ $darkGreen: rgba(30, 121, 90, 0.89);
                 background-color: white;
                 color: $darkGreen;
                 border: none;
+                border-radius: 0;
                 &:hover {
+                    font-weight: bold;
                     background-color: transparent;
                     color: white;
                     border: 1px solid white;

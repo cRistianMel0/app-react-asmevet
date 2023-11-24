@@ -12,6 +12,12 @@ $darkGreen: rgba(30, 121, 90, 0.89);
 
     .layout_padding2 {
         padding: 20px;
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
     .img_box {

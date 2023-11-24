@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <Navbar />
       <section className="pt-5">
-        <div className="pt-5" style={{ height: "800px", backgroundColor: "white" }}>
+        <div className="pt-5" style={{ backgroundColor: "white" }}>
             <SliderSection />
             <div className="p-5"></div>
             <ServiceSection />
