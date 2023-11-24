@@ -42,6 +42,19 @@ $darkGreen: rgba(30, 121, 90, 0.89);
                     border: 1px solid white;
                 }
             }
+
+            .linkService {
+                text-decoration: none;
+                background-color: $darkGreen;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                &:hover {
+                    background-color: transparent;
+                    color: $darkGreen;
+                    border: 1px solid $darkGreen;
+                }
+            }
         }
     } 
 

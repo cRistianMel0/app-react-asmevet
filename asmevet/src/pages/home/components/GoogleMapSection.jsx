@@ -2,7 +2,7 @@ import "../styled-components/googleMapSection.scss";
 
 const GoogleMapSection = () => {
   return (
-    <section className="map">
+    <section id="mapa" className="map">
       <div className="container mt-5 pt-4 pb-4 text-light text-center">
         <h4>Encuéntranos aquí</h4>
         <p>Cra. 9 #12-8, Tunja, Boyacá</p>

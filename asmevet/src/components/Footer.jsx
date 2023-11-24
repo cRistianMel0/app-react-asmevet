@@ -1,6 +1,8 @@
+import '../styled-components/footer.scss';
+
 export default function Footer() {
     return (
-        <footer className="mt-5 bg-success">
+        <footer className="mt-5">
             <div className="px-3 pb-3 text-light">
                 <div className="row text-center">
                     <div className="col mt-3">
@@ -19,4 +21,4 @@ export default function Footer() {
             </div>
         </footer>
     );
-};
+}

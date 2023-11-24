@@ -6,6 +6,7 @@ import sliderImg3 from '../../../assets/img/slider-img3.png';
 import sliderImg4 from '../../../assets/img/slider-img4.jpeg';
 import sliderImg5 from '../../../assets/img/slider-img5.jpeg';
 import sliderImg6 from '../../../assets/img/slider-img6.jpeg';
+import { Link } from 'react-router-dom';
 
 const SliderSection = () => {
   return (
@@ -25,11 +26,11 @@ const SliderSection = () => {
                     profesional y dedicado. Tu amigo peludo merece lo mejor.
                   </p>
                   <div className="btn-box">
-                    <Button href="#" className="btn-custom-1">
-                      Ver Servicios
-                    </Button>
-                    <Button href="#" className="btn-custom-2">
-                      Contacto
+                    <Link to="/servicios" className='linkService'>
+                      Conoce Más
+                    </Link>
+                    <Button href="#mapa" className="btn-custom-2">
+                      Ubicación
                     </Button>
                   </div>
                 </div>
@@ -61,8 +62,8 @@ const SliderSection = () => {
                     <Button href="#" className="btn-custom-1">
                       Conoce al Equipo
                     </Button>
-                    <Button href="#" className="btn-custom-2">
-                      Contacto
+                    <Button href="#mapa" className="btn-custom-2">
+                      Ubicación
                     </Button>
                   </div>
                 </div>
@@ -91,11 +92,11 @@ const SliderSection = () => {
                     hasta tratamientos especializados.
                   </p>
                   <div className="btn-box">
-                    <Button href="#" className="btn-custom-1">
+                    <Link to="/servicios" className='linkService'>
                       Ver Servicios
-                    </Button>
-                    <Button href="#" className="btn-custom-2">
-                      Contacto
+                    </Link>
+                    <Button href="#mapa" className="btn-custom-2">
+                      Ubicación
                     </Button>
                   </div>
                 </div>
@@ -127,7 +128,7 @@ const SliderSection = () => {
                     <Button href="#" className="btn-custom-1">
                       Contactar Ahora
                     </Button>
-                    <Button href="#" className="btn-custom-2">
+                    <Button href="#mapa" className="btn-custom-2">
                       Ubicación
                     </Button>
                   </div>
@@ -157,11 +158,11 @@ const SliderSection = () => {
                     compañero merece lo mejor.
                   </p>
                   <div className="btn-box">
-                    <Button href="#" className="btn-custom-1">
+                    <Link to="/servicios" className='linkService'>
                       Conoce Más
-                    </Button>
-                    <Button href="#" className="btn-custom-2">
-                      Contacto
+                    </Link>
+                    <Button href="#mapa" className="btn-custom-2">
+                      Ubicación
                     </Button>
                   </div>
                 </div>
@@ -193,8 +194,8 @@ const SliderSection = () => {
                     <Button href="#" className="btn-custom-1">
                       Ver Productos
                     </Button>
-                    <Button href="#" className="btn-custom-2">
-                      Contacto
+                    <Button href="#mapa" className="btn-custom-2">
+                      Ubicación
                     </Button>
                   </div>
                 </div>
