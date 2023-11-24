@@ -21,12 +21,12 @@ const vpassword = (value) => {
 };
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [emailValue, setEmailValue] = useState(""); 
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [touchedFields, setTouchedFields] = useState({
-    username: false,
+    email: false,
     password: false,
   });
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Login = () => {
     setLoading(true);
     setMessage("");
 
-    AuthService.login(username, password)
+    AuthService.login(emailValue, password)
       .then(() => {
         navigate("/profile");
         window.location.reload();
@@ -69,7 +69,7 @@ const Login = () => {
             <div className="d-flex flex-column mx-5">
               <div className="text-center">
                 <img
-                  src= {logoImg}
+                  src={logoImg}
                   style={{ width: "185px" }}
                   alt="logo"
                 />
@@ -80,15 +80,15 @@ const Login = () => {
                   <Form.Label>Correo Electrónico</Form.Label>
                   <Form.Control
                     type="text"
-                    name="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    name="email"
+                    value={emailValue}
+                    onChange={(e) => setEmailValue(e.target.value)}
                     required
-                    onBlur={() => handleFieldBlur("username")}
-                    isInvalid={touchedFields.username && email(username) !== null}
+                    onBlur={() => handleFieldBlur("email")}
+                    isInvalid={touchedFields.email && email(emailValue) !== null} 
                   />
                   <Form.Control.Feedback type="invalid">
-                    {email(username)}
+                    {email(emailValue)} 
                   </Form.Control.Feedback>
                 </Form.Group>
 
@@ -136,9 +136,9 @@ const Login = () => {
               </Form>
               <div className="d-flex flex-row align-items-center justify-content-center mb-3">
                 <p className="mb-0">¿No tienes cuenta?</p>
-                  <Link className="registerButton" to="/register">
-                    Registrate
-                  </Link>
+                <Link className="registerButton" to="/register">
+                  Registrate
+                </Link>
               </div>
             </div>
           </MDBCol>
@@ -148,9 +148,9 @@ const Login = () => {
               <div className="text-white text-center px-3 py-4 p-md-5 mx-md-4">
                 <h4 className="mb-4">Hospital Médico Veterinario</h4>
                 <p className="small mb-0">
-                Brindar servicios de salud a animales domésticos y de granja.
-                <br /> <br />
-                Ser un centro veterinario líder reconocido por su atención excepcional, servicios médicos avanzados y dedicación para mejorar el bienestar de los animales en nuestra comunidad.
+                  Brindar servicios de salud a animales domésticos y de granja.
+                  <br /> <br />
+                  Ser un centro veterinario líder reconocido por su atención excepcional, servicios médicos avanzados y dedicación para mejorar el bienestar de los animales en nuestra comunidad.
                 </p>
               </div>
             </div>
