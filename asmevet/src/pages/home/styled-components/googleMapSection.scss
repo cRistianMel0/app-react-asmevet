@@ -1,0 +1,21 @@
+// Estilos para el componente GoogleMapSection
+
+.map {
+    background-color: #4e5f56; 
+    color: #fff; 
+}
+
+.responsive-iframe {
+    overflow: hidden;
+    padding-bottom: 56.25%; // Proporción para hacer el iframe responsive (16:9)
+    position: relative;
+    height: 0;
+}
+
+.responsive-iframe iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
