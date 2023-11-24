@@ -3,7 +3,7 @@ import '../styled-components/serviceSection.scss';
 import servicioImg1 from '../../../assets/img/s-1.png';
 import servicioImg2 from '../../../assets/img/s-2.png';
 import servicioImg3 from '../../../assets/img/s-3.png';
-import toolImg from '../../../assets/img/slider-img3.png';
+import serviceImg from '../../../assets/img/horarioAtencion.jpg';
 import { Link } from 'react-router-dom';
 
 const ServiceSection = () => {
@@ -63,7 +63,7 @@ const ServiceSection = () => {
             </Link>
           </Col>
           <Col md={4}>
-            <img src={toolImg} alt="Herramientas Veterinarias" className="w-100" />
+            <img src={serviceImg} alt="Herramientas Veterinarias" className="w-100" />
           </Col>
         </Row>
       </Container>
