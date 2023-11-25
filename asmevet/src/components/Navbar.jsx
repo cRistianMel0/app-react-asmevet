@@ -29,8 +29,6 @@ export default function Navbar() {
     setCurrentUser(user);
   }, []);
 
-  console.log("currentUser:", currentUser);
-
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top Navbar">
       <div className="container-md">
@@ -55,11 +53,11 @@ export default function Navbar() {
                 Inicio
               </Link>
             </li>
-            <Link to="/servicios" className="nav-item">
-              <a className="nav-link">Servicios</a>
+            <Link to="/servicios" className="nav-link">
+              Servicios
             </Link>
-            <Link to="/productos" className="nav-item">
-              <a className="nav-link">Productos</a>
+            <Link to="/productos" className="nav-link">
+              Productos
             </Link>
           </ul>
         </div>
@@ -78,7 +76,10 @@ export default function Navbar() {
                 <Person className="icon" />
                 {currentUser.username}
               </button>
-              <div className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`} aria-labelledby="navbarDropdown">
+              <div
+                className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`}
+                aria-labelledby="navbarDropdown"
+              >
                 <Link to="/profile" className="dropdown-item">
                   <PersonCircle className="me-2" />
                   Mi Perfil
@@ -91,8 +92,8 @@ export default function Navbar() {
               </div>
             </div>
           ) : (
-            <Link to="/login" className="nav-item">
-              <a className="nav-link p-2">Iniciar Sesión</a>
+            <Link to="/login" className="nav-link p-2">
+              Iniciar Sesión
             </Link>
           )}
         </div>
