@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Person, BoxArrowRight, PersonCircle } from "react-bootstrap-icons";
+import AuthService from "../services/auth.service";
 import "../styled-components/navbar.scss";
 
-export default function Navbar({ currentUser, logOut, isAuthenticated }) {
-  console.log("currentUser:", currentUser);
+export default function Navbar() {
+  // Estado para almacenar la información del usuario
+  const [currentUser, setCurrentUser] = useState(null);
 
   // Estado para controlar si el menú desplegable está abierto o cerrado
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -14,6 +16,20 @@ export default function Navbar({ currentUser, logOut, isAuthenticated }) {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  // Función de cierre de sesión
+  const logOut = () => {
+    AuthService.logout();
+    setCurrentUser(null);
+  };
+
+  useEffect(() => {
+    // Obtener el usuario actual al cargar el componente
+    const user = AuthService.getCurrentUser();
+    setCurrentUser(user);
+  }, []);
+
+  console.log("currentUser:", currentUser);
 
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top Navbar">
@@ -48,7 +64,7 @@ export default function Navbar({ currentUser, logOut, isAuthenticated }) {
           </ul>
         </div>
         <div className="">
-          {isAuthenticated ? (
+          {currentUser ? (
             <div className="nav-item dropdown">
               <button
                 className="nav-link p-2 dropdown-toggle"
