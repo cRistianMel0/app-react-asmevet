@@ -1,7 +1,6 @@
 import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
 import "../styled-components/login.scss";
 import { useState } from "react";
-import { useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -21,7 +20,7 @@ const vpassword = (value) => {
 };
 
 const Login = () => {
-  const [emailValue, setEmailValue] = useState(""); 
+  const [emailValue, setEmailValue] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -30,7 +29,6 @@ const Login = () => {
     password: false,
   });
   const navigate = useNavigate();
-  const checkBtn = useRef();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -61,7 +59,6 @@ const Login = () => {
 
   return (
     <div className="loginBody">
-
       <MDBContainer className="gradient-form loginContainer">
         <MDBRow>
           <MDBCol col="6" className="">
@@ -74,7 +71,7 @@ const Login = () => {
                 />
                 <h4 className="mt-1 mb-2 pb-1">Inicio de Sesión</h4>
               </div>
-              <Form onSubmit={handleLogin} ref={checkBtn}>
+              <Form onSubmit={handleLogin}>
                 <Form.Group controlId="username">
                   <Form.Label>Correo Electrónico</Form.Label>
                   <Form.Control

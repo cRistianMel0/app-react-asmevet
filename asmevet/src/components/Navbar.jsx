@@ -1,8 +1,20 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Person, BoxArrowRight, PersonCircle } from "react-bootstrap-icons";
 import "../styled-components/navbar.scss";
 
-export default function Navbar({ currentUser, logOut }) {
+export default function Navbar({ currentUser, logOut, isAuthenticated }) {
+  console.log("currentUser:", currentUser);
+
+  // Estado para controlar si el menú desplegable está abierto o cerrado
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // Función para cambiar el estado del menú desplegable
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top Navbar">
       <div className="container-md">
@@ -36,10 +48,32 @@ export default function Navbar({ currentUser, logOut }) {
           </ul>
         </div>
         <div className="">
-          {currentUser ? (
-            <button className="nav-link p-2" onClick={logOut}>
-              Cerrar Sesión
-            </button>
+          {isAuthenticated ? (
+            <div className="nav-item dropdown">
+              <button
+                className="nav-link p-2 dropdown-toggle"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                onClick={toggleDropdown}
+              >
+                <Person className="icon" />
+                {currentUser.username}
+              </button>
+              <div className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`} aria-labelledby="navbarDropdown">
+                <Link to="/profile" className="dropdown-item">
+                  <PersonCircle className="me-2" />
+                  Mi Perfil
+                </Link>
+                <div className="dropdown-divider"></div>
+                <button className="dropdown-item" onClick={logOut}>
+                  <BoxArrowRight className="me-2" />
+                  Cerrar Sesión
+                </button>
+              </div>
+            </div>
           ) : (
             <Link to="/login" className="nav-item">
               <a className="nav-link p-2">Iniciar Sesión</a>
