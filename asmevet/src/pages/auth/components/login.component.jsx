@@ -40,7 +40,7 @@ const Login = () => {
 
     AuthService.login(emailValue, password)
       .then(() => {
-        navigate("/profile");
+        navigate("/");
       })
       .catch((error) => {
         const resMessage =
