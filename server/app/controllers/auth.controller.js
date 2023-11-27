@@ -71,22 +71,26 @@ exports.signin = (req, res) => {
       }
 
       const token = jwt.sign({ id: user.id },
-                              config.secret,
-                              {
-                                algorithm: 'HS256',
-                                allowInsecureKeySizes: true,
-                                expiresIn: 86400, // 24 hours
-                              });
+        config.secret,
+        {
+          algorithm: 'HS256',
+          allowInsecureKeySizes: true,
+          expiresIn: 86400, // 24 hours
+        });
 
       var authorities = [];
+      var roleIds = []; // Este arreglo lo cree para almacenar IDs de roles ya que un usuario puede tener varios roles
+
       user.getRoles().then(roles => {
         for (let i = 0; i < roles.length; i++) {
           authorities.push("ROLE_" + roles[i].name.toUpperCase());
+          roleIds.push(roles[i].id); // Almacena cada ID de rol
         }
         res.status(200).send({
           id: user.id,
           email: user.email,
           roles: authorities,
+          roleIds: roleIds, // Envia todos los IDs de roles
           accessToken: token
         });
       });
