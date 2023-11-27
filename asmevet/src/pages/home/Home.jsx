@@ -4,6 +4,7 @@ import SliderSection from "./components/SliderSection";
 import ServiceSection from "./components/ServiceSection";
 import GallerySection from "./components/GallerySection";
 import GoogleMapSection from "./components/GoogleMapSection";
+import Whatsapp from "../../components/Whatsapp";
 
 export default function Home() {
   window.scrollTo(0, 0);
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
+      <Whatsapp />
       <section className="pt-5">
         <div className="pt-5" style={{ backgroundColor: "white" }}>
           <SliderSection />

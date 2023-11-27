@@ -6,6 +6,7 @@ import ServiciosCreate from './ServiciosCreate';
 import { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import serviciosService from '../../services/servicios.service';
+import Whatsapp from '../../components/Whatsapp';
 
 export default function Servicios() {
   const [serviciosData, setServicios] = useState([]);
@@ -37,6 +38,7 @@ export default function Servicios() {
   return (
     <>
       <Navbar />
+      <Whatsapp />
 
       <section className="page">
         <div className="container">
