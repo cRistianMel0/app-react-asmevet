@@ -49,9 +49,9 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav d-flex gap-5 ms-5">
             <li className="nav-item">
-              <Link to="/" className="nav-link" aria-current="page">
+              <a href="#" className="nav-link">
                 Inicio
-              </Link>
+              </a>
             </li>
             <Link to="/servicios" className="nav-link">
               Servicios
