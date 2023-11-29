@@ -6,10 +6,12 @@ import "../styled-components/cardServicios.scss";
 import servicioImg from '../../../assets/img/servicio.jpeg';
 import ServiciosEdit from '../ServiciosEdit';
 import serviciosService from '../../../services/servicios.service';
+import authService from '../../../services/auth.service';
 
 export default function CardServicios({ cards }) {
   const [editModalShow, setEditModalShow] = useState(false);
   const [editedServicio, setEditedServicio] = useState(null);
+  const currentUser = authService.getCurrentUser();
 
   const handleEdit = (servicio) => {
     setEditedServicio(servicio); 
@@ -22,7 +24,7 @@ export default function CardServicios({ cards }) {
         console.log(response.data);
         setEditModalShow(false);
         alert('¡El servicio se actualizó correctamente!');
-        window.location.reload(); // Recargar la página
+        window.location.reload();
       })
       .catch(error => {
         console.error(error);
@@ -59,6 +61,7 @@ export default function CardServicios({ cards }) {
             <div className="description">
               {servicio.descripcion}
             </div>
+            {currentUser && currentUser.roles && currentUser.roles.includes("ROLE_ADMIN") && (
             <div className="buttons">
               <button className="edit-button" onClick={() => handleEdit(servicio)}>
                 <PencilSquare />
@@ -67,6 +70,7 @@ export default function CardServicios({ cards }) {
                 <ExclamationTriangle />
               </button>
             </div>
+            )}
           </div>
         </div>
       ))}
