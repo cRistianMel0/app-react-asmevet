@@ -4,28 +4,33 @@ import CardServicios from './components/CardServicios';
 import serviciosImg from '../../assets/img/pet.svg';
 import ServiciosCreate from './ServiciosCreate';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import SearchBar from '../../components/SearchBar';
+import serviciosService from '../../services/servicios.service';
+import Whatsapp from '../../components/Whatsapp';
+import authService from '../../services/auth.service';
 
 export default function Servicios() {
   const [serviciosData, setServicios] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const currentUser = authService.getCurrentUser();
 
   // Llamado al API para traer los registros de servicios
   useEffect(() => {
     const fetchAllServicios = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/servicios")
+        const res = await serviciosService.findAll();
         // Filtrar los servicios disponibles (donde el campo "disponible" es igual a 1)
-        const serviciosDisponibles = res.data.filter(servicio => servicio.disponible === 1);
+        const serviciosDisponibles = res.data.filter(servicio => servicio.disponible === true);
+        console.log(serviciosData)
         setServicios(serviciosDisponibles);
       } catch (err) {
         console.log(err);
       }
     }
-
+  
     fetchAllServicios()
   }, [])
+  
 
   // Función para filtrar los servicios en función del texto de búsqueda
   const filteredServicios = serviciosData.filter((servicio) =>
@@ -35,6 +40,7 @@ export default function Servicios() {
   return (
     <>
       <Navbar />
+      <Whatsapp />
 
       <section className="page">
         <div className="container">
@@ -53,9 +59,11 @@ export default function Servicios() {
             <div className="col-8">
               <SearchBar searchText={searchText} setSearchText={setSearchText} />
             </div>
-            <div className="col-4">
-              <ServiciosCreate />
-            </div>
+            {currentUser && currentUser.roles && currentUser.roles.includes("ROLE_ADMIN") && (
+              <div className="col-4">
+                <ServiciosCreate />
+              </div>
+            )}
           </div>
           <div className="row d-flex gap-5 justify-content-center mt-5">
             <CardServicios cards={filteredServicios} />

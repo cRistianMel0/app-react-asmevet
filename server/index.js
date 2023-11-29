@@ -1,77 +1,59 @@
-import express from "express"
-import mysql2 from "mysql2"
-import cors from "cors"
+const express = require("express");
+const cors = require("cors");
 
+const app = express();
 
-const db = mysql2.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "asmevet"
-})
+var corsOptions = {
+  origin: "http://localhost:8081"
+};
 
-const app = express()
+app.use(cors(corsOptions));
 
-app.use(express.json())
-app.use(cors())
+// parse requests of content-type - application/json
+app.use(express.json());
 
-const PORT = 8000;
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(PORT, ()=>{
-    console.log(`Funcionando en el puerto ${PORT}`);
-})
+// database
+const db = require("./app/models");
+const Role = db.role;
 
+db.sequelize.sync();
+// force: true will drop the table if it already exists
+// db.sequelize.sync({force: true}).then(() => {
+//   console.log('Drop and Resync Database with { force: true }');
+//   initial();
+// });
 
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to bezkoder application." });
+});
 
-/* Obtener los servicios */
-app.get("/servicios", (req,res)=>{
-    const q = "SELECT * FROM servicios"
-    db.query(q,(err,data)=>{
-        if(err) return res.json(err)
-        return res.json(data)
-    })
-})
+// routes
+require('./app/routes/auth.routes')(app);
+require('./app/routes/user.routes')(app);
 
-/*  Crear nuevos servicios*/
-app.post("/servicios", (req,res)=>{
-    const q = "INSERT INTO servicios (`nombre`, `descripcion`, `imagen`) VALUES (?)";
-    const values = [
-        req.body.nombre,
-        req.body.descripcion,
-        req.body.imagen,
-    ]
-    db.query(q,[values],(err,data)=>{
-        if(err) return res.json(err);
-        return res.json("Servicio Creado");
-    })
-})
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
 
-/* Modificar Disponibilidad de un servicio */
-app.patch('/servicios', (req,res)=>{
-    const id = req.body.idServicio
-    const q = "UPDATE servicios SET disponible = 0 WHERE idServicio = ?"
-
-    db.query(q,[id], (err,results)=>{
-        if(err) return res.json(err)
-        return res.json("Disponibilidad Actualizada Correctamente")
-    })
-})
-
-/* Actualizar infromacion de los servicios */
-app.put('/servicios', (req,res)=>{
-    const id = req.body.idServicio
-    const q = "UPDATE servicios SET `nombre` = ?, `descripcion` = ?, `imagen` = ? WHERE idServicio = ?"
-
-    const values = [
-        req.body.nombre,
-        req.body.descripcion,
-        req.body.imagen,
-    ]
-
-    db.query(q,[...values, id], (err,results)=>{
-        if(err) return res.json(err)
-        return res.json("El servicio se ha actualizado correctamente")
-    })
-})
-
-app.use(express.json())
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user"
+  });
+ 
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
+ 
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
+}

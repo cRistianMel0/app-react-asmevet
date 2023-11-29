@@ -11,11 +11,57 @@
         text-decoration: none;
         color: white;
     }
+
     a:hover {
         background-color: azure;
         color: rgba(42, 165, 124, 0.925);
         border-radius: 5px;
         transition: background-color 0.8s ease;
     }
-}
 
+    .nav-item.dropdown {
+        .nav-link {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            
+            &:hover {
+                background-color: rgba(204, 204, 204, 0.671);
+                border-radius: 20px;
+            }
+
+            .icon {
+                font-size: 30px;
+                margin-right: 10px;
+            }
+        }
+
+        .dropdown-menu {
+            background-color: white;
+            border: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+            .dropdown-item {
+                padding: 0.5rem 1rem;
+                color: #333;
+                border-radius: none;
+
+                &:hover {
+                    background-color: rgb(223, 223, 223);
+                }
+
+                .icon {
+                    font-size: 1.25rem;
+                }
+            }
+
+            .dropdown-divider {
+                border-color: #dee2e6;
+            }
+        }
+    }
+}

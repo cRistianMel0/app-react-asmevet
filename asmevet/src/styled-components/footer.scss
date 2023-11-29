@@ -1,0 +1,61 @@
+// Estilos para el componente Footer
+
+footer {
+    background-color: #3a4741;
+
+    .logoFooter {
+        width: 180px;
+        border-radius: 80px;
+    }
+
+    // Estilos para la columna Conéctate con Nosotros
+    .espacioSocial {
+        display: flex;
+        flex-direction: column;
+        
+        .iconRedes {
+            font-size: 20px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .redessociales {
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 12px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 1px;
+            display: inline-block;
+            color: #ffffff;
+            text-decoration: none;
+            height: 40px;
+            font-size: 14px;
+            line-height: 40px;
+            width: 165px;
+        }
+
+        .facebook {
+            background-color: #3b5998;
+        }
+
+        .instagram {
+            background-color: #c13584;
+        }
+
+        .ubicacion {
+            background-color: rgb(181, 91, 91);
+        }
+    }
+
+    // Estilos para la columna de Derechos Reservados
+    .derechosReservados {
+        h4 {
+            padding-bottom: 20px;
+        }
+        span {
+            color: rgb(218, 218, 218);
+        }
+    } 
+    
+}

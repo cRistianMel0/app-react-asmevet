@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 
 export default function ServiciosEdit({ show, onClose, servicio, onSave }) {
   const [editedServicio, setEditedServicio] = useState({ 
+    idServicio: servicio.idServicio,
     nombre: servicio.nombre,
     descripcion: servicio.descripcion,
     imagen: servicio.imagen,
@@ -13,14 +14,12 @@ export default function ServiciosEdit({ show, onClose, servicio, onSave }) {
 
   useEffect(() => {
     setEditedServicio({ 
+      idServicio: servicio.idServicio,
       nombre: servicio.nombre,
       descripcion: servicio.descripcion,
       imagen: servicio.imagen,
     });
   }, [servicio]);
-
-  console.log(editedServicio);
-  console.log(servicio);
 
   const handleSave = () => {
     onSave(editedServicio); 

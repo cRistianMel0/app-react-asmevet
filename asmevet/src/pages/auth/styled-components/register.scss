@@ -1,0 +1,55 @@
+// Estilos para el componente Register
+.registerBody {
+    background: linear-gradient(to right, rgb(197, 224, 248), rgb(180, 215, 247), rgb(135, 171, 204));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    // Estilos para el container de register
+    .registerContainer {
+        background-color: #EEEEEE;
+        border-radius: 20px;
+
+        // Estilos para la columna que contiene la imagen
+        .Col1 {
+            background-image: url("../../../assets/img/veterinario-register.jpeg");
+            background-size: cover;
+            border-radius: 20px 0px 0px 20px;
+        }
+    }
+}
+
+// Estilos para cuando se activa la alerta de usuario registrado éxitosamente
+/* Ajuste de tamaño para la columna cuando el registro es exitoso */
+.success-container {
+    width: 100vh;
+    height: 60vh;
+    ;
+
+    .Col1 {
+        height: 60vh;
+    }
+
+    /* Estilo adicional para el card-body cuando el registro es exitoso */
+    .success-card-body {
+        display: flex;
+        align-items: center;
+        height: 60vh;
+
+        // Estilos para el boton o link de login
+        .loginButton {
+            text-decoration: none;
+            color: #0d6efd;
+            border: 1px solid #0d6efd;
+            border-radius: 5px;
+            padding: 8px;
+            margin: 0px 20px 0px 20px;
+
+            &:hover {
+                color: white;
+                background-color: #0d6efd;
+            }
+        }
+    }
+}

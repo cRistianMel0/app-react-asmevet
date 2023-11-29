@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { PlusCircle  } from 'react-bootstrap-icons';
-import axios from 'axios';
+import serviciosService from '../../services/servicios.service';
 
 export default function ServiciosCreate() {
   // Estado para controlar la visibilidad del modal
@@ -37,15 +37,15 @@ export default function ServiciosCreate() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-    
+  
     // Validar el formulario
     if (form.checkValidity() === false) {
       e.stopPropagation();
     } else {
       try {
         // Realizar una solicitud POST a la API con los valores del formulario
-        await axios.post("http://localhost:8000/servicios", formValues);
-        // Cerrar el modal y recargar la page después de enviar los datos
+        await serviciosService.create(formValues); // Utilizar el método create del servicio
+        // Cerrar el modal y recargar la página después de enviar los datos
         handleClose();
         window.location.reload();
       } catch (err) {
@@ -54,6 +54,7 @@ export default function ServiciosCreate() {
     }
     setValidated(true);
   };
+  
 
   // Función para manejar los cambios en los campos del formulario
   const handleInputChange = (e) => {

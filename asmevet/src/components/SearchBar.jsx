@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "../styled-components/searchBar.scss";
 
 export default function SearchBar({ searchText, setSearchText }) {

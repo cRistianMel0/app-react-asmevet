@@ -3,7 +3,6 @@
     background: white;
     padding: 0.4em;
     border-radius: 6px;
-    cursor: pointer;
     transition: background-color 0.8s ease;
 
     &:hover {
@@ -45,7 +44,7 @@
         font-size: 20px;
 
         .edit-button,
-        .delete-button {
+        .disable-button {
             background-color: #007bff;
             color: #fff;
             border: none;
@@ -58,11 +57,11 @@
             }
         }
 
-        .delete-button {
-            background-color: #ff0000;
+        .disable-button {
+            background-color: #d6c100;
 
             &:hover {
-                background-color: #d60000;
+                background-color: #ad9c01;
             }
         }
     }

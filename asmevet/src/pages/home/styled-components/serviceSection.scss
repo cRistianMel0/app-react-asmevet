@@ -1,0 +1,65 @@
+// Estilos para ServiceSection
+$darkGreen: rgba(30, 121, 90, 0.89);
+
+.service_section {
+    background-color: white;
+    padding: 50px;
+    text-align: center;
+
+    .custom_heading {
+        color: rgba(42, 165, 124, 0.89);
+    }
+
+    .layout_padding2 {
+        padding: 20px;
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .img_box {
+        width: 110px;
+        height: 110px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(42, 165, 124, 0.89);
+        border-radius: 100%;
+
+        img {
+            width: 50px;
+        }
+    }
+
+    .detail_box {
+        h6 {
+            color: rgba(42, 165, 124, 0.89);
+            margin-top: 10px;
+        }
+
+        p {
+            color: #555;
+        }
+    }
+
+    .linkService {
+        display: inline-block;
+        text-decoration: none;
+        background-color: $darkGreen;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        &:hover {
+            background-color: transparent;
+            color: $darkGreen;
+            border: 1px solid $darkGreen;
+        }
+    }
+
+    .w-100 {
+        width: 100%;
+    }
+}
