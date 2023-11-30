@@ -7,10 +7,12 @@ import { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import serviciosService from '../../services/servicios.service';
 import Whatsapp from '../../components/Whatsapp';
+import authService from '../../services/auth.service';
 
 export default function Servicios() {
   const [serviciosData, setServicios] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const currentUser = authService.getCurrentUser();
 
   // Llamado al API para traer los registros de servicios
   useEffect(() => {
@@ -57,9 +59,11 @@ export default function Servicios() {
             <div className="col-8">
               <SearchBar searchText={searchText} setSearchText={setSearchText} />
             </div>
-            <div className="col-4">
-              <ServiciosCreate />
-            </div>
+            {currentUser && currentUser.roles && currentUser.roles.includes("ROLE_ADMIN") && (
+              <div className="col-4">
+                <ServiciosCreate />
+              </div>
+            )}
           </div>
           <div className="row d-flex gap-5 justify-content-center mt-5">
             <CardServicios cards={filteredServicios} />

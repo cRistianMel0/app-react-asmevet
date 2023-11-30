@@ -21,6 +21,7 @@ export default function Navbar() {
   const logOut = () => {
     AuthService.logout();
     setCurrentUser(null);
+    window.location.reload();
   };
 
   useEffect(() => {
