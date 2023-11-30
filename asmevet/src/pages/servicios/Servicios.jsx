@@ -31,7 +31,6 @@ export default function Servicios() {
     fetchAllServicios()
   }, [])
   
-
   // Función para filtrar los servicios en función del texto de búsqueda
   const filteredServicios = serviciosData.filter((servicio) =>
     servicio.nombre.toLowerCase().includes(searchText.toLowerCase())

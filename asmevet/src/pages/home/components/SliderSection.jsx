@@ -26,7 +26,7 @@ const SliderSection = () => {
                     profesional y dedicado. Tu amigo peludo merece lo mejor.
                   </p>
                   <div className="btn-box">
-                    <Link to="/servicios" className='linkService'>
+                    <Link to="/servicios" className='linkButton'>
                       Conoce Más
                     </Link>
                     <Button href="#mapa" className="btn-custom-2">
@@ -92,7 +92,7 @@ const SliderSection = () => {
                     hasta tratamientos especializados.
                   </p>
                   <div className="btn-box">
-                    <Link to="/servicios" className='linkService'>
+                    <Link to="/servicios" className='linkButton'>
                       Ver Servicios
                     </Link>
                     <Button href="#mapa" className="btn-custom-2">
@@ -158,7 +158,7 @@ const SliderSection = () => {
                     compañero merece lo mejor.
                   </p>
                   <div className="btn-box">
-                    <Link to="/servicios" className='linkService'>
+                    <Link to="/servicios" className='linkButton'>
                       Conoce Más
                     </Link>
                     <Button href="#mapa" className="btn-custom-2">
@@ -191,9 +191,9 @@ const SliderSection = () => {
                     alimentos hasta juguetes, tenemos todo lo que necesitas.
                   </p>
                   <div className="btn-box">
-                    <Button href="#" className="btn-custom-1">
+                    <Link to="/productos" className='linkButton'>
                       Ver Productos
-                    </Button>
+                    </Link>
                     <Button href="#mapa" className="btn-custom-2">
                       Ubicación
                     </Button>
