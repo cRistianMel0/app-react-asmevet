@@ -1,28 +1,46 @@
 import { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
-import userService from "../../services/user.service";
+import authService from "../../services/auth.service";
 import VeterinariosEdit from "./VeterinariosEdit";
 import { ExclamationTriangle, PencilSquare } from "react-bootstrap-icons";
 import SearchBar from "../../components/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 export default function Veterinarios() {
   const [veterinarios, setVeterinarios] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedVeterinario, setSelectedVeterinario] = useState(null);
   const [searchText, setSearchText] = useState('');
+  const navigate = useNavigate();
+  const currentUser = authService.getCurrentUser();
 
   useEffect(() => {
-    const fetchVeterinarios = async () => {
+    const checkUserRole = async () => {
       try {
-        const response = await userService.getUsersByRole("ROLE_VETERINARIO");
-        setVeterinarios(response.data);
+        // Verificar si el usuario está autenticado y tiene el rol de administrador
+        if (currentUser && currentUser.roles && currentUser.roles.includes("ROLE_ADMIN")) {
+          // Si es un administrador, cargar los veterinarios
+          fetchVeterinarios();
+        } else {
+          // Si el usuario no es un administrador o no está autenticado, redirigir a una página de no autorizado
+          navigate('/unauthorized');
+        }
       } catch (error) {
-        console.error("Error al obtener veterinarios:", error);
+        console.error("Error al obtener información del usuario:", error);
       }
     };
 
-    fetchVeterinarios();
-  }, []);
+    checkUserRole();
+  }, [navigate]);
+
+  const fetchVeterinarios = async () => {
+    try {
+      const response = await userService.getUsersByRole("ROLE_VETERINARIO");
+      setVeterinarios(response.data);
+    } catch (error) {
+      console.error("Error al obtener veterinarios:", error);
+    }
+  };
 
   const handleEdit = (veterinario) => {
     setSelectedVeterinario(veterinario);

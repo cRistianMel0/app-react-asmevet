@@ -4,25 +4,44 @@ import userService from "../../services/user.service";
 import ClientesEdit from "./ClientesEdit";
 import { ExclamationTriangle, PencilSquare } from "react-bootstrap-icons";
 import SearchBar from "../../components/SearchBar";
+import authService from "../../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 export default function Clientes() {
   const [clientes, setClientes] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedCliente, setSelectedCliente] = useState(null);
   const [searchText, setSearchText] = useState('');
+  const navigate = useNavigate();
+  const currentUser = authService.getCurrentUser();
 
   useEffect(() => {
-    const fetchClientes = async () => {
+    const checkUserRole = async () => {
       try {
-        const response = await userService.getUsersByRole("ROLE_CLIENTE");
-        setClientes(response.data);
+        // Verificar si el usuario está autenticado y tiene el rol de administrador
+        if (currentUser && currentUser.roles && currentUser.roles.includes("ROLE_ADMIN")) {
+          // Si es un administrador, cargar los veterinarios
+          fetchClientes();
+        } else {
+          // Si el usuario no es un administrador o no está autenticado, redirigir a una página de no autorizado
+          navigate('/unauthorized');
+        }
       } catch (error) {
-        console.error("Error al obtener clientes:", error);
+        console.error("Error al obtener información del usuario:", error);
       }
     };
 
-    fetchClientes();
-  }, []);
+    checkUserRole();
+  }, [navigate]);
+
+  const fetchClientes = async () => {
+    try {
+      const response = await userService.getUsersByRole("ROLE_USER");
+      setClientes(response.data);
+    } catch (error) {
+      console.error("Error al obtener clientes:", error);
+    }
+  };
 
   const handleEdit = (cliente) => {
     setSelectedCliente(cliente);

@@ -10,6 +10,7 @@ import Register from './pages/auth/components/register.component';
 import Profile from './pages/auth/components/profile.component';
 import Veterinarios from './pages/veterinarios/Veterinarios';
 import Clientes from './pages/clientes/Clientes';
+import UnauthorizedPage from './pages/auth/components/unauthorized';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/clientes",
     element: <Clientes />,
+  },
+  {
+    path: "/unauthorized",
+    element: <UnauthorizedPage />,
   },
 ]);
 
