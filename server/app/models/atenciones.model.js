@@ -34,6 +34,22 @@ module.exports = (sequelize, Sequelize) => {
         requiereHospitalizacion: {
             type: Sequelize.BOOLEAN,
             allowNull: false
+        },
+        diasHospitalizado: {
+            type: Sequelize.INTEGER,
+            allowNull: true
+        },
+        fechaHoraHospitalizacion: {
+            type: Sequelize.DATE,
+            allowNull: true
+        },
+        numHabitacion: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
+        fechaHoraIngreso: {
+            type: Sequelize.DATE,
+            allowNull: false
         }
     });
 
