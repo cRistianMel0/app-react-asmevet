@@ -25,8 +25,9 @@ db.sequelize = sequelize;
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.servicios = require("../models/servicios.models.js")(sequelize, Sequelize);
-db.servicios = require("../models/productos.model.js")(sequelize, Sequelize);
-db.servicios = require("../models/categorias.model.js")(sequelize, Sequelize);
+db.productos = require("../models/productos.model.js")(sequelize, Sequelize);
+db.categorias = require("../models/categorias.model.js")(sequelize, Sequelize);
+db.marca = require("../models/marcas.mode.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles"
@@ -34,6 +35,7 @@ db.role.belongsToMany(db.user, {
 db.user.belongsToMany(db.role, {
   through: "user_roles"
 });
+
 
 db.ROLES = ["user", "admin", "moderator"];
 
