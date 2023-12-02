@@ -49,7 +49,7 @@ function initial() {
  
   Role.create({
     id: 2,
-    name: "moderator"
+    name: "veterinario"
   });
  
   Role.create({

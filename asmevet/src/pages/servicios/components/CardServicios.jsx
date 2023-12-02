@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-// En CardServicios
+
 import { useState } from 'react';
 import { PencilSquare, ExclamationTriangle } from 'react-bootstrap-icons';
 import "../styled-components/cardServicios.scss";
@@ -35,7 +35,6 @@ export default function CardServicios({ cards }) {
   
 
   const handleDelete = (servicio) => {
-    console.log("algo se esta enviando:", servicio);
     let res = window.confirm("¿Está seguro de que desea DESHABILITAR el servicio?");
     if (res) {
       serviciosService.updateDisponibilidad(servicio) 
