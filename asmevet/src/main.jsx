@@ -8,6 +8,8 @@ import Servicios from './pages/servicios/Servicios';
 import Login from './pages/auth/components/login.component';
 import Register from './pages/auth/components/register.component';
 import Profile from './pages/auth/components/profile.component';
+import Veterinarios from './pages/veterinarios/Veterinarios';
+import Clientes from './pages/clientes/Clientes';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path: "/veterinarios",
+    element: <Veterinarios />,
+  },
+  {
+    path: "/clientes",
+    element: <Clientes />,
   },
 ]);
 

@@ -17,9 +17,68 @@ body {
         margin-left: 12%;
         margin-right: 12%;
         background-color: white;
+        
+        .container {
+            background-color: white;
+        }
     }
 }
 
 h2 {
     color: rgba(42, 165, 124, 0.89);
 }
+
+// Estilos para tablas con registros
+.table-responsive {
+    background-color: #e7e7e7;
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3aa38c;
+            color: #fff;
+        }
+
+        tr {
+            &:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            &:hover {
+                background-color: #cce5ff;
+            }
+        }
+    }
+
+    .edit-button,
+    .disable-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 5px;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+
+    .disable-button {
+        background-color: #d6c100;
+
+        &:hover {
+            background-color: #ad9c01;
+        }
+    }
+}
+
+

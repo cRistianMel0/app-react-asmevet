@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Person, BoxArrowRight, PersonCircle } from "react-bootstrap-icons";
+import { FaUserDoctor } from "react-icons/fa6";
 import AuthService from "../services/auth.service";
 import "../styled-components/navbar.scss";
 
@@ -75,12 +76,23 @@ export default function Navbar() {
                 onClick={toggleDropdown}
               >
                 <Person className="icon" />
-                {currentUser.username}
               </button>
               <div
                 className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`}
                 aria-labelledby="navbarDropdown"
               >
+                {currentUser && currentUser.roles && currentUser.roles.includes("ROLE_ADMIN") && (
+                  <>
+                  <Link to="/Clientes" className="dropdown-item">
+                    <Person className="me-2" />
+                    Clientes
+                  </Link>
+                  <Link to="/Veterinarios" className="dropdown-item">
+                    <FaUserDoctor className="me-2" />
+                    Veterinarios
+                  </Link>
+                  </>
+                )}
                 <Link to="/profile" className="dropdown-item">
                   <PersonCircle className="me-2" />
                   Mi Perfil
