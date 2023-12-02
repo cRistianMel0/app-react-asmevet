@@ -32,6 +32,7 @@ db.especialidades = require("../models/especialidades.model.js")(sequelize, Sequ
 db.animales = require("../models/animales.model.js")(sequelize, Sequelize);
 db.facturas = require("../models/facturas.model.js")(sequelize, Sequelize);
 db.detalleFacturas = require("../models/detalleFacturas.model.js")(sequelize, Sequelize);
+db.detalleServicios = require("../models/detalleServicios.model.js")(sequelize, Sequelize);
 
 
 db.role.belongsToMany(db.user, {
