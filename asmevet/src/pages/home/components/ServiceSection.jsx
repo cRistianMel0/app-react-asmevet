@@ -9,13 +9,13 @@ import { Link } from 'react-router-dom';
 const ServiceSection = () => {
   return (
     <section className="service_section">
-      <Container>
+      <Container style={{backgroundColor:"white", borderRadius:"0px", padding:"0"}}>
         <Row className="justify-content-center align-items-center">
           <Col md={6} offset-md={2}>
             <h2 className="custom_heading">
               Nuestros Servicios
             </h2>
-            <Container className="layout_padding2">
+            <Container className="layout_padding2" style={{backgroundColor:"white", borderRadius:"0px", padding:"0"}}>
               <Row>
                 <Col md={4} className="col">
                   <div className="img_box">
