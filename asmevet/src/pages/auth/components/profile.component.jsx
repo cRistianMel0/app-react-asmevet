@@ -1,6 +1,8 @@
 import { Component } from "react";
 import { Navigate } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
+import Navbar from "../../../components/Navbar";
+import '../styled-components/profile.scss';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -28,46 +30,33 @@ export default class Profile extends Component {
     const { currentUser } = this.state;
 
     return (
-      <div className="container">
-        {this.state.userReady ? (
-          <div>
-            <header className="jumbotron">
-              <h3>
-                <strong>{currentUser.username}</strong> Profile
-              </h3>
-            </header>
-            <p>
-              <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)}{" "}
-              ...{" "}
-              {currentUser.accessToken.substr(
-                currentUser.accessToken.length - 20
-              )}
-            </p>
-            <p>
-              <strong>Id:</strong> {currentUser.id}
-            </p>
-            <p>
-              <strong>Email:</strong> {currentUser.email}
-            </p>
-            <strong>Authorities:</strong>
-            <ul>
-              {currentUser.roles &&
-                currentUser.roles.map((role, index) => (
-                  <li key={index}>{role}</li>
-                ))}
-            </ul>
-            <p>
-              <strong>Authorities IDs:</strong>
-              <ul>
-                {currentUser.roleIds &&
-                  currentUser.roleIds.map((roleId, index) => (
-                    <li key={index}>{roleId}</li>
-                  ))}
-              </ul>
-            </p>
+      <>
+        <Navbar />
+
+        <section className="page">
+          <div className="container">
+            {this.state.userReady ? (
+              <div>
+                <header className="jumbotron mb-4">
+                  <h3>
+                    <strong>{currentUser.username}</strong> Perfil
+                  </h3>
+                </header>
+                <p>
+                  <strong>Email:</strong> {currentUser.email}
+                </p>
+                <strong>Roles:</strong>
+                <ul>
+                  {currentUser.roles &&
+                    currentUser.roles.map((role, index) => (
+                      <li key={index}>{role}</li>
+                    ))}
+                </ul>
+              </div>
+            ) : null}
           </div>
-        ) : null}
-      </div>
+        </section>
+      </>
     );
   }
 }
