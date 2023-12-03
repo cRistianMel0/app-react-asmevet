@@ -1,37 +1,51 @@
 const db = require("../models");
 const Servicio = db.servicios;
-const Op = db.Sequelize.Op;
+const multer = require('multer');
 
-// Crear y guardar un nuevo Servicio
-exports.create = (req, res) => {
-  // Validar la solicitud
-  if (!req.body.nombre || !req.body.descripcion) {
-    res.status(400).send({
-      message: "El nombre y la descripción son obligatorios."
-    });
-    return;
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'app/uploads/'); // Ruta donde se guardarán las imágenes
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname); // Nombre del archivo
   }
+});
 
-  // Crear un Servicio
-  const servicio = {
-    nombre: req.body.nombre,
-    descripcion: req.body.descripcion,
-    imagen: req.body.imagen || null,
-    disponible: req.body.disponible ? req.body.disponible : 1
-  };
+const upload = multer({ storage: storage }).single('imagen');
 
-  // Guardar el Servicio en la base de datos
-  Servicio.create(servicio)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Ocurrió un error al crear el Servicio."
+exports.create = (req, res) => {
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    } else if (err) {
+      return res.status(500).json(err);
+    }
+
+    console.log('Req Body:', req.body); // Verificar los datos recibidos en el cuerpo de la solicitud
+    console.log('Req File:', req.file); // Verificar la información del archivo subido
+
+    // Crear un Servicio
+    const servicio = {
+      nombre: req.body.nombre,
+      descripcion: req.body.descripcion,
+      imagen: req.file ? req.file.path : null, // Ruta de la imagen almacenada
+      disponible: req.body.disponible ? req.body.disponible : 1
+    };
+
+    // Guardar el Servicio en la base de datos
+    Servicio.create(servicio)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: err.message || "Ocurrió un error al crear el Servicio."
+        });
       });
-    });
+  });
 };
+
+
 
 // Obtener todos los Servicios desde la base de datos
 exports.findAll = (req, res) => {
@@ -103,26 +117,26 @@ exports.delete = (req, res) => {
 
 // Modificar la disponibilidad de un servicio
 exports.updateDisponibilidad = (req, res) => {
-    const id = req.body.idServicio;
-  
-    Servicio.update(
-      { disponible: 0 }, 
-      { where: { idServicio: id } } 
-    )
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "¡La disponibilidad se actualizó correctamente!"
-          });
-        } else {
-          res.send({
-            message: `No se pudo actualizar la disponibilidad del Servicio con id=${id}. ¡Quizás no se encontró el Servicio o req.body está vacío!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error al actualizar la disponibilidad del Servicio con id=" + id
+  const id = req.body.idServicio;
+
+  Servicio.update(
+    { disponible: 0 },
+    { where: { idServicio: id } }
+  )
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "¡La disponibilidad se actualizó correctamente!"
         });
+      } else {
+        res.send({
+          message: `No se pudo actualizar la disponibilidad del Servicio con id=${id}. ¡Quizás no se encontró el Servicio o req.body está vacío!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error al actualizar la disponibilidad del Servicio con id=" + id
       });
-  };
+    });
+};

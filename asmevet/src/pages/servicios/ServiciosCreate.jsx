@@ -6,46 +6,39 @@ import { PlusCircle  } from 'react-bootstrap-icons';
 import serviciosService from '../../services/servicios.service';
 
 export default function ServiciosCreate() {
-  // Estado para controlar la visibilidad del modal
   const [show, setShow] = useState(false);
-
-  // Estado para almacenar los valores del formulario
   const [formValues, setFormValues] = useState({
     nombre: '',
     descripcion: '',
-    imagen: '',
+    imagen: null, // Cambio a null para el campo de imagen
   });
-
-  // Estado para manejar la validación del formulario
   const [validated, setValidated] = useState(false);
 
-  // Función para cerrar el modal y limpiar el formulario
   const handleClose = () => {
     setShow(false);
     setFormValues({
       nombre: '',
       descripcion: '',
-      imagen: '',
+      imagen: null, // Cambio a null al cerrar el modal
     });
     setValidated(false);
   };
 
-  // Función para mostrar el modal
   const handleShow = () => setShow(true);
 
-  // Función para manejar el envío del formulario
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-  
-    // Validar el formulario
     if (form.checkValidity() === false) {
       e.stopPropagation();
     } else {
       try {
-        // Realizar una solicitud POST a la API con los valores del formulario
-        await serviciosService.create(formValues); // Utilizar el método create del servicio
-        // Cerrar el modal y recargar la página después de enviar los datos
+        const formData = new FormData();
+        formData.append('nombre', formValues.nombre);
+        formData.append('descripcion', formValues.descripcion);
+        formData.append('imagen', formValues.imagen); // Agregar la imagen al FormData
+
+        await serviciosService.create(formData);
         handleClose();
         window.location.reload();
       } catch (err) {
@@ -55,13 +48,13 @@ export default function ServiciosCreate() {
     setValidated(true);
   };
   
-
-  // Función para manejar los cambios en los campos del formulario
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
+    const newValue = name === 'imagen' ? files[0] : value; // Para el campo de imagen, obtén el archivo
+
     setFormValues({
       ...formValues,
-      [name]: value,
+      [name]: newValue,
     });
   };
 
@@ -108,9 +101,12 @@ export default function ServiciosCreate() {
               <Form.Control
                 type="file"
                 name="imagen"
-                value={formValues.imagen}
                 onChange={handleInputChange}
+                required // Asegura que el campo de imagen sea obligatorio
               />
+              <Form.Control.Feedback type="invalid">
+                Este campo es obligatorio.
+              </Form.Control.Feedback>
             </Form.Group>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>

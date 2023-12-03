@@ -3,20 +3,20 @@ module.exports = (app) => {
 
   const router = require("express").Router();
 
-  //Ruta para creación de servicios
+  // Ruta para creación de servicios, incluyendo la subida de archivos
   router.post("/api/servicios/", servicios.create);
 
-  //Obtener todos los servicios
+  // Obtener todos los servicios
   router.get("/api/servicios/", servicios.findAll);
 
-  //Actualizar un servicio
-  router.put("/api/servicios/", servicios.update);
+  // Actualizar un servicio por su id
+  router.put("/api/servicios/:idServicio", servicios.update);
 
-  //Actualizar la disponibilidad de un servicio
-  router.patch("/api/servicios/", servicios.updateDisponibilidad);
+  // Actualizar la disponibilidad de un servicio por su id
+  router.patch("/api/servicios/disponibilidad/:idServicio", servicios.updateDisponibilidad);
 
-  //Eliminar un servicio
-  router.delete("/api/servicios/", servicios.delete);
+  // Eliminar un servicio por su id
+  router.delete("/api/servicios/:idServicio", servicios.delete);
 
   app.use("/", router);
 };
