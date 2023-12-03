@@ -10,7 +10,7 @@ module.exports = (app) => {
   router.get("/api/servicios/", servicios.findAll);
 
   // Actualizar un servicio por su id
-  router.put("/api/servicios/:idServicio", servicios.update);
+  router.put("/api/servicios/", servicios.update);
 
   // Actualizar la disponibilidad de un servicio por su id
   router.patch("/api/servicios/disponibilidad/:idServicio", servicios.updateDisponibilidad);

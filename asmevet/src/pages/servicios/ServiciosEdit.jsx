@@ -56,25 +56,6 @@ export default function ServiciosEdit({ show, onClose, servicio, onSave }) {
               }
             />
           </Form.Group>
-          <Form.Group>
-            <Form.Label>Imagen del Servicio</Form.Label>
-            <Form.Control
-              type="file"
-              accept="image/*"
-              onChange={(e) =>
-                setEditedServicio({
-                  ...editedServicio,
-                  imagen: e.target.files[0],
-                })
-              }
-            />
-            {editedServicio.imagen && (
-              <img
-                src={URL.createObjectURL(editedServicio.imagen)}
-                alt="Imagen del servicio"
-              />
-            )}
-          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
