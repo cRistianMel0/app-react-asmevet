@@ -1,6 +1,7 @@
 const db = require("../models");
 const Servicio = db.servicios;
 const multer = require('multer');
+const path = require('path')
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -140,3 +141,26 @@ exports.updateDisponibilidad = (req, res) => {
       });
     });
 };
+
+exports.getImageById = function(req, res) {
+  const idServicio = req.params.idServicio;
+
+  Servicio.findByPk(idServicio, { attributes: ['imagen'] })
+    .then(servicio => {
+      if (!servicio) {
+        return res.status(404).send('Servicio no encontrado');
+      }
+
+      // Si se encuentra el servicio y tiene imagen, envía el archivo de imagen
+      if (servicio.imagen) {
+        const pathToImage = path.resolve(__dirname, '../..', servicio.imagen); // Ruta absoluta de la imagen
+        res.sendFile(pathToImage);
+      } else {
+        res.status(404).send('Imagen no encontrada para este servicio');
+      }
+    })
+    .catch(err => {
+      res.status(500).send('Error al obtener la imagen del servicio: ' + err.message);
+    });
+};
+

@@ -18,5 +18,9 @@ module.exports = (app) => {
   // Eliminar un servicio por su id
   router.delete("/api/servicios/:idServicio", servicios.delete);
 
+  // Ruta para servir archivos de imágenes
+  router.get("/api/servicios/:idServicio/imagen", servicios.getImageById);
+
+
   app.use("/", router);
 };

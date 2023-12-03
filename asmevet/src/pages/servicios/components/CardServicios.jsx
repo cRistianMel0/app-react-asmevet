@@ -1,9 +1,6 @@
-/* eslint-disable react/prop-types */
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PencilSquare, ExclamationTriangle } from 'react-bootstrap-icons';
 import "../styled-components/cardServicios.scss";
-import servicioImg from '../../../assets/img/servicio.jpeg';
 import ServiciosEdit from '../ServiciosEdit';
 import serviciosService from '../../../services/servicios.service';
 import authService from '../../../services/auth.service';
@@ -11,7 +8,39 @@ import authService from '../../../services/auth.service';
 export default function CardServicios({ cards }) {
   const [editModalShow, setEditModalShow] = useState(false);
   const [editedServicio, setEditedServicio] = useState(null);
+  const [images, setImages] = useState({});
   const currentUser = authService.getCurrentUser();
+
+  useEffect(() => {
+    // Obtener las imágenes de los servicios
+    const fetchImages = async () => {
+      const imageRequests = cards.map(servicio => {
+        return serviciosService.getImageById(servicio.idServicio)
+          .then(response => ({
+            id: servicio.idServicio,
+            image: URL.createObjectURL(response.data)
+          }))
+          .catch(error => {
+            console.error(`Error al obtener la imagen para el servicio ${servicio.idServicio}: ${error}`);
+            return { id: servicio.idServicio, image: null };
+          });
+      });
+
+      Promise.all(imageRequests)
+        .then(images => {
+          const imageMap = {};
+          images.forEach(image => {
+            imageMap[image.id] = image.image;
+          });
+          setImages(imageMap);
+        })
+        .catch(error => {
+          console.error(`Error al obtener las imágenes: ${error}`);
+        });
+    };
+
+    fetchImages();
+  }, [cards]);
 
   const handleEdit = (servicio) => {
     setEditedServicio(servicio); 
@@ -32,8 +61,6 @@ export default function CardServicios({ cards }) {
       });
   };
   
-  
-
   const handleDelete = (servicio) => {
     let res = window.confirm("¿Está seguro de que desea DESHABILITAR el servicio?");
     if (res) {
@@ -48,13 +75,12 @@ export default function CardServicios({ cards }) {
         });
     }
   }
-  
 
   return (
     <>
       {cards.map((servicio, index) => (
         <div className="card" key={index}>
-          <div className="card-image" style={{ backgroundImage: `url(${servicioImg})` }}></div>
+          <div className="card-image" style={{ backgroundImage: `url(${images[servicio.idServicio]})`}}></div>
           <div className="heading">
             {servicio.nombre}
             <div className="description">

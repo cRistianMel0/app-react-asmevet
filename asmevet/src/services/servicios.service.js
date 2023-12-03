@@ -23,6 +23,11 @@ class ServiciosService {
   delete(id) {
     return axios.delete(`${API_URL}/${id}`);
   }
+
+  getImageById(idServicio) {
+    return axios.get(`${API_URL}${idServicio}/imagen`, { responseType: 'blob' });
+  }
+  
 }
 
 export default new ServiciosService();
