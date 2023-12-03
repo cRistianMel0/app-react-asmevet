@@ -16,10 +16,10 @@ module.exports = (app) => {
     router.patch("/api/productos/disponibilidad/:idServicio", productos.updateDisponibilidad);
   
     // Eliminar un servicio por su id
-    router.delete("/api/productos/:idServicio", productos.delete);
+    router.delete("/api/productos/:idProducto", productos.delete);
   
     // Ruta para servir archivos de imágenes
-    router.get("/api/productos/:idServicio/imagen", productos.getImageById);
+    router.get("/api/productos/:idProducto/imagen", productos.getImageById);
   
   
     app.use("/", router);

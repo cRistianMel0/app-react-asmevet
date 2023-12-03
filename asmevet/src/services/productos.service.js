@@ -3,16 +3,16 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/api/productos/"; // Asegúrate de tener la URL correcta para los prodcutos
 
 class ProdcutosService {
-  create(servicio) {
-    return axios.post(API_URL, servicio);
+  create(producto) {
+    return axios.post(API_URL, producto);
   }
 
   findAll() {
     return axios.get(API_URL);
   }
 
-  update(servicio) {
-    return axios.put(API_URL, servicio);
+  update(producto) {
+    return axios.put(API_URL, producto);
   }
 
   updateDisponibilidad(servicio) {
@@ -24,8 +24,8 @@ class ProdcutosService {
     return axios.delete(`${API_URL}/${id}`);
   }
 
-  getImageById(idServicio) {
-    return axios.get(`${API_URL}${idServicio}/imagen`, { responseType: 'blob' });
+  getImageById(idProducto) {
+    return axios.get(`${API_URL}${idProducto}/imagen`, { responseType: 'blob' });
   }
   
 }

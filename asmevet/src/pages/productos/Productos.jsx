@@ -6,6 +6,7 @@ import authService from "../../services/auth.service";
 import productosImg from '../../assets/img/slider-img6.jpeg';
 import ProductosCreate from "./ProductosCreate";
 import CardProductos from "./components/CardProductos";
+import productosService from "../../services/productos.service";
 
 export default function Productos() {
   const [productosData, setProductos] = useState([]);
