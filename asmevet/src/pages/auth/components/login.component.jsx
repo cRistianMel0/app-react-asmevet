@@ -59,7 +59,7 @@ const Login = () => {
 
   return (
     <div className="loginBody">
-      <MDBContainer className="gradient-form loginContainer">
+      <MDBContainer className="gradient-form loginContainer" style={{padding: "0"}}>
         <MDBRow>
           <MDBCol col="6" className="">
             <div className="d-flex flex-column mx-5">

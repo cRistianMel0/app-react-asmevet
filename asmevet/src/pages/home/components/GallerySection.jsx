@@ -9,10 +9,10 @@ import galleryImg5 from '../../../assets/img/galeria-img5.jpg';
 const GallerySection = () => {
   return (
     <section className="gallery-section layout_padding">
-      <Container>
+      <Container style={{backgroundColor:"transparent", borderRadius:"0px", padding:"0"}}>
         <h2>Nuestra Galería</h2>
       </Container>
-      <Container className="gallery-container">
+      <Container className="gallery-container" style={{backgroundColor:"transparent", borderRadius:"0px", padding:"0"}}>
         <div className="img_box box-1">
           <img src={galleryImg1} alt="" />
         </div>
