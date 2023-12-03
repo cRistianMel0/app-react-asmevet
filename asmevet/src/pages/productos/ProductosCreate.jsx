@@ -2,49 +2,46 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { PlusCircle  } from 'react-bootstrap-icons';
+import { PlusCircle } from 'react-bootstrap-icons';
+import productosService from '../../services/productos.service'; // Importa el servicio de productos
 
 export default function ProductosCreate() {
-  // Estado para controlar la visibilidad del modal
   const [show, setShow] = useState(false);
-
-  // Estado para almacenar los valores del formulario
   const [formValues, setFormValues] = useState({
     nombre: '',
     descripcion: '',
-    imagen: '',
+    imagen: null,
+    precio: '', // Cambia el estado para el campo de precio
   });
-
-  // Estado para manejar la validación del formulario
   const [validated, setValidated] = useState(false);
 
-  // Función para cerrar el modal y limpiar el formulario
   const handleClose = () => {
     setShow(false);
     setFormValues({
       nombre: '',
       descripcion: '',
-      imagen: '',
+      imagen: null,
+      precio: '', // Reinicia el campo de precio al cerrar el modal
     });
     setValidated(false);
   };
 
-  // Función para mostrar el modal
   const handleShow = () => setShow(true);
 
-  // Función para manejar el envío del formulario
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-  
-    // Validar el formulario
     if (form.checkValidity() === false) {
       e.stopPropagation();
     } else {
       try {
-        // Realizar una solicitud POST a la API con los valores del formulario
-        await productosService.create(formValues); // Utilizar el método create del producto
-        // Cerrar el modal y recargar la página después de enviar los datos
+        const formData = new FormData();
+        formData.append('nombre', formValues.nombre);
+        formData.append('descripcion', formValues.descripcion);
+        formData.append('imagen', formValues.imagen);
+        formData.append('precio', formValues.precio); // Agrega el precio al FormData
+
+        await productosService.create(formData);
         handleClose();
         window.location.reload();
       } catch (err) {
@@ -53,21 +50,21 @@ export default function ProductosCreate() {
     }
     setValidated(true);
   };
-  
 
-  // Función para manejar los cambios en los campos del formulario
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
+    const newValue = name === 'imagen' ? files[0] : value;
+
     setFormValues({
       ...formValues,
-      [name]: value,
+      [name]: newValue,
     });
   };
 
   return (
     <>
       <Button variant="outline-success" onClick={handleShow}>
-        <PlusCircle /> Agrega un Nuevo Producto
+        <PlusCircle /> Agregar un Nuevo Producto
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -107,9 +104,26 @@ export default function ProductosCreate() {
               <Form.Control
                 type="file"
                 name="imagen"
-                value={formValues.imagen}
                 onChange={handleInputChange}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                Este campo es obligatorio.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Precio</Form.Label>
+              <Form.Control
+                type="number"
+                step="0.01"
+                name="precio"
+                value={formValues.precio}
+                onChange={handleInputChange}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Este campo es obligatorio.
+              </Form.Control.Feedback>
             </Form.Group>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>

@@ -21,7 +21,11 @@ module.exports = (sequelize, Sequelize) => {
       precio: {
         type: Sequelize.DECIMAL(10, 2), // Por ejemplo, 10 dígitos totales con 2 decimales
         allowNull: false
-      }
+      },
+      imagen: {
+        type: Sequelize.STRING(255), // Cambiado a STRING(255) para que coincida con la definición en la base de datos
+        allowNull: true
+      },
     });
   
     return Producto;

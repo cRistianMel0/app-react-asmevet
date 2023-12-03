@@ -20,16 +20,17 @@ const db = require("./app/models");
 const Role = db.role;
 
 // Descomentar la siguiente línea para forzar la sincronización y ejecutar la función `initial`
-/* db.sequelize.sync({force: true}).then(() => {
+/*  db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync Database with { force: true }');
   initial();
-});
- */
+}); */
+
 
 // routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/servicios.routes')(app);
+require('./app/routes/productos.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
