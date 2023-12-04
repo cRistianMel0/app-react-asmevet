@@ -14,11 +14,18 @@ export default function ProductosBuy({ show, onClose, producto, onBuy }) {
   }, [producto]);
 
   const handleBuy = () => {
-    onBuy({
-      producto,
-      cantidad,
-    });
-    onClose();
+    const isConfirmed = window.confirm("¿Está seguro de realizar la compra del producto?");
+
+    if (isConfirmed) {
+      onBuy({
+        producto,
+        cantidad,
+      });
+
+      console.log("Su compra se ha efectuado. Se ha enviado la factura de la compra a su correo electrónico.");
+      alert("Su compra se ha efectuado. Se ha enviado la factura de la compra a su correo electrónico.");
+      onClose();
+    }
   };
 
   const calculateTotal = () => {
