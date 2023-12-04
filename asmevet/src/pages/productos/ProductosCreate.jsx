@@ -40,7 +40,7 @@ export default function ProductosCreate() {
         formData.append("nombre", formValues.nombre);
         formData.append("descripcion", formValues.descripcion);
         formData.append("imagen", formValues.imagen);
-        formData.append("precio", formValues.precio);
+        formData.append("precio", formValues.precio); // agregar precio
 
         await productosService.create(formData);
         handleClose();
@@ -64,7 +64,7 @@ export default function ProductosCreate() {
       newValue = value;
     }
 
-    setFormValues({
+    setFormValues({ 
       ...formValues,
       [name]: newValue,
     });
@@ -116,8 +116,8 @@ export default function ProductosCreate() {
                 onChange={handleInputChange}
                 required
               />
-              <Form.Control.Feedback type="invalid">
-                Este campo es obligatorio.
+              <Form.Control.Feedback type="invalid"> 
+                Este campo es obligatorio. 
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
