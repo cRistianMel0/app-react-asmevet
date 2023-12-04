@@ -23,7 +23,7 @@ export default function Productos() {
         // Filtrar los productos disponibles (donde el campo "disponible" es igual a 1)
         const productosDisponibles = res.data.filter(servicio => servicio.disponible === true);
         console.log(productosData)
-        setProductos(productosDisponibles);
+        setProductos(productosDisponibles); //Uso de la funcion para poder ver los productos disponibles
       } catch (err) {
         console.log(err);
       }
