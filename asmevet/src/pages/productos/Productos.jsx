@@ -7,6 +7,7 @@ import productosImg from '../../assets/img/slider-img6.jpeg';
 import ProductosCreate from "./ProductosCreate";
 import CardProductos from "./components/CardProductos";
 import productosService from "../../services/productos.service";
+import Footer from "../../components/Footer";
 
 export default function Productos() {
   window.scrollTo(0, 0);
@@ -76,6 +77,8 @@ export default function Productos() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }

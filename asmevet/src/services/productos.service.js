@@ -15,8 +15,8 @@ class ProdcutosService {
     return axios.put(API_URL, producto);
   }
 
-  updateDisponibilidad(servicio) {
-    return axios.patch(API_URL, servicio);
+  updateDisponibilidad(producto) {
+    return axios.patch(API_URL, producto);
   }
   
 

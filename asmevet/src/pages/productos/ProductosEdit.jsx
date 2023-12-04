@@ -6,19 +6,19 @@ import Button from "react-bootstrap/Button";
 
 export default function ProductosEdit({ show, onClose, producto, onSave }) {
   const [editedProducto, setEditedProducto] = useState({
-    id: producto.id,
-    title: producto.title,
-    description: producto.description,
-    price: producto.price,
+    idProducto: producto.idProducto,
+    nombre: producto.nombre,
+    descripcion: producto.descripcion,
+    precio: producto.precio,
     imagen: producto.imagen,
   });
 
   useEffect(() => {
     setEditedProducto({
-      id: producto.id,
-      title: producto.title,
-      description: producto.description,
-      price: producto.price,
+      idProducto: producto.idProducto,
+      nombre: producto.nombre,
+      descripcion: producto.descripcion,
+      precio: producto.precio,
       imagen: producto.imagen,
     });
   }, [producto]);
@@ -29,9 +29,9 @@ export default function ProductosEdit({ show, onClose, producto, onSave }) {
   };
 
   return (
-    <Modal show={show} onHide={onClose}>
+    <Modal show={show} onHidProductoe={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Editar Producto</Modal.Title>
+        <Modal.nombre>Editar Producto</Modal.nombre>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -39,9 +39,9 @@ export default function ProductosEdit({ show, onClose, producto, onSave }) {
             <Form.Label>Nombre del Producto</Form.Label>
             <Form.Control
               type="text"
-              value={editedProducto.title}
+              value={editedProducto.nombre}
               onChange={(e) =>
-                setEditedProducto({ ...editedProducto, title: e.target.value })
+                setEditedProducto({ ...editedProducto, nombre: e.target.value })
               }
             />
           </Form.Group>
@@ -49,11 +49,11 @@ export default function ProductosEdit({ show, onClose, producto, onSave }) {
             <Form.Label>Descripción del Producto</Form.Label>
             <Form.Control
               as="textarea"
-              value={editedProducto.description}
+              value={editedProducto.descripcion}
               onChange={(e) =>
                 setEditedProducto({
                   ...editedProducto,
-                  description: e.target.value,
+                  descripcion: e.target.value,
                 })
               }
             />
@@ -62,11 +62,11 @@ export default function ProductosEdit({ show, onClose, producto, onSave }) {
             <Form.Label>Precio del Producto</Form.Label>
             <Form.Control
               type="text"
-              value={editedProducto.price}
+              value={editedProducto.precio}
               onChange={(e) =>
                 setEditedProducto({
                   ...editedProducto,
-                  price: e.target.value,
+                  precio: e.target.value,
                 })
               }
             />
