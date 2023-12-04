@@ -70,8 +70,9 @@ export default function ProductosBuy({ show, onClose, producto, onBuy }) {
               <Form.Group>
                 <Form.Label>Forma de Pago</Form.Label>
                 <Form.Control as="select">
-                  <option>Efectivo</option>
                   <option>Tarjeta de Crédito</option>
+                  <option>Tarjeta de Débito</option>
+                  <option>CR Contra Entrega</option>
                   <option>Otro</option>
                 </Form.Control>
               </Form.Group>
