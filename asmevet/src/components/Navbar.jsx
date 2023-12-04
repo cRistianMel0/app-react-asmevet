@@ -95,13 +95,13 @@ export default function Navbar() {
                   </Link>
                   </>
                 )}
-                <Link to="/profile" className="dropdown-item">
-                  <PersonCircle className="me-2" />
-                  Mi Perfil
-                </Link>
                 <Link to="/Animales" className="dropdown-item">
                   <FaPaw className="me-2" />
                   Mascotas
+                </Link>
+                <Link to="/profile" className="dropdown-item">
+                  <PersonCircle className="me-2" />
+                  Mi Perfil
                 </Link>
                 <div className="dropdown-divider"></div>
                 <button className="dropdown-item" onClick={logOut}>
