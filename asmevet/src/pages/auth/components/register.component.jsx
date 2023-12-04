@@ -40,41 +40,58 @@ const Register = () => {
     fechaNacimiento: "",
     successful: false,
     message: "",
+    emailExistsError: false,
   });
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     setState((prevState) => ({
       ...prevState,
       message: "",
       successful: false,
+      emailExistsError: false,
     }));
 
     const form = e.target;
     const isValidForm = form.checkValidity();
 
     if (isValidForm) {
-      AuthService.register({
-        username: state.username,
-        email: state.email,
-        password: state.password,
-        apellido: state.apellido,
-        tipoDoc: state.tipoDoc,
-        documento: state.documento,
-        telefono: state.telefono,
-        direccion: state.direccion,
-        genero: state.genero,
-        fechaNacimiento: state.fechaNacimiento,
-      }).then(
-        (response) => {
-          setState((prevState) => ({
-            ...prevState,
-            message: response.data.message,
-            successful: true,
-          }));
-        },
-        (error) => {
+      try {
+        const response = await AuthService.register({
+          username: state.username,
+          email: state.email,
+          password: state.password,
+          apellido: state.apellido,
+          tipoDoc: state.tipoDoc,
+          documento: state.documento,
+          telefono: state.telefono,
+          direccion: state.direccion,
+          genero: state.genero,
+          fechaNacimiento: state.fechaNacimiento,
+        });
+
+        setState((prevState) => ({
+          ...prevState,
+          message: response.data.message,
+          successful: true,
+        }));
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          const responseData = error.response.data;
+          if (responseData.message === "Correo ya registrado") {
+            setState((prevState) => ({
+              ...prevState,
+              emailExistsError: true,
+            }));
+          } else {
+            setState((prevState) => ({
+              ...prevState,
+              successful: false,
+              message: responseData.message,
+            }));
+          }
+        } else {
           const resMessage =
             (error.response &&
               error.response.data &&
@@ -88,7 +105,7 @@ const Register = () => {
             message: resMessage,
           }));
         }
-      );
+      }
     } else {
       form.reportValidity();
     }
@@ -336,6 +353,12 @@ const Register = () => {
                     {state.message}
                   </Alert>
                 )}
+
+                {state.emailExistsError && (
+                  <Alert variant="danger" role="alert" className="fade show">
+                    El correo electrónico ya está registrado. Por favor, utiliza otro correo.
+                  </Alert>
+                )}
               </Form>
               {state.successful && (
                 <>
@@ -349,7 +372,7 @@ const Register = () => {
         </MDBRow>
       </MDBContainer>
     </div>
-  );  
+  );
 };
 
 export default Register;

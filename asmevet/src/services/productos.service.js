@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/productos/"; // Asegúrate de tener la URL correcta para los prodcutos
+const API_URL = "http://localhost:8080/api/productos/";
 
 class ProdcutosService {
   create(producto) {

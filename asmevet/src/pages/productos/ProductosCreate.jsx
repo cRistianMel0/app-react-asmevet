@@ -1,27 +1,28 @@
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import { PlusCircle } from 'react-bootstrap-icons';
-import productosService from '../../services/productos.service'; // Importa el servicio de productos
+import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import { PlusCircle } from "react-bootstrap-icons";
+import productosService from "../../services/productos.service";
+import { InputGroup } from "react-bootstrap";
 
 export default function ProductosCreate() {
   const [show, setShow] = useState(false);
   const [formValues, setFormValues] = useState({
-    nombre: '',
-    descripcion: '',
+    nombre: "",
+    descripcion: "",
     imagen: null,
-    precio: '', // Cambia el estado para el campo de precio
+    precio: 0,
   });
   const [validated, setValidated] = useState(false);
 
   const handleClose = () => {
     setShow(false);
     setFormValues({
-      nombre: '',
-      descripcion: '',
+      nombre: "",
+      descripcion: "",
       imagen: null,
-      precio: '', // Reinicia el campo de precio al cerrar el modal
+      precio: "",
     });
     setValidated(false);
   };
@@ -36,10 +37,10 @@ export default function ProductosCreate() {
     } else {
       try {
         const formData = new FormData();
-        formData.append('nombre', formValues.nombre);
-        formData.append('descripcion', formValues.descripcion);
-        formData.append('imagen', formValues.imagen);
-        formData.append('precio', formValues.precio); // Agrega el precio al FormData
+        formData.append("nombre", formValues.nombre);
+        formData.append("descripcion", formValues.descripcion);
+        formData.append("imagen", formValues.imagen);
+        formData.append("precio", formValues.precio);
 
         await productosService.create(formData);
         handleClose();
@@ -53,7 +54,15 @@ export default function ProductosCreate() {
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    const newValue = name === 'imagen' ? files[0] : value;
+    let newValue;
+
+    if (name === 'imagen') {
+      newValue = files[0];
+    } else if (name === 'precio') {
+      newValue = Math.max(0, parseFloat(value)); // No permitir valores negativos
+    } else {
+      newValue = value;
+    }
 
     setFormValues({
       ...formValues,
@@ -112,18 +121,25 @@ export default function ProductosCreate() {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Precio</Form.Label>
-              <Form.Control
-                type="number"
-                step="0.01"
-                name="precio"
-                value={formValues.precio}
-                onChange={handleInputChange}
-                required
-              />
+              <Form.Label>Precio (COP)</Form.Label>
+              <InputGroup>
+                <InputGroup.Text>$</InputGroup.Text>
+                <Form.Control
+                  type="number"
+                  step="100"
+                  name="precio"
+                  value={formValues.precio}
+                  onChange={handleInputChange}
+                  required
+                />
+              </InputGroup>
               <Form.Control.Feedback type="invalid">
                 Este campo es obligatorio.
               </Form.Control.Feedback>
+              <Form.Text muted>
+                Ingresa el precio en pesos colombianos (COP). No es necesario
+                incluir decimales (por ejemplo, 1000).
+              </Form.Text>
             </Form.Group>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
