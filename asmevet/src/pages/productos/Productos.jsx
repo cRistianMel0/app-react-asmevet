@@ -9,6 +9,8 @@ import CardProductos from "./components/CardProductos";
 import productosService from "../../services/productos.service";
 
 export default function Productos() {
+  window.scrollTo(0, 0);
+  
   const [productosData, setProductos] = useState([]);
   const [searchText, setSearchText] = useState('');
   const currentUser = authService.getCurrentUser();

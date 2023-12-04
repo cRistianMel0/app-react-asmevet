@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { PencilSquare, ExclamationTriangle } from 'react-bootstrap-icons';
 import "../styled-components/cardServicios.scss";

@@ -8,8 +8,11 @@ import SearchBar from '../../components/SearchBar';
 import serviciosService from '../../services/servicios.service';
 import Whatsapp from '../../components/Whatsapp';
 import authService from '../../services/auth.service';
+import Footer from '../../components/Footer';
 
 export default function Servicios() {
+  window.scrollTo(0, 0);
+  
   const [serviciosData, setServicios] = useState([]);
   const [searchText, setSearchText] = useState('');
   const currentUser = authService.getCurrentUser();
@@ -69,6 +72,8 @@ export default function Servicios() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </>
   )
 }
