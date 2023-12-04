@@ -56,8 +56,7 @@ const CardProductos = ({ cards }) => {
   };
 
   const handleSaveEdit = (editedProducto) => {
-    productosService
-      .update(editedProducto)
+    productosService.update(editedProducto)
       .then((response) => {
         console.log(response.data);
         setEditModalShow(false);
@@ -75,8 +74,7 @@ const CardProductos = ({ cards }) => {
       "¿Está seguro de que desea DESHABILITAR el producto?"
     );
     if (res) {
-      productosService
-        .updateDisponibilidad(producto)
+      productosService.updateDisponibilidad(producto)
         .then((response) => {
           console.log(response.data);
           window.location.reload();

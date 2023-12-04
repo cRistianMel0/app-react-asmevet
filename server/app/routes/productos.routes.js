@@ -10,10 +10,10 @@ module.exports = (app) => {
     router.get("/api/productos/", productos.findAll);
   
     // Actualizar un servicio por su id
-    router.put("/api/productos/:idServicio", productos.update);
+    router.put("/api/productos/", productos.update);
   
     // Actualizar la disponibilidad de un servicio por su id
-    router.patch("/api/productos/disponibilidad/:idServicio", productos.updateDisponibilidad);
+    router.patch("/api/productos/", productos.updateDisponibilidad);
   
     // Eliminar un servicio por su id
     router.delete("/api/productos/:idProducto", productos.delete);

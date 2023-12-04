@@ -13,7 +13,7 @@ module.exports = (app) => {
   router.put("/api/servicios/", servicios.update);
 
   // Actualizar la disponibilidad de un servicio por su id
-  router.patch("/api/servicios/disponibilidad/:idServicio", servicios.updateDisponibilidad);
+  router.patch("/api/servicios/", servicios.updateDisponibilidad);
 
   // Eliminar un servicio por su id
   router.delete("/api/servicios/:idServicio", servicios.delete);
