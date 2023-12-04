@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Person, BoxArrowRight, PersonCircle } from "react-bootstrap-icons";
-import { FaUserDoctor } from "react-icons/fa6";
+import { FaPaw, FaUserDoctor } from "react-icons/fa6";
 import AuthService from "../services/auth.service";
 import "../styled-components/navbar.scss";
 
@@ -18,11 +18,13 @@ export default function Navbar() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const navigate = useNavigate();
+
   // Función de cierre de sesión
   const logOut = () => {
     AuthService.logout();
     setCurrentUser(null);
-    window.location.reload();
+    navigate("/");
   };
 
   useEffect(() => {
@@ -96,6 +98,10 @@ export default function Navbar() {
                 <Link to="/profile" className="dropdown-item">
                   <PersonCircle className="me-2" />
                   Mi Perfil
+                </Link>
+                <Link to="/Animales" className="dropdown-item">
+                  <FaPaw className="me-2" />
+                  Mascotas
                 </Link>
                 <div className="dropdown-divider"></div>
                 <button className="dropdown-item" onClick={logOut}>

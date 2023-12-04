@@ -24,7 +24,6 @@ export default function Servicios() {
         const res = await serviciosService.findAll();
         // Filtrar los servicios disponibles (donde el campo "disponible" es igual a 1)
         const serviciosDisponibles = res.data.filter(servicio => servicio.disponible === true);
-        console.log(serviciosData)
         setServicios(serviciosDisponibles);
       } catch (err) {
         console.log(err);
