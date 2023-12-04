@@ -1,15 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { PencilSquare, ExclamationTriangle } from "react-bootstrap-icons";
-import { FaShoppingCart } from 'react-icons/fa';
 import authService from "../../../services/auth.service";
 import "../styled-components/cardProductos.scss";
+import { FaShoppingCart } from "react-icons/fa";
 import ProductosEdit from "../ProductosEdit";
 import productosService from "../../../services/productos.service";
+import ProductosBuy from "../ProductosBuy";
 
 const CardProductos = ({ cards }) => {
   const [editModalShow, setEditModalShow] = useState(false);
+  const [buyModalShow, setBuyModalShow] = useState(false);
   const [editedProducto, setEditedProducto] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const currentUser = authService.getCurrentUser();
   const [images, setImages] = useState({});
 
@@ -85,6 +88,15 @@ const CardProductos = ({ cards }) => {
     }
   };
 
+  const handleBuy = (producto) => {
+    setSelectedProduct(producto);
+    setBuyModalShow(true);
+  };
+
+  const handleBuyModalClose = () => {
+    setBuyModalShow(false);
+  };
+
   return (
     <>
       {cards.map((producto, index) => (
@@ -95,14 +107,18 @@ const CardProductos = ({ cards }) => {
           ></div>
           <div className="heading">
             {producto.nombre}
-            <div className="description">
-              {producto.descripcion}
-            </div>
-            <div className="buttons">
-              <button className="buy-button">
+            <div className="description">{producto.descripcion}</div>
+            <div className="price-and-button">
+              <p className="text-price">${producto.precio}</p>
+              <button
+                className="buy-button"
+                onClick={() => handleBuy(producto)}
+              >
                 <FaShoppingCart className="buy-icon" />
                 Comprar
               </button>
+            </div>
+            <div className="buttons">
               {currentUser &&
                 currentUser.roles &&
                 currentUser.roles.includes("ROLE_ADMIN") && (
@@ -131,6 +147,13 @@ const CardProductos = ({ cards }) => {
           onClose={() => setEditModalShow(false)}
           producto={editedProducto}
           onSave={handleSaveEdit}
+        />
+      )}
+      {selectedProduct && (
+        <ProductosBuy
+          show={buyModalShow}
+          onClose={handleBuyModalClose}
+          producto={selectedProduct}
         />
       )}
     </>

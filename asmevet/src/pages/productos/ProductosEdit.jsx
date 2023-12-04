@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { InputGroup } from "react-bootstrap";
 
 export default function ProductosEdit({ show, onClose, producto, onSave }) {
   const [editedProducto, setEditedProducto] = useState({
@@ -10,7 +11,6 @@ export default function ProductosEdit({ show, onClose, producto, onSave }) {
     nombre: producto.nombre,
     descripcion: producto.descripcion,
     precio: producto.precio,
-    imagen: producto.imagen,
   });
 
   useEffect(() => {
@@ -19,7 +19,6 @@ export default function ProductosEdit({ show, onClose, producto, onSave }) {
       nombre: producto.nombre,
       descripcion: producto.descripcion,
       precio: producto.precio,
-      imagen: producto.imagen,
     });
   }, [producto]);
 
@@ -29,9 +28,9 @@ export default function ProductosEdit({ show, onClose, producto, onSave }) {
   };
 
   return (
-    <Modal show={show} onHidProductoe={onClose}>
+    <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.nombre>Editar Producto</Modal.nombre>
+        <Modal.Title>Editar Producto</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -60,35 +59,20 @@ export default function ProductosEdit({ show, onClose, producto, onSave }) {
           </Form.Group>
           <Form.Group>
             <Form.Label>Precio del Producto</Form.Label>
-            <Form.Control
-              type="text"
-              value={editedProducto.precio}
-              onChange={(e) =>
-                setEditedProducto({
-                  ...editedProducto,
-                  precio: e.target.value,
-                })
-              }
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Imagen del Producto</Form.Label>
-            <Form.Control
-              type="file"
-              accept="image/*"
-              onChange={(e) =>
-                setEditedProducto({
-                  ...editedProducto,
-                  imagen: e.target.files[0],
-                })
-              }
-            />
-            {editedProducto.imagen && (
-              <img
-                src={URL.createObjectURL(editedProducto.imagen)}
-                alt="Imagen del producto"
-              />
-            )}
+              <InputGroup>
+                <InputGroup.Text>$</InputGroup.Text>
+                <Form.Control
+                  type="number"
+                  step="100"
+                  value={editedProducto.precio}
+                  onChange={(e) =>
+                    setEditedProducto({
+                      ...editedProducto,
+                      precio: e.target.value,
+                    })
+                  }
+                />
+              </InputGroup>
           </Form.Group>
         </Form>
       </Modal.Body>
