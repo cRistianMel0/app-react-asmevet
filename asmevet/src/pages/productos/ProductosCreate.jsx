@@ -126,7 +126,7 @@ export default function ProductosCreate() {
               </Form.Control.Feedback>
             </Form.Group>
             <div className="row">
-              <div className="col-md-6 mb-3">
+              <div className="col-md-6">
                 <Form.Group className="mb-3">
                   <Form.Label>Precio (COP)</Form.Label>
                   <InputGroup>

@@ -6,6 +6,7 @@ import SearchBar from "../../components/SearchBar";
 import { useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
 import AnimalesEdit from "./AnimalesEdit";
+import AnimalesCreate from "./AnimalesCreate";
 
 export default function Animales() {
   const [animales, setAnimales] = useState([]);
@@ -104,6 +105,9 @@ export default function Animales() {
                 searchText={searchText}
                 setSearchText={setSearchText}
               />
+            </div>
+            <div className="col-4">
+              <AnimalesCreate />
             </div>
           </div>
 
