@@ -2,7 +2,9 @@ module.exports = (app) => {
   const carritos = require('../controllers/carrito.controller');
   const router = require("express").Router();
 
-  router.post("/api/carrito/:idUser/:idProducto", carritos.create)
+  router.post("/api/carrito/:idUser/:idProducto", carritos.create);
+
+  router.get("/api/carrito/:idUser", carritos.getProductosEnCarrito)
 
   app.use("/", router);
 };

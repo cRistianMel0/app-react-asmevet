@@ -10,6 +10,10 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
 
+    Carrito.associate = (models) => {
+      Carrito.belongsToMany(models.Producto, { through: 'Carrito', foreignKey: 'idUser' });
+  };
+
     return Carrito;
   };
   
