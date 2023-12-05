@@ -27,6 +27,10 @@ class ProdcutosService {
   getImageById(idProducto) {
     return axios.get(`${API_URL}${idProducto}/imagen`, { responseType: 'blob' });
   }
+
+  agregarAlCarrito(idProducto, idUser){
+    return axios.put(`${API_URL}${idProducto}/${idUser}`);
+  }
   
 }
 

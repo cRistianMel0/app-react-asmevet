@@ -167,3 +167,51 @@ exports.update = (req, res) => {
       });
   };
   
+  exports.agregarAlCarrito = (req, res) => {
+    const idProducto = req.params.idProducto; // ID del producto que se agregará al carrito
+    const idUser = req.params.idUser; // ID del usuario al que se le agregará el producto al carrito
+  
+    Producto.findByPk(idProducto)
+      .then(producto => {
+        if (!producto) {
+          return res.status(404).send('Producto no encontrado');
+        }
+  
+        // Actualizar el campo 'enCarrito' a true y asignar el 'idUser'
+        producto.update({ enCarrito: true, idUser: idUser })
+          .then(() => {
+            res.send({
+              message: "¡Producto agregado al carrito exitosamente!"
+            });
+          })
+          .catch(err => {
+            res.status(500).send('Error al agregar el producto al carrito: ' + err.message);
+          });
+      })
+      .catch(err => {
+        res.status(500).send('Error al obtener el producto: ' + err.message);
+      });
+  };
+
+  // Método para quitar un producto del carrito de un usuario
+exports.quitarDelCarrito = (req, res) => {
+  const idProducto = req.params.idProducto;
+  const idUser = req.params.idUser;
+
+
+  // Por ejemplo, si tienes un modelo de Carrito con los productos del usuario, podrías hacer algo como:
+  Carrito.findOneAndDelete({ idUser: idUser, idProducto: idProducto })
+    .then((productoRemovido) => {
+      if (!productoRemovido) {
+        return res.status(404).send('Producto no encontrado en el carrito');
+      }
+      res.send({
+        message: "¡Producto removido del carrito exitosamente!"
+      });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error al quitar el producto del carrito: " + err.message
+      });
+    });
+};

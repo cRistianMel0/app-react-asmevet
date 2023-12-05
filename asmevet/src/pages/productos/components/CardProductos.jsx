@@ -91,6 +91,19 @@ const CardProductos = ({ cards }) => {
     setBuyModalShow(true);
   };
 
+  const handleAddToCart = (idProducto, idUser) => {
+    try {
+      productosService.agregarAlCarrito(idProducto, idUser)
+      window.confirm(
+        "Producto agregado exitosamente!"
+      );
+    } catch (error) {
+      console.error(error);
+      window.alert(`Se ha generado un problema en el servidor ${error}`);
+    }
+    
+  }
+
   const handleBuyModalClose = () => {
     setBuyModalShow(false);
   };
@@ -111,10 +124,10 @@ const CardProductos = ({ cards }) => {
               <p className="text-price">${producto.precio}</p>
               <button
                 className="buy-button"
-                onClick={() => handleBuy(producto)}
+                onClick={() => handleAddToCart(producto.idProducto,currentUser.id)}
               >
-                <FaShoppingCart className="buy-icon" />
-                Comprar
+                Añadir
+                <FaShoppingCart className="buy-icon ms-2" />
               </button>
             </div>
             <div className="buttons">

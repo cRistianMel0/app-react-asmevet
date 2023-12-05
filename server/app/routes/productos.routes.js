@@ -21,6 +21,9 @@ module.exports = (app) => {
     // Ruta para servir archivos de imágenes
     router.get("/api/productos/:idProducto/imagen", productos.getImageById);
   
+    router.put("/api/productos/:idUser/:idProducto", productos.agregarAlCarrito);
+
+    router.delete("/api/productos/:idUser/:idProducto", productos.quitarDelCarrito);
   
     app.use("/", router);
   };
