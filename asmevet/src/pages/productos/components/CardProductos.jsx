@@ -45,6 +45,7 @@ const CardProductos = ({ cards }) => {
         .catch((error) => {
           console.error(`Error al obtener las imágenes: ${error}`);
         });
+      console.log("Datos de los productos:", cards);
     };
 
     fetchImages();
@@ -93,7 +94,7 @@ const CardProductos = ({ cards }) => {
 
   const handleAddToCart = (idProducto, idUser) => {
     try {
-      productosService.agregarAlCarrito(idProducto, idUser)
+      productosService.agregarAlCarrito(idUser, idProducto)
       window.confirm(
         "Producto agregado exitosamente!"
       );
@@ -101,12 +102,27 @@ const CardProductos = ({ cards }) => {
       console.error(error);
       window.alert(`Se ha generado un problema en el servidor ${error}`);
     }
-    
+
   }
+
+  const handleRemoveFromCart = (idProducto, idUser) => {
+    try {
+      productosService.quitarDelCarrito(idUser, idProducto)
+      window.confirm(
+        "Producto removido del carrito exitosamente!"
+      );
+    } catch (error) {
+      console.error(error);
+      window.alert(`Se ha generado un problema en el servidor ${error}`);
+    }
+  }
+
 
   const handleBuyModalClose = () => {
     setBuyModalShow(false);
   };
+
+  
 
   return (
     <>
@@ -122,13 +138,23 @@ const CardProductos = ({ cards }) => {
             <div className="existances">Quedan {producto.existencias} existencias</div>
             <div className="price-and-button">
               <p className="text-price">${producto.precio}</p>
-              <button
-                className="buy-button"
-                onClick={() => handleAddToCart(producto.idProducto,currentUser.id)}
-              >
-                Añadir
-                <FaShoppingCart className="buy-icon ms-2" />
-              </button>
+              {producto.enCarrito === true ? (
+                <button
+                  className="buy-button bg-danger"
+                  onClick={() => handleRemoveFromCart(currentUser.id, producto.idProducto)}
+                >
+                  Quitar
+                  <FaShoppingCart className="buy-icon ms-2" />
+                </button>
+              ) : (
+                <button
+                  className="buy-button"
+                  onClick={() => handleAddToCart(currentUser.id, producto.idProducto)}
+                >
+                  Añadir
+                  <FaShoppingCart className="buy-icon ms-2" />
+                </button>
+              )}
             </div>
             <div className="buttons">
               {currentUser &&

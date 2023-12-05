@@ -28,8 +28,12 @@ class ProdcutosService {
     return axios.get(`${API_URL}${idProducto}/imagen`, { responseType: 'blob' });
   }
 
-  agregarAlCarrito(idProducto, idUser){
+  agregarAlCarrito(idUser, idProducto){
     return axios.put(`${API_URL}${idProducto}/${idUser}`);
+  }
+
+  quitarDelCarrito(idUser, idProducto){
+    return axios.delete(`${API_URL}${idProducto}/${idUser}`);
   }
   
 }
