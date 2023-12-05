@@ -1,24 +1,21 @@
 module.exports = (app) => {
-    
-    const animales = require('../controllers/animales.controller')
-  
-    const router = require("express").Router();
-  
-    // Ruta para creación de animales, incluyendo la subida de archivos
-    router.post("/api/animales/", animales.create);
+  const animales = require('../controllers/animales.controller');
+  const router = require("express").Router();
 
-    router.get("/api/animales/", animales.getAllAnimals);
+  // Ruta para creación de animales
+  router.post("/api/animales", animales.create);
 
-    router.patch("/api/animales/:idAnimal", animales.deshabilitarAnimal)
+  // Ruta para obtener todos los animales
+  router.get("/api/animales", animales.getAllAnimals);
 
-    router.put("/api/animales/:idAnimal", animales.editarAnimal)
+  // Ruta para deshabilitar un animal por ID
+  router.patch("/api/animales/:idAnimal", animales.deshabilitarAnimal);
 
-    router.get("/api/animales/:idUser", animales.getAllByUserId)
-  
-    // Obtener todos los animales
+  // Ruta para editar un animal por ID
+  router.put("/animales/:idAnimal", animales.editarAnimal);
 
-  
-  
-    app.use("/", router);
-  };
-  
+  // Ruta para obtener todos los animales de un usuario por ID
+  router.get("/animales/user/:idUser", animales.getAllByUserId);
+
+  app.use("/", router);
+};
