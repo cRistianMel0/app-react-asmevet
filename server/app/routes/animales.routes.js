@@ -10,6 +10,8 @@ module.exports = (app) => {
     router.patch("/api/animales/:idAnimal", animales.deshabilitarAnimal)
 
     router.put("/api/animales/:idAnimal", animales.editarAnimal)
+
+    router.get("/api/animales/:idUser", animales.getAllByUserId)
   
     // Obtener todos los animales
 
