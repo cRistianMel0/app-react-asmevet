@@ -23,15 +23,15 @@ export default function Animales() {
           navigate("/unauthorized");
           return;
         }
-  
+
         let response;
-  
+
         if (currentUser.roles.includes("ROLE_ADMIN")) {
           response = await animalesService.getAllAnimals();
         } else if (currentUser.roles.includes("ROLE_USER")) {
           response = await animalesService.getAnimalesByUserId(currentUser.id);
         }
-  
+
         if (response && response.data) {
           setAnimales(response.data);
         }
@@ -39,10 +39,10 @@ export default function Animales() {
         console.error("Error al obtener animales:", error);
       }
     };
-  
+
     fetchAnimales();
-  }, [currentUser, navigate]); 
-  
+  }, [currentUser, navigate]);
+
   const handleEdit = (animal) => {
     setSelectedAnimal(animal);
     setShowEditModal(true);
@@ -54,7 +54,7 @@ export default function Animales() {
   };
 
   const handleSaveEdit = (editedAnimal) => {
-    animalService
+    animalesService
       .updateAnimal(editedAnimal)
       .then((response) => {
         console.log(response.data);
@@ -68,19 +68,19 @@ export default function Animales() {
       });
   };
 
-  const handleDelete = (animal) => {
+  const handleDelete = async (animal) => {
     let res = window.confirm("¿Está seguro de que desea eliminar el animal?");
     if (res) {
-      animalService
-        .deleteAnimal(animal.idAnimal)
-        .then((response) => {
-          console.log(response.data);
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.error(error);
-          window.alert(`Se ha generado un problema en el servidor ${error}`);
-        });
+      try {
+        await animalesService.deshabilitarAnimal(animal.idAnimal);
+        const updatedAnimales = animales.map((a) =>
+          a.idAnimal === animal.idAnimal ? { ...a, disponible: false } : a
+        );
+        setAnimales(updatedAnimales);
+      } catch (error) {
+        console.error(error);
+        window.alert(`Se ha generado un problema en el servidor ${error}`);
+      }
     }
   };
 
@@ -93,10 +93,7 @@ export default function Animales() {
 
           <div className="row mb-5">
             <div className="col-8">
-              <SearchBar
-                searchText={searchText}
-                setSearchText={setSearchText}
-              />
+              <SearchBar searchText={searchText} setSearchText={setSearchText} />
             </div>
             <div className="col-4">
               <AnimalesCreate />
@@ -117,33 +114,34 @@ export default function Animales() {
                 </tr>
               </thead>
               <tbody>
-                {animales.map((animal, index) => (
-                  <tr key={index}>
-                    <td>{animal.nombre}</td>
-
-                    <td>{animal.tipo}</td>
-                    <td>{animal.raza}</td>
-                    <td>{animal.collar ? "Sí" : "No"}</td>
-                    <td>{animal.requiereCarnet ? "Sí" : "No"}</td>
-                    <td>
-                      {new Date(animal.fechaNacimiento).toLocaleDateString()}
-                    </td>
-                    <td>
-                      <button
-                        className="edit-button"
-                        onClick={() => handleEdit(animal)}
-                      >
-                        <PencilSquare />
-                      </button>
-                      <button
-                        className="disable-button"
-                        onClick={() => handleDelete(animal)}
-                      >
-                        <ExclamationTriangle />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {animales
+                  .filter((animal) => animal.disponible) // Filtrar solo los animales disponibles
+                  .map((animal, index) => (
+                    <tr key={index}>
+                      <td>{animal.nombre}</td>
+                      <td>{animal.tipo}</td>
+                      <td>{animal.raza}</td>
+                      <td>{animal.collar ? "Sí" : "No"}</td>
+                      <td>{animal.requiereCarnet ? "Sí" : "No"}</td>
+                      <td>
+                        {new Date(animal.fechaNacimiento).toLocaleDateString()}
+                      </td>
+                      <td>
+                        <button
+                          className="edit-button"
+                          onClick={() => handleEdit(animal)}
+                        >
+                          <PencilSquare />
+                        </button>
+                        <button
+                          className="disable-button"
+                          onClick={() => handleDelete(animal)}
+                        >
+                          <ExclamationTriangle />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
