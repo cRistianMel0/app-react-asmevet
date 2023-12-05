@@ -4,16 +4,16 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { PlusCircle } from "react-bootstrap-icons";
-import { Col } from "react-bootstrap";
+// import animalService from "../../services/animal.service";
 
-export default function AnimalesCreate({ onAnimalCreate }) {
+export default function AnimalesCreate() {
   const [show, setShow] = useState(false);
   const [formValues, setFormValues] = useState({
     idUser: "",
     nombre: "",
     tipo: "",
     raza: "",
-    collar: "",
+    collar: false,
     requiereCarnet: false,
     fechaNacimiento: "",
   });
@@ -22,11 +22,11 @@ export default function AnimalesCreate({ onAnimalCreate }) {
   const handleClose = () => {
     setShow(false);
     setFormValues({
-      idUser: "",
+      idUser: "", 
       nombre: "",
       tipo: "",
       raza: "",
-      collar: "",
+      collar: false,
       requiereCarnet: false,
       fechaNacimiento: "",
     });
@@ -35,21 +35,32 @@ export default function AnimalesCreate({ onAnimalCreate }) {
 
   const handleShow = () => setShow(true);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.stopPropagation();
     } else {
-      onAnimalCreate(formValues);
-      handleClose();
+      try {
+        await animalService.create(formValues);
+        handleClose();
+        window.location.reload(); 
+      } catch (err) {
+        console.log(err);
+      }
     }
     setValidated(true);
   };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value;
+    let newValue;
+
+    if (type === "checkbox") {
+      newValue = checked;
+    } else {
+      newValue = value;
+    }
 
     setFormValues({
       ...formValues,
@@ -82,58 +93,56 @@ export default function AnimalesCreate({ onAnimalCreate }) {
                 Este campo es obligatorio.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Row>
-              <Form.Group as={Col} className="mb-3">
-                <Form.Label>Tipo</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="tipo"
-                  value={formValues.tipo}
-                  onChange={handleInputChange}
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  Este campo es obligatorio.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} className="mb-3">
-                <Form.Label>Raza</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="raza"
-                  value={formValues.raza}
-                  onChange={handleInputChange}
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  Este campo es obligatorio.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              <Form.Group as={Col} className="mb-3">
-                <Form.Label>Collar</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="collar"
-                  value={formValues.collar}
-                  onChange={handleInputChange}
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  Este campo es obligatorio.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} className="mb-3">
-                <Form.Check
-                  type="checkbox"
-                  label="Requiere Carnet"
-                  name="requiereCarnet"
-                  checked={formValues.requiereCarnet}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </Form.Row>
+            <Form.Group className="mb-3">
+              <Form.Label>Tipo</Form.Label>
+              <Form.Control
+                type="text"
+                name="tipo"
+                value={formValues.tipo}
+                onChange={handleInputChange}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Este campo es obligatorio.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Raza</Form.Label>
+              <Form.Control
+                type="text"
+                name="raza"
+                value={formValues.raza}
+                onChange={handleInputChange}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Este campo es obligatorio.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <div className="row">
+              <div className="col-md-6">
+            <Form.Group className="mb-3">
+              <Form.Check
+                type="checkbox"
+                label="Cuenta con Collar"
+                name="collar"
+                checked={formValues.collar}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+              </div>
+              <div className="col-md-6 mb-3">
+            <Form.Group className="mb-3">
+              <Form.Check
+                type="checkbox"
+                label="Requiere Carnet"
+                name="requiereCarnet"
+                checked={formValues.requiereCarnet}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+              </div>
+            </div>
             <Form.Group className="mb-3">
               <Form.Label>Fecha de Nacimiento</Form.Label>
               <Form.Control
