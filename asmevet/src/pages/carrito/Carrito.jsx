@@ -1,12 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import authService from "../../services/auth.service";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Carrito() {
-  const currentUser = authService.getCurrentUser();
   const [carrito, setCarrito] = useState([]);
+  const navigate = useNavigate();
+  const currentUser = authService.getCurrentUser();
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        // Verificar si el usuario está autenticado
+        if ( currentUser ) {
+          // fetchClientes();
+        } else {
+          // Si el usuario no está autenticado
+          navigate('/unauthorized');
+        }
+      } catch (error) {
+        console.error("Error al obtener información del carrito de compras:", error);
+      }
+    };
+
+    checkUser();
+  }, [navigate]);
 
   // Función para eliminar un producto del carrito
   const eliminarDelCarrito = (idProducto) => {
