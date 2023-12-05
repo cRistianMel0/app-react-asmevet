@@ -5,15 +5,6 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true
       },
-      idUser: {
-        type: Sequelize.INTEGER,
-        allowNull: true
-      },
-      enCarrito: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-      },
       nombre: {
         type: Sequelize.STRING,
         allowNull: false
@@ -40,6 +31,8 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: true
       },
     });
+
+    
   
     return Producto;
   };

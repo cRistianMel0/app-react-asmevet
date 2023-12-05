@@ -222,3 +222,19 @@ exports.quitarDelCarrito = (req, res) => {
     });
 };
 
+// Encontrar los productos que esten en el carrito de un usuario:
+exports.obtenerCarritoUsuario = (req, res) => {
+  const idUsery = req.params.idUser; // Suponiendo que el ID del usuario está en los parámetros de la URL
+
+  Producto.findAll({
+    where: { idUser: idUsery, enCarrito: true }
+  })
+    .then(products => {
+      res.send(products); // Envía la lista de productos en el carrito del usuario
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Ocurrió un error al obtener los productos en el carrito del usuario."
+      });
+    });
+}
