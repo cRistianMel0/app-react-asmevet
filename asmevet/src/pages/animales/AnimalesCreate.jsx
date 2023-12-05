@@ -41,19 +41,24 @@ export default function AnimalesCreate() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-    if (form.checkValidity() === false) {
+  
+    // Validar que tanto el tipo como la raza no estén vacíos
+    if (form.checkValidity() === false || formValues.tipo === '' || formValues.raza === '') {
       e.stopPropagation();
-    } else {
-      try {
-        await animalesService.create(formValues);
-        handleClose();
-        window.location.reload(); 
-      } catch (err) {
-        console.log(err);
-      }
+      setValidated(true); // Esto muestra los mensajes de error si están en blanco
+      return;
+    }
+  
+    try {
+      await animalesService.create(formValues);
+      handleClose();
+      window.location.reload(); 
+    } catch (err) {
+      console.log(err);
     }
     setValidated(true);
   };
+  
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;

@@ -19,34 +19,30 @@ export default function Animales() {
   useEffect(() => {
     const fetchAnimales = async () => {
       try {
-        let response;
-        if (
-          currentUser &&
-          currentUser.roles &&
-          currentUser.roles.includes("ROLE_ADMIN")
-        ) {
-          response = await animalesService.getAllAnimals();
-        } else if (
-          currentUser &&
-          currentUser.roles &&
-          currentUser.roles.includes("ROLE_USER")
-        ) {
-          // Aquí deberías usar `animalesService` en lugar de `animalService`
-          response = await animalesService.getAnimalesByUserId(currentUser.id);
-        } else {
+        if (!currentUser) {
           navigate("/unauthorized");
           return;
         }
-
-        setAnimales(response.data);
+  
+        let response;
+  
+        if (currentUser.roles.includes("ROLE_ADMIN")) {
+          response = await animalesService.getAllAnimals();
+        } else if (currentUser.roles.includes("ROLE_USER")) {
+          response = await animalesService.getAnimalesByUserId(currentUser.id);
+        }
+  
+        if (response && response.data) {
+          setAnimales(response.data);
+        }
       } catch (error) {
         console.error("Error al obtener animales:", error);
       }
     };
-
+  
     fetchAnimales();
-  }, [currentUser, navigate]);
-
+  }, [currentUser, navigate]); 
+  
   const handleEdit = (animal) => {
     setSelectedAnimal(animal);
     setShowEditModal(true);
