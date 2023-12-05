@@ -7,7 +7,12 @@ module.exports = (sequelize, Sequelize) => {
       idProducto: {
         type: Sequelize.INTEGER,
         allowNull: false
-      }
+      },
+      enCarrito: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
     });
 
     Carrito.associate = (models) => {

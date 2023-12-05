@@ -44,15 +44,7 @@ db.user.belongsToMany(db.role, {
   through: "user_roles"
 });
 
-db.productos.belongsToMany(db.carritos, {
-  through: 'Carritos', // Nombre de la tabla intermedia que contiene las relaciones
-  foreignKey: 'idProducto', // Nombre de la clave foránea en la tabla intermedia que apunta a Producto
-});
 
-db.carritos.belongsToMany(db.productos, {
-  through: 'Carritos', // Nombre de la tabla intermedia que contiene las relaciones
-  foreignKey: 'idUser', // Nombre de la clave foránea en la tabla intermedia que apunta a Carrito
-});
 
 db.ROLES = ["user", "admin", "moderator"];
 

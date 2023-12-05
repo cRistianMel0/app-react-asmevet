@@ -4,7 +4,9 @@ module.exports = (app) => {
 
   router.post("/api/carrito/:idUser/:idProducto", carritos.create);
 
-  router.get("/api/carrito/:idUser", carritos.getProductosEnCarrito)
+  router.get("/api/carrito/:idUser", carritos.getCarritosUsuario);
+
+  
 
   app.use("/", router);
 };

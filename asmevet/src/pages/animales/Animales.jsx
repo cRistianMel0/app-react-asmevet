@@ -54,7 +54,7 @@ export default function Animales() {
   };
 
   const handleSaveEdit = (editedAnimal) => {
-    animalesService.editarAnimal(editedAnimal.idAnimal ,editedAnimal)
+    animalesService.editarAnimal(editedAnimal.idAnimal, editedAnimal)
       .then((response) => {
         console.log(response.data);
         setShowEditModal(false);
@@ -82,6 +82,14 @@ export default function Animales() {
       }
     }
   };
+
+  // Función para filtrar los animales en función del texto de búsqueda
+  // Función para filtrar los animales en función del texto de búsqueda
+  const filteredAnimales = animales.filter(
+    (animal) =>
+      animal.nombre.toLowerCase().includes(searchText.toLowerCase())||
+      animal.tipo.toLowerCase().includes(searchText.toLowerCase()) 
+  );
 
   return (
     <>
@@ -113,7 +121,7 @@ export default function Animales() {
                 </tr>
               </thead>
               <tbody>
-                {animales
+                {filteredAnimales
                   .filter((animal) => animal.disponible) // Filtrar solo los animales disponibles
                   .map((animal, index) => (
                     <tr key={index}>

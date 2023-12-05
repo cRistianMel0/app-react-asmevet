@@ -3,6 +3,8 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import authService from "../../services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
+import carritosService from "../../services/carritos.service";
+
 
 export default function Carrito() {
   const [carrito, setCarrito] = useState([]);
@@ -13,8 +15,19 @@ export default function Carrito() {
     const checkUser = async () => {
       try {
         // Verificar si el usuario está autenticado
-        if ( currentUser ) {
-          // fetchClientes();
+        if (currentUser) {
+          const fetchAllProductos = async () => {
+            try {
+              const res = await carritosService.get();
+              // Filtrar los productos disponibles (donde el campo "disponible" es igual a 1)
+              const productosDisponibles = res.data.filter(producto => producto.enCarrito === true);
+              console.log(productosData)
+              setProductos(productosDisponibles); //Uso de la funcion para poder ver los productos disponibles
+            } catch (err) {
+              console.log(err);
+            }
+          }
+          fetchAllProductos()
         } else {
           // Si el usuario no está autenticado
           navigate('/unauthorized');
@@ -27,13 +40,10 @@ export default function Carrito() {
     checkUser();
   }, [navigate]);
 
-  // Función para eliminar un producto del carrito
-  const eliminarDelCarrito = (idProducto) => {
-    const nuevoCarrito = carrito.filter(
-      (producto) => producto.id !== idProducto
-    );
-    setCarrito(nuevoCarrito);
-  };
+  const filteredProductos = productosData.filter((servicio) =>
+    servicio.nombre.toLowerCase().includes(searchText.toLowerCase())
+  );
+
 
   // Función para calcular el total del carrito
   const calcularTotal = () => {
@@ -63,20 +73,10 @@ export default function Carrito() {
                       </tr>
                     </thead>
                     <tbody>
-                      {carrito.map((producto) => (
-                        <tr key={producto.id}>
-                          <td>{producto.nombre}</td>
-                          <td>${producto.precio}</td>
-                          <td>
-                            <button
-                              className="btn btn-danger btn-sm"
-                              onClick={() => eliminarDelCarrito(producto.id)}
-                            >
-                              Eliminar
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+
+                      <div className="row d-flex gap-5 justify-content-center mt-5">
+                        <CardProductos cards={filteredProductos} />
+                      </div>
                     </tbody>
                   </table>
                 </div>

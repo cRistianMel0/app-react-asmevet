@@ -19,19 +19,19 @@ exports.create = (req, res) => {
         });
 }
 
-exports.getProductosEnCarrito = (req, res) => {
+//Encontrar todos los carritos de un usuario
+exports.getCarritosUsuario = (req, res) => {
     const userId = req.params.idUser;
 
     Carrito.findAll({
-        where: { idUser: userId },
-        include: [{ model: Producto }]
+        where: { idUser: userId }
     })
-    .then(carritoProductos => {
-        res.send(carritoProductos);
+    .then(carritos => {
+        res.send(carritos);
     })
     .catch(err => {
         res.status(500).send({
-            message: err.message || "Ocurrió un error al obtener los productos del carrito."
+            message: err.message || "Ocurrió un error al obtener los carritos del usuario."
         });
     });
 }
