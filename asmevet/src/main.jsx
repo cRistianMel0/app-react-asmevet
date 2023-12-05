@@ -12,6 +12,7 @@ import Veterinarios from './pages/veterinarios/Veterinarios';
 import Clientes from './pages/clientes/Clientes';
 import UnauthorizedPage from './pages/auth/components/unauthorized';
 import Animales from './pages/animales/Animales';
+import Carrito from './pages/carrito/Carrito';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/productos",
     element: <Productos />,
+  },
+  {
+    path: "/car",
+    element: <Carrito />,
   },
   {
     path: "/servicios",
