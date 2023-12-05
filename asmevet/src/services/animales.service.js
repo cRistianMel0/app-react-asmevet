@@ -14,6 +14,10 @@ class animalesService {
   deshabilitarAnimal(idAnimal) {
     return axios.patch(`${API_URL}/animales/${idAnimal}`);
   }
+
+  editarAnimal(idAnimal , animal){
+    return axios.put(`${API_URL}${idAnimal}`, animal)
+  }
 }
 
 // Aquí, debes exportar la clase en lugar de la instancia del servicio

@@ -26,7 +26,7 @@ exports.create = (req, res) => {
 
 //Metodo para editar la informacion de un animal
 exports.editarAnimal = (req, res) => {
-  const animalId = req.params.idAnimal; // Suponiendo que el ID del animal está en los parámetros de la URL
+  const animalId = req.params.idAnimal; // Corregido para obtener el ID del animal desde los parámetros de la URL
 
   const updatedAnimal = {
     idUser: req.body.idUser,
@@ -38,17 +38,16 @@ exports.editarAnimal = (req, res) => {
     fechaNacimiento: req.body.fechaNacimiento
   }
 
-  Animal.findByPk(animalId) // Busca el animal por su ID
+  Animal.findByPk(animalId)
     .then(animal => {
       if (!animal) {
         return res.status(404).send({ message: "Animal no encontrado." });
       }
 
-      // Actualiza los campos del animal con los nuevos valores
       return animal.update(updatedAnimal);
     })
     .then(updatedData => {
-      res.send(updatedData); // Envía los datos actualizados del animal
+      res.send(updatedData);
     })
     .catch(err => {
       res.status(500).send({

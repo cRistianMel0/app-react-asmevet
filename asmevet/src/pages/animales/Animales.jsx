@@ -54,8 +54,7 @@ export default function Animales() {
   };
 
   const handleSaveEdit = (editedAnimal) => {
-    animalesService
-      .updateAnimal(editedAnimal)
+    animalesService.editarAnimal(editedAnimal.idAnimal ,editedAnimal)
       .then((response) => {
         console.log(response.data);
         setShowEditModal(false);

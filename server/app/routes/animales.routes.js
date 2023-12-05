@@ -12,7 +12,8 @@ module.exports = (app) => {
   router.patch("/api/animales/:idAnimal", animales.deshabilitarAnimal);
 
   // Ruta para editar un animal por ID
-  router.put("/animales/:idAnimal", animales.editarAnimal);
+  router.put("/api/animales/:idAnimal", animales.editarAnimal);
+
 
   // Ruta para obtener todos los animales de un usuario por ID
   router.get("/animales/user/:idUser", animales.getAllByUserId);
