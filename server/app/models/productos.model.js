@@ -18,6 +18,10 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
         defaultValue: true
       },
+      existencias: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       precio: {
         type: Sequelize.DECIMAL(10, 2), // Por ejemplo, 10 dígitos totales con 2 decimales
         allowNull: false

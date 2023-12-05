@@ -20,10 +20,10 @@ const db = require("./app/models");
 const Role = db.role;
 
 // Descomentar la siguiente línea para forzar la sincronización y ejecutar la función `initial`
-/*  db.sequelize.sync({force: true}).then(() => {
+ db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync Database with { force: true }');
   initial();
-}); */
+});
 
 
 // routes
