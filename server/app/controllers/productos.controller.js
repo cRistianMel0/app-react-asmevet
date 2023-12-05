@@ -31,7 +31,8 @@ exports.create = (req, res) => {
       descripcion: req.body.descripcion,
       imagen: req.file ? req.file.path : null, // Ruta de la imagen almacenada
       disponible: req.body.disponible ? req.body.disponible : true,
-      precio: req.body.precio
+      precio: req.body.precio,
+      existencias: req.body.existencias
     };
 
     // Guardar el Producto en la base de datos

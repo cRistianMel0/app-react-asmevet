@@ -13,6 +13,7 @@ export default function ProductosCreate() {
     descripcion: "",
     imagen: null,
     precio: 0,
+    existencias: 0
   });
   const [validated, setValidated] = useState(false);
 
@@ -23,6 +24,7 @@ export default function ProductosCreate() {
       descripcion: "",
       imagen: null,
       precio: "",
+      existencias: null
     });
     setValidated(false);
   };
@@ -40,7 +42,8 @@ export default function ProductosCreate() {
         formData.append("nombre", formValues.nombre);
         formData.append("descripcion", formValues.descripcion);
         formData.append("imagen", formValues.imagen);
-        formData.append("precio", formValues.precio); // agregar precio
+        formData.append("precio", formValues.precio);
+        formData.append("existencias", formValues.existencias);
 
         await productosService.create(formData);
         handleClose();
@@ -64,7 +67,7 @@ export default function ProductosCreate() {
       newValue = value;
     }
 
-    setFormValues({ 
+    setFormValues({
       ...formValues,
       [name]: newValue,
     });
@@ -116,8 +119,8 @@ export default function ProductosCreate() {
                 onChange={handleInputChange}
                 required
               />
-              <Form.Control.Feedback type="invalid"> 
-                Este campo es obligatorio. 
+              <Form.Control.Feedback type="invalid">
+                Este campo es obligatorio.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
@@ -140,6 +143,27 @@ export default function ProductosCreate() {
                 Ingresa el precio en pesos colombianos (COP). No es necesario
                 incluir decimales (por ejemplo, 1000).
               </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Existencias</Form.Label>
+              <InputGroup>
+                <InputGroup.Text>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 16 16">
+                    <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1M.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z" />
+                  </svg>
+                </InputGroup.Text>
+                <Form.Control
+                  type="number"
+                  step="100"
+                  name="existencias"
+                  value={formValues.existencias}
+                  onChange={handleInputChange}
+                  required
+                />
+              </InputGroup>
+              <Form.Control.Feedback type="invalid">
+                Este campo es obligatorio.
+              </Form.Control.Feedback>
             </Form.Group>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>

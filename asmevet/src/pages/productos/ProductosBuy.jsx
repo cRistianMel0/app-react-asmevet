@@ -65,7 +65,7 @@ export default function ProductosBuy({ show, onClose, producto, onBuy }) {
                 <Form.Control
                   type="number"
                   min="1"
-                  max="12"
+                  max={producto.existencias}
                   value={cantidad}
                   onChange={(e) => setCantidad(e.target.value)}
                 />

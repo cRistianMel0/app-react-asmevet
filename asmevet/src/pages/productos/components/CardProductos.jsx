@@ -106,6 +106,7 @@ const CardProductos = ({ cards }) => {
           <div className="heading">
             {producto.nombre}
             <div className="description">{producto.descripcion}</div>
+            <div className="existances">Quedan {producto.existencias} existencias</div>
             <div className="price-and-button">
               <p className="text-price">${producto.precio}</p>
               <button
