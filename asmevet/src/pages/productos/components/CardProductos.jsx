@@ -7,6 +7,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import ProductosEdit from "../ProductosEdit";
 import productosService from "../../../services/productos.service";
 import ProductosBuy from "../ProductosBuy";
+import carritosService from "../../../services/carritos.service";
 
 const CardProductos = ({ cards }) => {
   const [editModalShow, setEditModalShow] = useState(false);
@@ -94,11 +95,11 @@ const CardProductos = ({ cards }) => {
 
   const handleAddToCart = (idProducto, idUser) => {
     try {
-      productosService.agregarAlCarrito(idUser, idProducto)
+      carritosService.create(idUser, idProducto)
       window.confirm(
         "Producto agregado exitosamente!"
       );
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error(error);
       window.alert(`Se ha generado un problema en el servidor ${error}`);
