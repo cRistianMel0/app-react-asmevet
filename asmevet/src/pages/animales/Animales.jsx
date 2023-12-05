@@ -133,7 +133,7 @@ export default function Animales() {
                           <PencilSquare />
                         </button>
                         <button
-                          className="disable-button"
+                          className="disable-button ms-3"
                           onClick={() => handleDelete(animal)}
                         >
                           <ExclamationTriangle />
