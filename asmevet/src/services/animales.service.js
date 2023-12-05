@@ -12,7 +12,7 @@ class animalesService {
   }
 
   deshabilitarAnimal(idAnimal) {
-    return axios.patch(`${API_URL}/animales/${idAnimal}`);
+    return axios.patch(`${API_URL}${idAnimal}`);
   }
 
   editarAnimal(idAnimal , animal){
