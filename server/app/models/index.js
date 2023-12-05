@@ -34,7 +34,7 @@ db.facturas = require("../models/facturas.model.js")(sequelize, Sequelize);
 db.detalleFacturas = require("../models/detalleFacturas.model.js")(sequelize, Sequelize);
 db.detalleServicios = require("../models/detalleServicios.model.js")(sequelize, Sequelize);
 db.atenciones = require("../models/atenciones.model.js")(sequelize, Sequelize);
-db.imagenes = require("../models/imagenes.model.js")(sequelize, Sequelize);
+
 
 
 db.role.belongsToMany(db.user, {
