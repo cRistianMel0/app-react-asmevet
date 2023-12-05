@@ -4,12 +4,15 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { PlusCircle } from "react-bootstrap-icons";
-// import animalService from "../../services/animal.service";
+import animalesService from "../../services/animales.service";
+import authService from "../../services/auth.service";
+
 
 export default function AnimalesCreate() {
   const [show, setShow] = useState(false);
+  const currentUser = authService.getCurrentUser();
   const [formValues, setFormValues] = useState({
-    idUser: "",
+    idUser: currentUser.id,
     nombre: "",
     tipo: "",
     raza: "",
@@ -42,7 +45,7 @@ export default function AnimalesCreate() {
       e.stopPropagation();
     } else {
       try {
-        await animalService.create(formValues);
+        await animalesService.create(formValues);
         handleClose();
         window.location.reload(); 
       } catch (err) {
@@ -79,7 +82,7 @@ export default function AnimalesCreate() {
           <Modal.Title>Crear Animal</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+          <Form noValidate validated={validated}>
             <Form.Group className="mb-3">
               <Form.Label>Nombre</Form.Label>
               <Form.Control
@@ -96,12 +99,16 @@ export default function AnimalesCreate() {
             <Form.Group className="mb-3">
               <Form.Label>Tipo</Form.Label>
               <Form.Control
-                type="text"
+                as="select"
                 name="tipo"
                 value={formValues.tipo}
                 onChange={handleInputChange}
                 required
-              />
+              >
+                <option value="">Seleccionar tipo</option>
+                <option value="Domestico">Domestico</option>
+                <option value="De granja">De granja</option>
+              </Form.Control>
               <Form.Control.Feedback type="invalid">
                 Este campo es obligatorio.
               </Form.Control.Feedback>
@@ -160,7 +167,7 @@ export default function AnimalesCreate() {
               <Button variant="secondary" onClick={handleClose}>
                 Cancelar
               </Button>
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="submit" onClick={handleFormSubmit}>
                 Agregar
               </Button>
             </Modal.Footer>

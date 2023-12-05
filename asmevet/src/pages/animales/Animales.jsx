@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
-// import animalService from "../../services/animal.service";
 import { ExclamationTriangle, PencilSquare } from "react-bootstrap-icons";
 import SearchBar from "../../components/SearchBar";
 import { useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
 import AnimalesEdit from "./AnimalesEdit";
 import AnimalesCreate from "./AnimalesCreate";
+import animalesService from "../../services/animales.service";
 
 export default function Animales() {
   const [animales, setAnimales] = useState([]);
@@ -20,26 +20,22 @@ export default function Animales() {
     const fetchAnimales = async () => {
       try {
         let response;
-
-        // Verificar si el usuario está autenticado y tiene el rol de administrador
         if (
           currentUser &&
           currentUser.roles &&
           currentUser.roles.includes("ROLE_ADMIN")
         ) {
-          // Si es un administrador, cargar todos los animales
-          response = await animalService.getAnimales();
+          response = await animalesService.getAllAnimals();
         } else if (
           currentUser &&
           currentUser.roles &&
           currentUser.roles.includes("ROLE_USER")
         ) {
-          // Si es un usuario normal, cargar los animales asociados a su idUser
-          response = await animalService.getAnimalesByUserId(currentUser.id);
+          // Aquí deberías usar `animalesService` en lugar de `animalService`
+          response = await animalesService.getAnimalesByUserId(currentUser.id);
         } else {
-          // Si el usuario no está autenticado, redirigir a una página de no autorizado
           navigate("/unauthorized");
-          return; // Terminar la ejecución del useEffect si no está autenticado
+          return;
         }
 
         setAnimales(response.data);
@@ -116,7 +112,6 @@ export default function Animales() {
               <thead>
                 <tr>
                   <th>Nombre</th>
-                  <th>Dueño</th>
                   <th>Tipo</th>
                   <th>Raza</th>
                   <th>Collar</th>
@@ -129,7 +124,7 @@ export default function Animales() {
                 {animales.map((animal, index) => (
                   <tr key={index}>
                     <td>{animal.nombre}</td>
-                    <td>{animal.usuario.username}</td>
+
                     <td>{animal.tipo}</td>
                     <td>{animal.raza}</td>
                     <td>{animal.collar ? "Sí" : "No"}</td>

@@ -32,6 +32,7 @@ require('./app/routes/servicios.routes')(app);
 require('./app/routes/productos.routes')(app);
 require('./app/routes/animales.routes')(app);
 require('./app/routes/carrito.routes')(app);
+require('./app/routes/privateUsers.routes')(app);
 
 
 // set port, listen for requests

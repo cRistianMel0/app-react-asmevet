@@ -103,3 +103,17 @@ exports.getAllByUserId = (req, res) => {
       });
     });
 }
+
+
+// Método para obtener todos los animales de la base de datos
+exports.getAllAnimals = (req, res) => {
+  Animal.findAll()
+    .then(animals => {
+      res.send(animals);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Ocurrió un error al obtener todos los animales."
+      });
+    });
+}

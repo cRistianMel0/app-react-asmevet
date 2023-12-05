@@ -7,6 +7,8 @@ module.exports = (app) => {
     // Ruta para creación de animales, incluyendo la subida de archivos
     router.post("/api/animales/", animales.create);
 
+    router.get("/api/animales/", animales.getAllAnimals);
+
     router.patch("/api/animales/:idAnimal", animales.deshabilitarAnimal)
 
     router.put("/api/animales/:idAnimal", animales.editarAnimal)
