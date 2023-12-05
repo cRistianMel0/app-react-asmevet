@@ -24,7 +24,7 @@ exports.create = (req, res) => {
 }
 
 //funcion para editar la informacion de un animal
-exports.edit = (req, res) => {
+exports.editarAnimal = (req, res) => {
   const animalId = req.params.idAnimal; // Suponiendo que el ID del animal está en los parámetros de la URL
 
   const updatedAnimal = {
@@ -55,3 +55,31 @@ exports.edit = (req, res) => {
       });
     });
 }
+
+exports.deshabilitarAnimal = (req, res) => {
+  const animalId = req.params.idAnimal; 
+
+  Animal.findByPk(animalId) 
+    .then(animal => {
+      if (!animal) {
+        return res.status(404).send({ message: "Animal no encontrado." });
+      }
+
+      // Actualiza el campo 'disponible' a 'false'
+      animal.update({ disponible: false })
+        .then(updatedAnimal => {
+          res.send(updatedAnimal); 
+        })
+        .catch(err => {
+          res.status(500).send({
+            message: err.message || "Ocurrió un error al deshabilitar el animal."
+          });
+        });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Ocurrió un error al buscar el animal."
+      });
+    });
+}
+

@@ -27,6 +27,11 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
         defaultValue: false
       },
+      disponible :{
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      },
       requiereCarnet: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
