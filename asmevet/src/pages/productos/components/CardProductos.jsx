@@ -98,6 +98,7 @@ const CardProductos = ({ cards }) => {
       window.confirm(
         "Producto agregado exitosamente!"
       );
+      window.location.reload();
     } catch (error) {
       console.error(error);
       window.alert(`Se ha generado un problema en el servidor ${error}`);
@@ -111,6 +112,7 @@ const CardProductos = ({ cards }) => {
       window.confirm(
         "Producto removido del carrito exitosamente!"
       );
+      window.location.reload();
     } catch (error) {
       console.error(error);
       window.alert(`Se ha generado un problema en el servidor ${error}`);
@@ -131,6 +133,7 @@ const CardProductos = ({ cards }) => {
           <div
             className="card-image"
             style={{ backgroundImage: `url(${images[producto.idProducto]})` }}
+            onClick={() => handleBuy(producto)}
           ></div>
           <div className="heading">
             {producto.nombre}
