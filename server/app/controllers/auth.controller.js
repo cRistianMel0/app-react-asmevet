@@ -107,3 +107,37 @@ exports.signin = (req, res) => {
       res.status(500).send({ message: err.message });
     });
 };
+
+
+exports.updateUser = (req, res) => {
+  const userId = req.body.id; // Obtener el ID del usuario de la solicitud (puedes usar algún middleware para esto)
+  User.findByPk(userId) // Buscar el usuario por su ID
+    .then(user => {
+      if (!user) {
+        return res.status(404).send({ message: "User Not found." });
+      }
+
+      // Actualizar los campos que se reciben en la solicitud
+      user.username = req.body.username || user.username;
+      user.apellido = req.body.apellido || user.apellido;
+      user.tipoDoc = req.body.tipoDoc || user.tipoDoc;
+      user.documento = req.body.documento || user.documento;
+      user.telefono = req.body.telefono || user.telefono;
+      user.direccion = req.body.direccion || user.direccion;
+      user.email = req.body.email || user.email;
+      user.genero = req.body.genero || user.genero;
+      user.fechaNacimiento = req.body.fechaNacimiento || user.fechaNacimiento;
+
+      // Guardar los cambios en la base de datos
+      user.save()
+        .then(updatedUser => {
+          res.status(200).send({ message: "User updated successfully!", user: updatedUser });
+        })
+        .catch(err => {
+          res.status(500).send({ message: err.message });
+        });
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+};
