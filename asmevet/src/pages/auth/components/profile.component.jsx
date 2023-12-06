@@ -46,7 +46,31 @@ export default class Profile extends Component {
                   <strong>Email:</strong> {currentUser.email}
                 </p>
                 <p>
-                  <strong>id:</strong> {currentUser.id}
+                  <strong>Nombre:</strong> {currentUser.nombre}
+                </p>
+                <p>
+                  <strong>Apellido:</strong> {currentUser.apellido}
+                </p>
+                <p>
+                  <strong>Tipo Documento:</strong> {currentUser.tipoDoc}
+                </p>
+                <p>
+                  <strong>Documento:</strong> {currentUser.documento}
+                </p>
+                <p>
+                  <strong>Telefono:</strong> {currentUser.telefono}
+                </p>
+                <p>
+                  <strong>Direccion:</strong> {currentUser.direccion}
+                </p>
+                <p>
+                  <strong>Email:</strong> {currentUser.email}
+                </p>
+                <p>
+                  <strong>Genero:</strong> {currentUser.genero}
+                </p>
+                <p>
+                  <strong>Fecha Nacimiento:</strong> {currentUser.fechaNacimiento}
                 </p>
                 <strong>Roles:</strong>
                 <ul>
