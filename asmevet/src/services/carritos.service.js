@@ -8,7 +8,7 @@ class carritosService {
     }
 
     quitarDelCarrito(idUser, idProducto) {
-        return axios.delete(`${API_URL}${idProducto}/${idUser}`)
+        return axios.delete(`${API_URL}${idUser}/${idProducto}`)
     }
 
     obtenerProductosEnCarrito(idUser) {

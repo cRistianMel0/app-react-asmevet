@@ -18,8 +18,15 @@ export default function Carrito() {
         if (currentUser) {
           const response = await carritosService.obtenerProductosEnCarrito(currentUser.id);
 
-          const productosEnCarrito = response.data.productosEnCarrito;
-          setCarrito(productosEnCarrito);
+          const { data } = response;
+
+          if (data.productosEnCarrito && data.productosEnCarrito.length > 0) {
+            const productosEnCarrito = data.productosEnCarrito;
+            setCarrito(productosEnCarrito);
+          } else {
+            // Si el usuario tiene un carrito vacío, recarga la página
+            window.location.reload();
+          }
         } else {
           // Si el usuario no está autenticado, redirige a la página de inicio de sesión
           navigate('/login');
@@ -32,26 +39,31 @@ export default function Carrito() {
     checkUser();
   }, [currentUser, navigate]);
 
+
+  // Función para calcular el total del carrito
   // Función para calcular el total del carrito
   const calcularTotal = () => {
-    return carrito.reduce((total, producto) => total + producto.precio, 0);
+    const total = carrito.reduce((acc, producto) => {
+      const precio = parseFloat(producto.precio);
+      return acc + (isNaN(precio) ? 0 : precio);
+    }, 0);
+
+    return total.toFixed(2); // Redondear el total a 2 decimales
   };
 
-  // Función para quitar un producto del carrito
-  const quitarDelCarrito = async (productoId) => {
+  const handleDelete = async (userId, productId) => {
+    console.log("UserId:", userId);
+    console.log("ProductId:", productId);
     try {
-      // Lógica para quitar el producto del carrito
-      // Puedes utilizar el servicio correspondiente para realizar esta acción
-      await carritosService.quitarDelCarrito(currentUser.id, productoId);
+      // Realizar la solicitud para quitar el producto del carrito
+      await carritosService.quitarDelCarrito(userId, productId);
+      window.location.reload();
 
-      // Actualizar la lista de productos en el carrito
-      const response = await carritosService.obtenerProductosEnCarrito(currentUser.id);
-      const productosEnCarrito = response.data.productosEnCarrito;
-      setCarrito(productosEnCarrito);
     } catch (error) {
-      console.error("Error al quitar el producto del carrito:", error);
+      console.error("Error al quitar producto del carrito:", error);
     }
   };
+
 
   return (
     <>
@@ -83,7 +95,7 @@ export default function Carrito() {
                           <td>
                             <button
                               className="btn btn-danger"
-                              onClick={() => quitarDelCarrito(producto.id)}
+                              onClick={() => handleDelete(currentUser.id, producto.idProducto)}
                             >
                               Quitar del Carrito
                             </button>

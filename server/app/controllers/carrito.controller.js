@@ -84,7 +84,7 @@ exports.quitarDelCarrito = (req, res) => {
     const userId = req.params.idUser;
     const productoId = req.params.idProducto;
 
-    // Asegúrate de que el usuario y el producto existan antes de quitar del carrito
+    // Asegúrate de que el usuario exista antes de quitar del carrito
     User.findByPk(userId)
         .then(user => {
             if (!user) {
@@ -100,7 +100,16 @@ exports.quitarDelCarrito = (req, res) => {
                     // Quita el producto del carrito del usuario
                     user.removeProductos(producto)
                         .then(() => {
-                            res.status(200).send({ message: "Producto quitado del carrito correctamente." });
+                            // Verifica si el carrito está vacío después de quitar el producto
+                            user.countProductos().then(count => {
+                                if (count === 0) {
+                                    return res.status(200).send({ message: "Último producto eliminado, carrito vacío." });
+                                } else {
+                                    return res.status(200).send({ message: "Producto quitado del carrito correctamente." });
+                                }
+                            }).catch(err => {
+                                res.status(500).send({ message: err.message });
+                            });
                         })
                         .catch(err => {
                             res.status(500).send({ message: err.message });
