@@ -16,9 +16,12 @@ export default function Carrito() {
       try {
         // Verificar si el usuario está autenticado
         if (currentUser) {
+          console.log(currentUser.id)
           const fetchAllProductos = async () => {
             try {
-              const res = await carritosService.get();
+              const response = await carritosService.obtenerProductosEnCarrito(currentUser.id);
+
+              const res = response.data.productosEnCarrito;
               // Filtrar los productos disponibles (donde el campo "disponible" es igual a 1)
               const productosDisponibles = res.data.filter(producto => producto.enCarrito === true);
               console.log(productosData)
