@@ -4,7 +4,7 @@
     margin: 20px;
 }
 
-.container {
+.profile-container {
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 8px;
@@ -15,13 +15,37 @@
     color: #fff;
     padding: 20px;
     border-radius: 8px;
+    display: flex;
+    align-items: center; /* Centrar verticalmente */
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+/* Icono de usuario en el header */
+.user-icon {
+    font-size: 30px;
+    margin-right: 22px;
 }
 
-li {
-    margin-bottom: 5px;
+.profile-details {
+    margin-top: 20px;
+
+    div {
+        margin-bottom: 10px;
+    }
+
+    strong {
+        margin-right: 10px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 5px;
+    }
+}
+
+.roles-section {
+    margin-top: 20px;
 }

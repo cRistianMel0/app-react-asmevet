@@ -52,7 +52,6 @@ export default function AnimalesCreate() {
     try {
       await animalesService.create(formValues);
       handleClose();
-      window.location.reload(); 
     } catch (err) {
       console.log(err);
     }
