@@ -21,5 +21,8 @@ module.exports = function(app) {
 
   app.post("/api/auth/signin", controller.signin);
 
-  app.put("/api/auth/update", controller.updateUser)
+  app.put("/api/auth/update", controller.updateUser);
+
+  app.get("/api/auth/users/:id", controller.obtenerUsuariosRol);
+  
 };

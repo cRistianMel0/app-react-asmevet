@@ -141,3 +141,41 @@ exports.updateUser = (req, res) => {
       res.status(500).send({ message: err.message });
     });
 };
+
+// Metodo que obtenga todos los veterinarios
+exports.obtenerUsuariosRol = (req, res) => {
+  const roleId = req.params.id; // ID del rol que quieres buscar
+
+  User.findAll({
+    include: [
+      {
+        model: Role,
+        where: { id: roleId }
+      }
+    ]
+  })
+    .then(users => {
+      if (!users || users.length === 0) {
+        return res.status(404).send({ message: "Users with Role ID 2 not found." });
+      }
+
+      const usersWithRoleId2 = users.map(user => ({
+        id: user.id,
+        nombre: user.username,
+        apellido: user.apellido,
+        tipoDoc: user.tipoDoc,
+        documento: user.documento,
+        telefono: user.telefono,
+        direccion: user.direccion,
+        genero: user.genero,
+        email: user.email,
+        fechaNacimiento: user.fechaNacimiento,
+        // Otros campos del usuario que quieras devolver
+      }));
+
+      res.status(200).send({ users: usersWithRoleId2 });
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+};

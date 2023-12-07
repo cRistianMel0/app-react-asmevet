@@ -35,12 +35,15 @@ export default function Veterinarios() {
 
   const fetchVeterinarios = async () => {
     try {
-      const response = await userService.getUsersByRole("ROLE_VETERINARIO");
-      setVeterinarios(response.data);
+      const response = await authService.obtenerUsuariosRol(2);
+      const users = response.data.users; // Acceder a la lista de usuarios desde la respuesta
+
+      setVeterinarios(users); // Establecer los usuarios en el estado de veterinarios
     } catch (error) {
       console.error("Error al obtener veterinarios:", error);
     }
   };
+
 
   const handleEdit = (veterinario) => {
     setSelectedVeterinario(veterinario);
@@ -102,26 +105,44 @@ export default function Veterinarios() {
             <table className="table table-bordered">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Email</th>
-                  <th>Acciones</th>
+                  <th className="thHead">Nombre</th>
+                  <th className="thHead">Email</th>
+                  <th className="thHead">Tipo Doc</th>
+                  <th className="thHead">Teléfono</th>
+                  <th className="thHead">Email</th>
+                  <th className="thHead">Acciones</th>
+                  <th className="thHead">Nombre</th>
+                  <th className="thHead">Email</th>
+                  <th className="thHead">Acciones</th>
+                  <th className="thHead">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                {veterinarios.map((veterinario, index) => (
+                {veterinarios.map((cliente, index) => (
                   <tr key={index}>
-                    <td>{veterinario.username}</td>
-                    <td>{veterinario.email}</td>
+                    {Object.keys(cliente).map((key) => {
+                      if (key !== 'id') {
+                        // Verificar si la propiedad es una fecha y formatearla
+                        const value = key === 'fechaNacimiento'
+                          ? new Date(cliente[key]).toLocaleDateString() // Formatear la fecha
+                          : cliente[key];
+
+                        return (
+                          <td key={key}>{value}</td>
+                        );
+                      }
+                      return null;
+                    })}
                     <td>
                       <button
                         className="edit-button"
-                        onClick={() => handleEdit(veterinario)}
+                        onClick={() => handleEdit(cliente)}
                       >
                         <PencilSquare />
                       </button>
                       <button
                         className="disable-button"
-                        onClick={() => handleDelete(veterinario)}
+                        onClick={() => handleDelete(cliente)}
                       >
                         <ExclamationTriangle />
                       </button>

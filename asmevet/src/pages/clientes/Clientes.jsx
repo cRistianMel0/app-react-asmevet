@@ -7,6 +7,7 @@ import SearchBar from "../../components/SearchBar";
 import authService from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Clientes() {
   const [clientes, setClientes] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -36,12 +37,15 @@ export default function Clientes() {
 
   const fetchClientes = async () => {
     try {
-      const response = await userService.getUsersByRole("ROLE_USER");
-      setClientes(response.data);
+      const response = await authService.obtenerUsuariosRol(1);
+      const users = response.data.users; // Acceder a la lista de usuarios desde la respuesta
+
+      setClientes(users); // Establecer los usuarios en el estado
     } catch (error) {
       console.error("Error al obtener clientes:", error);
     }
   };
+
 
   const handleEdit = (cliente) => {
     setSelectedCliente(cliente);
@@ -106,16 +110,34 @@ export default function Clientes() {
             <table className="table table-bordered">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Email</th>
-                  <th>Acciones</th>
+                  <th className="thHead">Nombre</th>
+                  <th className="thHead">Email</th>
+                  <th className="thHead">Tipo Doc</th>
+                  <th className="thHead">Teléfono</th>
+                  <th className="thHead">Email</th>
+                  <th className="thHead">Acciones</th>
+                  <th className="thHead">Nombre</th>
+                  <th className="thHead">Email</th>
+                  <th className="thHead">Acciones</th>
+                  <th className="thHead">Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {clientes.map((cliente, index) => (
                   <tr key={index}>
-                    <td>{cliente.username}</td>
-                    <td>{cliente.email}</td>
+                    {Object.keys(cliente).map((key) => {
+                      if (key !== 'id') {
+                        // Verificar si la propiedad es una fecha y formatearla
+                        const value = key === 'fechaNacimiento'
+                          ? new Date(cliente[key]).toLocaleDateString() // Formatear la fecha
+                          : cliente[key];
+
+                        return (
+                          <td key={key}>{value}</td>
+                        );
+                      }
+                      return null;
+                    })}
                     <td>
                       <button
                         className="edit-button"
@@ -133,6 +155,8 @@ export default function Clientes() {
                   </tr>
                 ))}
               </tbody>
+
+
             </table>
           </div>
 

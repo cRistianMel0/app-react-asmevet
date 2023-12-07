@@ -50,6 +50,14 @@ class AuthService {
   getCurrentUser() {
     return JSON.parse(localStorage.getItem('user'));
   }
+
+  updateUser(updatedUser) {
+    return axios.put(API_URL, updatedUser)
+  }
+
+  obtenerUsuariosRol(id){
+    return axios.get(`${API_URL}users/${id}`)
+  }
 }
 
 export default new AuthService();
