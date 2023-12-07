@@ -79,3 +79,38 @@ exports.obtenerProductosEnCarrito = (req, res) => {
             res.status(500).send({ message: err.message });
         });
 };
+
+exports.quitarDelCarrito = (req, res) => {
+    const userId = req.params.idUser;
+    const productoId = req.params.idProducto;
+
+    // Asegúrate de que el usuario y el producto existan antes de quitar del carrito
+    User.findByPk(userId)
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({ message: "Usuario no encontrado." });
+            }
+
+            Producto.findByPk(productoId)
+                .then(producto => {
+                    if (!producto) {
+                        return res.status(404).send({ message: "Producto no encontrado." });
+                    }
+
+                    // Quita el producto del carrito del usuario
+                    user.removeProductos(producto)
+                        .then(() => {
+                            res.status(200).send({ message: "Producto quitado del carrito correctamente." });
+                        })
+                        .catch(err => {
+                            res.status(500).send({ message: err.message });
+                        });
+                })
+                .catch(err => {
+                    res.status(500).send({ message: err.message });
+                });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+};

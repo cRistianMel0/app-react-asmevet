@@ -61,7 +61,7 @@ export default function Carrito() {
         <div className="container">
           <h2 className="mb-4">Carrito de Compras</h2>
 
-          {carrito.length !== 0 ? (
+          {carrito.length === 0 ? (
             <p>Su carrito está vacío. ¡Agregue productos desde la tienda!</p>
           ) : (
             <>

@@ -7,9 +7,15 @@ class carritosService {
         return axios.post(`${API_URL}${idProducto}/${idUser}`)
     }
 
-    obtenerProductosEnCarrito(idUser) {
-        return axios.post(`${API_URL}${idUser}`)
+    quitarDelCarrito(idUser, idProducto) {
+        return axios.delete(`${API_URL}${idProducto}/${idUser}`)
     }
+
+    obtenerProductosEnCarrito(idUser) {
+        return axios.get(`${API_URL}${idUser}`)
+    }
+
+    
 }
 
 // Aquí, debes exportar la clase en lugar de la instancia del servicio

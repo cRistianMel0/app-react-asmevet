@@ -4,6 +4,8 @@ module.exports = (app) => {
 
   router.post("/api/carrito/:idUser/:idProducto", carritos.agregarAlCarrito);
 
+  router.delete("/api/carrito/:idUser/:idProducto", carritos.quitarDelCarrito);
+
   router.get("/api/carrito/:idUser", carritos.obtenerProductosEnCarrito);
 
   
