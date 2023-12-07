@@ -69,6 +69,7 @@ exports.obtenerProductosEnCarrito = (req, res) => {
                 existencias: producto.existencias,
                 precio: producto.precio,
                 imagen: producto.imagen,
+                enCarrito: true,
                 createdAt: producto.createdAt,
                 updatedAt: producto.updatedAt
             }));

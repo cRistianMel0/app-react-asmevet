@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { PencilSquare, ExclamationTriangle } from "react-bootstrap-icons";
 import authService from "../../../services/auth.service";
@@ -16,6 +15,7 @@ const CardProductos = ({ cards }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const currentUser = authService.getCurrentUser();
   const [images, setImages] = useState({});
+  const [productosEnCarrito, setProductosEnCarrito] = useState([]);
 
   useEffect(() => {
     // Obtener las imágenes de los productos
@@ -51,6 +51,26 @@ const CardProductos = ({ cards }) => {
 
     fetchImages();
   }, [cards]);
+
+  // Obtener los productos del carrito del usuario actual
+  useEffect(() => {
+    const obtenerProductosEnCarritoUsuario = async () => {
+      try {
+        const response = await carritosService.obtenerProductosEnCarrito(currentUser.id);
+        const { productosEnCarrito } = response.data;
+        setProductosEnCarrito(productosEnCarrito);
+      } catch (error) {
+        console.error("Error al obtener productos del carrito:", error);
+      }
+    };
+
+    obtenerProductosEnCarritoUsuario();
+  }, [currentUser.id]);
+
+  const productosConMarca = cards.map(producto => {
+    const estaEnCarrito = productosEnCarrito.some(item => item.idProducto === producto.idProducto);
+    return { ...producto, enCarrito: estaEnCarrito };
+  });
 
   const handleEdit = (producto) => {
     setEditedProducto(producto);
@@ -96,40 +116,34 @@ const CardProductos = ({ cards }) => {
   const handleAddToCart = (idProducto, idUser) => {
     try {
       carritosService.agregarAlCarrito(idUser, idProducto)
-      window.confirm(
-        "Producto agregado exitosamente!"
-      );
-      // window.location.reload();
-    } catch (error) {
-      console.error(error);
-      window.alert(`Se ha generado un problema en el servidor ${error}`);
-    }
-
-  }
-
-  const handleRemoveFromCart = (idProducto, idUser) => {
-    try {
-      productosService.quitarDelCarrito(idUser, idProducto)
-      window.confirm(
-        "Producto removido del carrito exitosamente!"
-      );
       window.location.reload();
     } catch (error) {
       console.error(error);
       window.alert(`Se ha generado un problema en el servidor ${error}`);
     }
+
   }
+
+  const handleRemoveFromCart = async (userId, productId) => {
+    console.log("UserId:", userId);
+    console.log("ProductId:", productId);
+    try {
+      // Realizar la solicitud para quitar el producto del carrito
+      await carritosService.quitarDelCarrito(userId, productId);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error al quitar producto del carrito:", error);
+    }
+  };
 
 
   const handleBuyModalClose = () => {
     setBuyModalShow(false);
   };
 
-  
-
   return (
     <>
-      {cards.map((producto, index) => (
+      {productosConMarca.map((producto, index) => (
         <div className="card" key={index}>
           <div
             className="card-image"
