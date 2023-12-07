@@ -51,10 +51,10 @@ class AuthService {
     return JSON.parse(localStorage.getItem('user'));
   }
 
-  updateUser(updatedUser) {
-    return axios.put(API_URL, updatedUser)
+  updateUser(updatedUserData) {
+    return axios.put(`${API_URL}update`, updatedUserData);
   }
-
+  
   obtenerUsuariosRol(id){
     return axios.get(`${API_URL}users/${id}`)
   }

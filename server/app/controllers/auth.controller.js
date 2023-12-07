@@ -110,7 +110,7 @@ exports.signin = (req, res) => {
 
 
 exports.updateUser = (req, res) => {
-  const userId = req.body.id; // Obtener el ID del usuario de la solicitud (puedes usar algún middleware para esto)
+  const userId = req.body.id; 
   User.findByPk(userId) // Buscar el usuario por su ID
     .then(user => {
       if (!user) {

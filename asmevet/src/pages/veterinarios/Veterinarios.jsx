@@ -56,8 +56,7 @@ export default function Veterinarios() {
   };
 
   const handleSaveEdit = (editedVeterinario) => {
-    veterinariosService
-      .update(editedVeterinario)
+    authService.updateUser(editedVeterinario)
       .then((response) => {
         console.log(response.data);
         setShowEditModal(false);
@@ -106,14 +105,14 @@ export default function Veterinarios() {
               <thead>
                 <tr>
                   <th className="thHead">Nombre</th>
-                  <th className="thHead">Email</th>
+                  <th className="thHead">Apellido</th>
                   <th className="thHead">Tipo Doc</th>
+                  <th className="thHead">Número Documento</th>
                   <th className="thHead">Teléfono</th>
-                  <th className="thHead">Email</th>
                   <th className="thHead">Acciones</th>
                   <th className="thHead">Nombre</th>
                   <th className="thHead">Email</th>
-                  <th className="thHead">Acciones</th>
+                  <th className="thHead">Fecha Nacimiento</th>
                   <th className="thHead">Acciones</th>
                 </tr>
               </thead>

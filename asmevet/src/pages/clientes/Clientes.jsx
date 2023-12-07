@@ -58,8 +58,7 @@ export default function Clientes() {
   };
 
   const handleSaveEdit = (editedCliente) => {
-    clientesService
-      .update(editedCliente)
+    authService.updateUser(editedCliente)
       .then((response) => {
         console.log(response.data);
         setShowEditModal(false);
@@ -111,14 +110,14 @@ export default function Clientes() {
               <thead>
                 <tr>
                   <th className="thHead">Nombre</th>
-                  <th className="thHead">Email</th>
+                  <th className="thHead">Apellido</th>
                   <th className="thHead">Tipo Doc</th>
+                  <th className="thHead">Número Documento</th>
                   <th className="thHead">Teléfono</th>
-                  <th className="thHead">Email</th>
                   <th className="thHead">Acciones</th>
                   <th className="thHead">Nombre</th>
                   <th className="thHead">Email</th>
-                  <th className="thHead">Acciones</th>
+                  <th className="thHead">Fecha Nacimiento</th>
                   <th className="thHead">Acciones</th>
                 </tr>
               </thead>
