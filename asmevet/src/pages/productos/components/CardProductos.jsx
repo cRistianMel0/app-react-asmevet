@@ -95,7 +95,7 @@ const CardProductos = ({ cards }) => {
 
   const handleAddToCart = (idProducto, idUser) => {
     try {
-      carritosService.create(idUser, idProducto)
+      carritosService.agregarAlCarrito(idUser, idProducto)
       window.confirm(
         "Producto agregado exitosamente!"
       );
