@@ -1,37 +1,81 @@
 const db = require("../models");
-const Carrito = db.carritos;
+const User = db.user;
 const Producto = db.productos;
 
-exports.create = (req, res) => {
-    const carrito = {
-        idUser: req.params.idUser,
-        idProducto: req.params.idProducto
-    }
+exports.agregarAlCarrito = (req, res) => {
+    const userId = req.params.idUser;
+    const productoId = req.params.idProducto;
 
-    Carrito.create(carrito)
-        .then(data => {
-            res.send(data);
+    // Asegúrate de que el usuario y el producto existan antes de agregar al carrito
+    User.findByPk(userId)
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({ message: "Usuario no encontrado." });
+            }
+
+            Producto.findByPk(productoId)
+                .then(producto => {
+                    if (!producto) {
+                        return res.status(404).send({ message: "Producto no encontrado." });
+                    }
+
+                    // Agregar el producto al carrito
+                    user.addProductos(producto)
+                        .then(() => {
+                            res.status(200).send({ message: "Producto agregado al carrito correctamente." });
+                        })
+                        .catch(err => {
+                            res.status(500).send({ message: err.message });
+                        });
+                })
+                .catch(err => {
+                    res.status(500).send({ message: err.message });
+                });
         })
         .catch(err => {
-            res.status(500).send({
-                message: err.message || "Ocurrió un error al crear el carrito."
-            });
+            res.status(500).send({ message: err.message });
         });
-}
+};
 
-//Encontrar todos los carritos de un usuario
-exports.getCarritosUsuario = (req, res) => {
-    const userId = req.params.idUser;
+exports.obtenerProductosEnCarrito = (req, res) => {
+    const userId = req.params.idUser; // Suponiendo que el ID del usuario viene como parámetro en la URL
 
-    Carrito.findAll({
-        where: { idUser: userId }
+    // Encuentra al usuario por su ID y carga sus productos asociados sin incluir la información de la tabla "carritos"
+    User.findByPk(userId, {
+        include: [
+            {
+                model: Producto,
+                as: 'productos',
+                through: { attributes: [] } // Esto evita que se incluyan los detalles de la tabla carritos
+            }
+        ]
     })
-    .then(carritos => {
-        res.send(carritos);
-    })
-    .catch(err => {
-        res.status(500).send({
-            message: err.message || "Ocurrió un error al obtener los carritos del usuario."
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({ message: "Usuario no encontrado." });
+            }
+
+            // Verifica si el usuario tiene productos en su carrito
+            if (!user.productos || user.productos.length === 0) {
+                return res.status(404).send({ message: "El usuario no tiene productos en el carrito." });
+            }
+
+            // Devuelve solo los detalles de los productos en el carrito del usuario
+            const productosEnCarrito = user.productos.map(producto => ({
+                idProducto: producto.idProducto,
+                nombre: producto.nombre,
+                descripcion: producto.descripcion,
+                disponible: producto.disponible,
+                existencias: producto.existencias,
+                precio: producto.precio,
+                imagen: producto.imagen,
+                createdAt: producto.createdAt,
+                updatedAt: producto.updatedAt
+            }));
+
+            res.status(200).send({ productosEnCarrito });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
         });
-    });
-}
+};

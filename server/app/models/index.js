@@ -34,7 +34,7 @@ db.facturas = require("../models/facturas.model.js")(sequelize, Sequelize);
 db.detalleFacturas = require("../models/detalleFacturas.model.js")(sequelize, Sequelize);
 db.detalleServicios = require("../models/detalleServicios.model.js")(sequelize, Sequelize);
 db.atenciones = require("../models/atenciones.model.js")(sequelize, Sequelize);
-db.carritos = require("../models/carrito.model.js")(sequelize, Sequelize);
+
 
 
 db.role.belongsToMany(db.user, {
@@ -42,6 +42,13 @@ db.role.belongsToMany(db.user, {
 });
 db.user.belongsToMany(db.role, {
   through: "user_roles"
+});
+
+db.productos.belongsToMany(db.user, {
+  through: "carritos"
+});
+db.user.belongsToMany(db.productos, {
+  through: "carritos"
 });
 
 
